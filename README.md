@@ -33,7 +33,15 @@ http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/mars1
 3.)
 Download and install Git
 https://git-scm.com/downloads
-** NOTE: During the installation process you want to select the following configuration:
+** IMPORTANT: During the installation process you want to select the following configuration:
 * On the step "Adjusting your PATH environment" you want to select the "Use Git for Windows Command Prompt"
-    Very Important!
+
+4.)
+Download this file and unzip it on your desktop
+*For Windows(Suckers):
+*For Mac OSX(Winners):
+Open the folder after unzipping it and open the How-To.txt to complete the final installation proccess. 
+
+#And have fun developing!
+
 
