@@ -21,7 +21,7 @@ http://files.minecraftforge.net/minecraftforge/
 Download and install the latest version of Java SE Development Kit 8
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
-** Remember to Accept the License Agreement and select the JDK according to your computer specs.
+* Remember to Accept the License Agreement and select the JDK according to your computer specs.
 
 2.)
 Download and install the latest version of Eclipse IDE 
@@ -31,5 +31,5 @@ http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/mars1
 * When you open Eclipse make sure you accept the default location of your workspace
 
 3.)
-Download this folder for further automated
+Download 
 
