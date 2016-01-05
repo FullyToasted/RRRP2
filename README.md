@@ -31,5 +31,8 @@ http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/mars1
 * When you open Eclipse make sure you accept the default location of your workspace
 
 3.)
-Download 
+Download and install Git
+https://git-scm.com/downloads
+** NOTE: During the installation process you want to select the following configuration:
+* Select
 
