@@ -27,8 +27,8 @@ http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.h
 Download and install the latest version of Eclipse IDE 
 http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/mars1
 
-** Download links on the right side of the page 
-** When you open Eclipse make sure you accept the default location of your workspace
+* Download links on the right side of the page 
+* When you open Eclipse make sure you accept the default location of your workspace
 
 3.)
 Download this folder for further automated
