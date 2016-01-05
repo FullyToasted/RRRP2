@@ -17,6 +17,7 @@ http://files.minecraftforge.net/minecraftforge/
 
 ## (For RRR Developers) Step-by-Step to developing RRRP!
 
+1.)
 Download and install the latest version of  Java SE Development Kit 8u65
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 ** Remember to Accept the License Agreement and select the JDK according to your computer specs.
