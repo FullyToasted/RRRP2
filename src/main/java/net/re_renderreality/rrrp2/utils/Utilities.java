@@ -1,0 +1,125 @@
+package net.re_renderreality.rrrp2.utils;
+
+import java.util.Optional;
+
+import net.re_renderreality.rrrp2.main.registry;
+
+import org.spongepowered.api.command.source.CommandBlockSource;
+import org.spongepowered.api.command.source.ConsoleSource;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.text.channel.MessageChannel;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.World;
+
+public class Utilities {
+
+	/**
+	 * @param strings to be formatted
+	 * @return String array of formatted strings.
+	 */
+	public static String[] stringFormatter(String... strings) {
+		return strings;
+	}
+	
+	/**
+	 * @param vals a integer array of values.
+	 * @return the mean of all values in parameter array.
+	 */
+	public double getMean(int[] vals) {
+		double sum = 0.0;
+		for (int val:vals)
+			sum+=val;
+		return sum/vals.length;
+	}
+
+	/**
+	 * @return current server ticks per second.
+	 */
+	public double getTps() { 
+		return registry.getGame().getServer().getTicksPerSecond();	
+	}
+
+	/**
+	 * @return MessageChannel to message all server players.
+	 */
+	public static MessageChannel getBroadcastChannel() { 
+		return registry.getServer().getBroadcastChannel();
+	}
+	
+	/**
+	 * @param message Text message to be broadcast to server.
+	 */
+	public static void broadcastMessage(Text message) { 
+		getBroadcastChannel().send(message);
+	}
+	
+	/**
+	 * @param message String message to be broadcast to server.
+	 */
+	public static void broadcastMessage(String message) { 
+		getBroadcastChannel().send(Text.of(message));
+	}
+	
+	/**
+	 * @param name of player to search for.
+	 * @return Optional<Player> with player data or Optional.empty() if unfound.
+	 */
+	public Optional<Player> getPlayer(String name) {
+		return registry.getServer().getPlayer(name);
+	}
+	
+	/**
+	 * @param player Player to get location for.
+	 * @return Location<World> of Player player.
+	 */
+	public Location<World> getPlayerLocation(Player player) {
+		return player.getLocation();
+	}
+	
+	/**
+	 * @param name String of player name to get location for.
+	 * @return Location<World> of Player with String name.
+	 */
+	public Location<World> getPlayerLocation(String name) {
+		return getPlayer(name).get().getLocation();
+	}
+	
+	/**
+	 * @return names of all server worlds stored in a String array.
+	 */
+	public String[] getWorldNames() {
+		Object[] objs = registry.getServer().getWorlds().toArray();
+		String[] names = new String[objs.length];
+		int i = 0;
+		for (Object o:objs)
+		{
+			names[i] = o.toString();
+			i+=1;
+		}
+		return names;
+	}
+	
+	/**
+	 * @return boolean check if player.
+	 */
+	public boolean isPlayer(Object src) { return (src instanceof Player); }
+	
+	/**
+	 * @return boolean check if console.
+	 */
+	public boolean isConsole(Object src) { return (src instanceof ConsoleSource); }
+	
+	/**
+	 * @return boolean check if command block.
+	 */
+	public boolean isCommandBlock(Object src) { return (src instanceof CommandBlockSource); }
+	
+	/**
+	 * @param src Object to check for class of.
+	 * @return String of class name.
+	 */
+	public String srcOf(Object src) {
+		return src.getClass().getName();
+	}
+}
