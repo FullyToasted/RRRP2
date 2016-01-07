@@ -21,22 +21,42 @@ public class CommandSpecFactory {
 	 * @note Try to to touch this method unless you know what you're doing.
 	 */
 	public void commandSpecFactory() {
-		int numofcmds = 1;
-		CommandSpec[] commandSpecs = new CommandSpec[numofcmds];
-		BaseCommand[] baseCommands = new BaseCommand[numofcmds];
+		
+		//Change this number if you add a command
+		final int numoftotalcmds = 2;
+		
+		int numofcmd = -1;
+		CommandSpec[] commandSpecs = new CommandSpec[numoftotalcmds];
+		BaseCommand[] baseCommands = new BaseCommand[numoftotalcmds];
+		String[][] aliases = new String[numoftotalcmds][];
 		
 		//EXAMPLE FOR A BASIC COMMAND || READ EACH PARAMETER DEFINITION 
-		String[] aliases = Utilities.stringFormatter("Hello", "HelloWorld");
-		baseCommands[0] = new BaseCommand();
-		baseCommands[0].setInformation("Hello", "Hello Command", "rrrp2.hello", aliases, true);
-		commandSpecs[0] = CommandSpec.builder()
-				.description(Text.of(baseCommands[0].getDescription()))
-				.permission(baseCommands[0].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[0])).build();
+		numofcmd += 1;
+		String[] helloAlias = Utilities.stringFormatter("Hello", "HelloWorld");
+		aliases[numofcmd] = helloAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("Hello", "Hello Command", "rrrp2.hello", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
+		String[] rrrpAlias = Utilities.stringFormatter("rrrp");
+		numofcmd += 1;
+		aliases[numofcmd] = rrrpAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("rrrp", "Re-RenderReality's Plugin Command List", "rrrp2.help", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		
+		// DO NOT TOUCH
 		Utilities.baseCommands = baseCommands;
-		for (CommandSpec spec : commandSpecs) {
-			registry.getGame().getCommandManager().register(plugin, spec, aliases);
+		for (int i = 0 ; i < numoftotalcmds; i++) {
+			registry.getGame().getCommandManager().register(plugin, commandSpecs[i], aliases[i]);
+			plugin.getLogger().info("[CommandFactory] The command " + baseCommands[i].getName() + " is now registered.");
 		}
 	}
 }
