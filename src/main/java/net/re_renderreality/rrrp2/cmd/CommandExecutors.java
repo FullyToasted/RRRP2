@@ -43,6 +43,8 @@ public class CommandExecutors implements CommandExecutor {
 					break;
 				case "Hello":
 					Utilities.broadcastMessage("HELLO BITCHES!");
+				case "clearEntities":
+					new ClearEntitiesCommand(src, args).run();
 					break;
 			}
 		} 

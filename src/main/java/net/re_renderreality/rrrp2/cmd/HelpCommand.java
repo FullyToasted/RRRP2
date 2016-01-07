@@ -26,7 +26,6 @@ public class HelpCommand {
         	.contents(contents)
         	.header(Text.of("Re-RenderRealityPlugin 2"))
         	.footer(Text.of("Thank you for choosing Re-RenderReality"))
-        	.paddingString("-")
         	.sendTo(src);
 	}	
 }
