@@ -15,7 +15,7 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 public class Utilities {
-
+	
 	public static PaginationService paginationService = registry.getGame().getServiceManager().provide(PaginationService.class).get();
 	public static BaseCommand[] baseCommands;
 	

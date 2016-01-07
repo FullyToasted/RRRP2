@@ -33,7 +33,7 @@ public class RRRP2{
 	public void gameStarting(GameStartingServerEvent event) {
 		plugin = this;
 		server = game.getServer();
-		registry.game = game;
+		registry.game = getGame();
 		registry.logger = getLogger();
 		factory.commandSpecFactory();
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been initialized.");
