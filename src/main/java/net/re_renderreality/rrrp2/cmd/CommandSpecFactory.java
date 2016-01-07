@@ -55,8 +55,8 @@ public class CommandSpecFactory {
 		// DO NOT TOUCH
 		Utilities.baseCommands = baseCommands;
 		for (int i = 0 ; i < numoftotalcmds; i++) {
-			registry.getGame().getCommandManager().register(plugin, commandSpecs[i], aliases[i]);
-			plugin.getLogger().info("[CommandFactory] The command " + baseCommands[i].getName() + " is now registered.");
+				registry.getGame().getCommandManager().register(plugin, commandSpecs[i], aliases[i]);
+				plugin.getLogger().info("[CommandFactory] The command " + baseCommands[i].getName() + " is now registered.");
 		}
 	}
 }

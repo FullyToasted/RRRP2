@@ -12,26 +12,10 @@ public class BaseCommand {
 	private String permission;
 	private String[] aliases;
 	private boolean isUniversal;
-	@SuppressWarnings("unused")
 	private boolean isEnabled;
 	
 	public CommandSource src;
 	
-	/**
-	 * @return String of with value of source type
-	 */
-	public Class<?> getSourceType() {
-		if (src instanceof Player) {
-			return Player.class;
-		}
-		else if (src instanceof ConsoleSource) {
-			return ConsoleSource.class;
-		}
-		else if (src instanceof CommandBlockSource) {
-			return CommandBlockSource.class;
-		}
-		return null;
-	}
 	
 	/**
 	 * @param name String of name to set for command name.
@@ -50,12 +34,39 @@ public class BaseCommand {
 	}
 	
 	/**
-	 * @return permission String for command.
+	 * @return String of with value of source type
+	 */
+	public Class<?> getSourceType() {
+		if (src instanceof Player) {
+			return Player.class;
+		}
+		else if (src instanceof ConsoleSource) {
+			return ConsoleSource.class;
+		}
+		else if (src instanceof CommandBlockSource) {
+			return CommandBlockSource.class;
+		}
+		return null;
+	}
+	
+	/**
+	 * @return isEnabled Returns true or false depending if it will be enabled
+	 */
+	public boolean isEnabled(){
+		return isEnabled;
+	}
+	
+	/**
+	 * @return isUniversal Returns true if the command can be used by all CommandSources
 	 */
 	public boolean isUniversal() {
 		return isUniversal;
 	}
 	
+	
+	/**
+	 * @return permission String for command.
+	 */
 	public String getPermission() {
 		return permission;
 	}

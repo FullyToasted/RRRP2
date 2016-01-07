@@ -19,7 +19,7 @@ public class HelpCommand {
 		this.src = src;
 		BaseCommand[] baseCommands = Utilities.baseCommands;
 		
-		for (int i = 0 ; i <= baseCommands.length ; i++) {
+		for (int i = 0 ; i < baseCommands.length ; i++) {
 		contents.add(Text.of(baseCommands[i].getName() + " " + baseCommands[i].getDescription()));
 		}
 		
