@@ -1,9 +1,6 @@
 package net.re_renderreality.rrrp2.cmd;
 
 import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.command.source.CommandBlockSource;
-import org.spongepowered.api.command.source.ConsoleSource;
-import org.spongepowered.api.entity.living.player.Player;
 
 public class BaseCommand {
 
@@ -34,22 +31,6 @@ public class BaseCommand {
 	}
 	
 	/**
-	 * @return String of with value of source type
-	 */
-	public Class<?> getSourceType() {
-		if (src instanceof Player) {
-			return Player.class;
-		}
-		else if (src instanceof ConsoleSource) {
-			return ConsoleSource.class;
-		}
-		else if (src instanceof CommandBlockSource) {
-			return CommandBlockSource.class;
-		}
-		return null;
-	}
-	
-	/**
 	 * @return isEnabled Returns true or false depending if it will be enabled
 	 */
 	public boolean isEnabled(){
@@ -62,7 +43,6 @@ public class BaseCommand {
 	public boolean isUniversal() {
 		return isUniversal;
 	}
-	
 	
 	/**
 	 * @return permission String for command.

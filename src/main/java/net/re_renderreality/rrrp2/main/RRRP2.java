@@ -1,7 +1,6 @@
 package net.re_renderreality.rrrp2.main;
 
 import net.re_renderreality.rrrp2.cmd.CommandSpecFactory;
-
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
@@ -24,7 +23,6 @@ public class RRRP2{
 	private Logger logger;
 	public RRRP2 plugin;
 	private Server server;
-	private final CommandSpecFactory factory = new CommandSpecFactory(this);
 	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
@@ -33,9 +31,10 @@ public class RRRP2{
 	public void gameStarting(GameStartingServerEvent event) {
 		plugin = this;
 		server = game.getServer();
-		registry.game = getGame();
-		registry.logger = getLogger();
-		factory.commandSpecFactory();
+		Registry.game = getGame();
+		Registry.logger = getLogger();
+		Registry.plugin = this;
+		new CommandSpecFactory().buildCommandSpecs();
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been initialized.");
 	}
 	

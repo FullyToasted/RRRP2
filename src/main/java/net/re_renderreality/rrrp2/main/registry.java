@@ -4,10 +4,18 @@ import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 
-public class registry {
+public class Registry {
 	
 	public static Game game;
 	public static Logger logger;
+	public static RRRP2 plugin;
+	
+	/**
+	 * @return registered RRRP2 plugin object.
+	 */
+	public static RRRP2 getPlugin() {
+		return plugin;
+	}
 	
 	/**
 	 * @return the registered Game object.

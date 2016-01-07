@@ -1,17 +1,17 @@
-Sponge Notes
+Sponge plugin notes:
 
 TO DO LIST (Please add as needed):
 Logger -- complete
 Commands -- working needs framework organization/work
 
-Text Formatting   :
+Import statements alphabetized. please try to maintain.
+
+Text Formatting:
 
 Colored Text: {
-Text coloredText = Texts.builder("Woot! Golden text is golden.").color(TextColors.GOLD).build();
-Text styledText = Texts.builder("Yay! Styled text!").style(TextStyles.ITALIC).build();
-Text multiColoredText = Texts.builder("Sponges are ").color(TextColors.YELLOW).append(
-        Texts.builder("invincible!").color(TextColors.RED).build()).build();
-Text clickableText = Texts.builder("Click here!").onClick(TextActions.runCommand("tell Spongesquad I'm ready!")).build();
-Text adventurers = Texts.builder("These players are in adventure mode: ").append(
-        Texts.of(Selectors.parse("@a[m=2]"))).build();
+	Text coloredText = Texts.builder("Golden text").color(TextColors.GOLD).build();
+	Text styledText = Texts.builder("Styled text").style(TextStyles.ITALIC).build();
+	Text multiColoredText = Texts.builder("Multi-").color(TextColors.YELLOW).append(Texts.builder("colored text").color(TextColors.RED).build()).build();
+	Text clickableText = Texts.builder("Click here!").onClick(TextActions.runCommand("Popup text")).build();
+	Text adventurers = Texts.builder("These players are in adventure mode: ").append(Texts.of(Selectors.parse("@a[m=2]"))).build();
 }

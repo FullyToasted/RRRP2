@@ -1,9 +1,8 @@
 package net.re_renderreality.rrrp2.cmd;
 
 import net.re_renderreality.rrrp2.main.RRRP2;
-import net.re_renderreality.rrrp2.main.registry;
+import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
-
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
 
@@ -11,16 +10,16 @@ public class CommandSpecFactory {
 
 	RRRP2 plugin;
 	
-	public CommandSpecFactory(RRRP2 plugin) {
-		this.plugin = plugin;
+	public CommandSpecFactory() {
+		this.plugin = Registry.getPlugin();
 	}
 	
 	/**
 	 * @author EliteByte/Avarai
 	 * @category CommandManagement
-	 * @note Try to to touch this method unless you know what you're doing.
+	 * @note Try not to touch this method unless you know what you're doing.
 	 */
-	public void commandSpecFactory() {
+	public void buildCommandSpecs() {
 		
 		//Change this number if you add a command
 		final int numoftotalcmds = 2;
@@ -55,8 +54,8 @@ public class CommandSpecFactory {
 		// DO NOT TOUCH
 		Utilities.baseCommands = baseCommands;
 		for (int i = 0 ; i < numoftotalcmds; i++) {
-				registry.getGame().getCommandManager().register(plugin, commandSpecs[i], aliases[i]);
-				plugin.getLogger().info("[CommandFactory] The command " + baseCommands[i].getName() + " is now registered.");
+				Utilities.getCommandManager().register(plugin, commandSpecs[i], aliases[i]);
+				plugin.getLogger().info("[CommandFactory] The command: " + baseCommands[i].getName() + " is now registered.");
 		}
 	}
 }

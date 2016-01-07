@@ -1,10 +1,10 @@
 package net.re_renderreality.rrrp2.utils;
 
 import java.util.Optional;
-
 import net.re_renderreality.rrrp2.cmd.BaseCommand;
-import net.re_renderreality.rrrp2.main.registry;
+import net.re_renderreality.rrrp2.main.Registry;
 
+import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.command.source.CommandBlockSource;
 import org.spongepowered.api.command.source.ConsoleSource;
 import org.spongepowered.api.entity.living.player.Player;
@@ -16,11 +16,13 @@ import org.spongepowered.api.world.World;
 
 public class Utilities {
 	
-	public static PaginationService paginationService = registry.getGame().getServiceManager().provide(PaginationService.class).get();
 	public static BaseCommand[] baseCommands;
 	
+	/**
+	 * @return PaginationService object associated with Registry's Game object.
+	 */
 	public static PaginationService getPaginationService() {
-		return paginationService;
+		return Registry.getGame().getServiceManager().provide(PaginationService.class).get();
 	}
 	
 	/**
@@ -35,7 +37,7 @@ public class Utilities {
 	 * @param vals a integer array of values.
 	 * @return the mean of all values in parameter array.
 	 */
-	public double getMean(int[] vals) {
+	public static double getMean(int[] vals) {
 		double sum = 0.0;
 		for (int val:vals)
 			sum+=val;
@@ -45,15 +47,15 @@ public class Utilities {
 	/**
 	 * @return current server ticks per second.
 	 */
-	public double getTps() { 
-		return registry.getGame().getServer().getTicksPerSecond();	
+	public static double getTps() { 
+		return Registry.getGame().getServer().getTicksPerSecond();	
 	}
 
 	/**
 	 * @return MessageChannel to message all server players.
 	 */
 	public static MessageChannel getBroadcastChannel() { 
-		return registry.getServer().getBroadcastChannel();
+		return Registry.getServer().getBroadcastChannel();
 	}
 	
 	/**
@@ -74,15 +76,15 @@ public class Utilities {
 	 * @param name of player to search for.
 	 * @return Optional<Player> with player data or Optional.empty() if unfound.
 	 */
-	public Optional<Player> getPlayer(String name) {
-		return registry.getServer().getPlayer(name);
+	public static Optional<Player> getPlayer(String name) {
+		return Registry.getServer().getPlayer(name);
 	}
 	
 	/**
 	 * @param player Player to get location for.
 	 * @return Location<World> of Player player.
 	 */
-	public Location<World> getPlayerLocation(Player player) {
+	public static Location<World> getPlayerLocation(Player player) {
 		return player.getLocation();
 	}
 	
@@ -90,45 +92,52 @@ public class Utilities {
 	 * @param name String of player name to get location for.
 	 * @return Location<World> of Player with String name.
 	 */
-	public Location<World> getPlayerLocation(String name) {
+	public static Location<World> getPlayerLocation(String name) {
 		return getPlayer(name).get().getLocation();
 	}
 	
 	/**
 	 * @return names of all server worlds stored in a String array.
 	 */
-	public String[] getWorldNames() {
-		Object[] objs = registry.getServer().getWorlds().toArray();
+	public static String[] getWorldNames() {
+		Object[] objs = Registry.getServer().getWorlds().toArray();
 		String[] names = new String[objs.length];
 		int i = 0;
-		for (Object o:objs)
+		for (Object obj:objs)
 		{
-			names[i] = o.toString();
+			names[i] = obj.toString();
 			i+=1;
 		}
 		return names;
 	}
 	
 	/**
-	 * @return boolean check if player.
+	 * @return boolean check if PlayerSource.
 	 */
-	public boolean isPlayer(Object src) { return (src instanceof Player); }
+	public static boolean isPlayer(Object src) { return (src instanceof Player); }
 	
 	/**
-	 * @return boolean check if console.
+	 * @return boolean check if ConsoleSource.
 	 */
-	public boolean isConsole(Object src) { return (src instanceof ConsoleSource); }
+	public static boolean isConsole(Object src) { return (src instanceof ConsoleSource); }
 	
 	/**
-	 * @return boolean check if command block.
+	 * @return boolean check if CommandBlockSource.
 	 */
-	public boolean isCommandBlock(Object src) { return (src instanceof CommandBlockSource); }
+	public static boolean isCommandBlock(Object src) { return (src instanceof CommandBlockSource); }
 	
 	/**
 	 * @param src Object to check for class of.
 	 * @return String of class name.
 	 */
-	public String srcOf(Object src) {
+	public static String srcOf(Object src) {
 		return src.getClass().getName();
+	}
+	
+	/**
+	 * @return CommandManager object associated with Registry's stored Game Object.
+	 */
+	public static CommandManager getCommandManager() {
+		return Registry.getGame().getCommandManager();
 	}
 }
