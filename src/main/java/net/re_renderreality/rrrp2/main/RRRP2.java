@@ -1,19 +1,15 @@
 package net.re_renderreality.rrrp2.main;
 
-import net.re_renderreality.rrrp2.cmd.BaseCommand;
-import net.re_renderreality.rrrp2.cmd.CommandExecutors;
-import net.re_renderreality.rrrp2.utils.Utilities;
+import net.re_renderreality.rrrp2.cmd.CommandSpecFactory;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
-import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
-import org.spongepowered.api.text.Text;
 
 import com.google.inject.Inject;
 
@@ -28,6 +24,7 @@ public class RRRP2{
 	private Logger logger;
 	public RRRP2 plugin;
 	private Server server;
+	private final CommandSpecFactory factory = new CommandSpecFactory(this);
 	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
@@ -38,7 +35,7 @@ public class RRRP2{
 		server = game.getServer();
 		registry.game = game;
 		registry.logger = getLogger();
-		commandSpecFactory();
+		factory.commandSpecFactory();
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been initialized.");
 	}
 	
@@ -50,24 +47,6 @@ public class RRRP2{
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been un-initialized.");
 	}
 	
-	/**
-	 * @author EliteByte/Avarai
-	 * @category CommandManagement
-	 */
-	public void commandSpecFactory() {
-		int numofcmds = 1;
-		CommandSpec[] commandSpecs = new CommandSpec[numofcmds];
-		
-		String[] aliases = Utilities.stringFormatter("Hello", "HelloWorld");
-		BaseCommand hello = new BaseCommand();
-		hello.setInformation("Hello", "Hello Command", "rrrp2.hello", aliases);
-		
-		commandSpecs[0] = CommandSpec.builder().description(Text.of(hello.description)).permission(hello.permission).executor(new CommandExecutors(plugin, hello)).build();
-
-		for (CommandSpec spec: commandSpecs) {
-			game.getCommandManager().register(plugin, spec, aliases);
-		}
-	}
 	
 	/**
 	 * @return Logger for logging status messages.

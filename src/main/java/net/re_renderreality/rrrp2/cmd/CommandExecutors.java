@@ -32,24 +32,42 @@ public class CommandExecutors implements CommandExecutor {
 	 * @param args Arguements of the command 
 	 * @return Returns the CommandResult (Usually CommandResult.success())
 	 */
+	@Override
 	public CommandResult execute(CommandSource src, CommandContext args)
 	
-		throws CommandException {
+	throws CommandException {
 		
-			if (src instanceof Player) {
+		/*
+		 * If the Command isUniversal it can be used by any CommandSource
+		 */
+		if (bc.isUniversal()) {
+			switch (bc.getName()) {
+				case "Hello":
+					Utilities.broadcastMessage("HELLO BITCHES!");
+					break;
 			
+			}
+		} 
+		/*
+		 * Else if the command has a specific target specify it here
+		 */
+		else {
+			if (src instanceof Player) {
 				switch (bc.getName()) {
-					case "Hello":
-						Utilities.broadcastMessage("HELLO BITCHES!");
-						break;
-					case "tps":
-						break;
+					
 				}
-		} else if (src instanceof ConsoleSource) {
-			//commandHandler.commandHandlerConsole(src, args);
-		} else if (src instanceof CommandBlockSource) {
-			//commandHandler.commandHandlerCmdBlock(src, args);
+			} else if (src instanceof ConsoleSource) {
+				switch (bc.getName()) {
+				
+				}
+			} else if (src instanceof CommandBlockSource) {
+				switch (bc.getName()) {
+				
+				}
+			}
 		}
 		return CommandResult.success();
 	}
 }
+
+

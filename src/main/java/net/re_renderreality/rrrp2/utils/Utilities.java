@@ -2,18 +2,27 @@ package net.re_renderreality.rrrp2.utils;
 
 import java.util.Optional;
 
+import net.re_renderreality.rrrp2.cmd.BaseCommand;
 import net.re_renderreality.rrrp2.main.registry;
 
 import org.spongepowered.api.command.source.CommandBlockSource;
 import org.spongepowered.api.command.source.ConsoleSource;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.text.channel.MessageChannel;
+import org.spongepowered.api.service.pagination.PaginationService;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.channel.MessageChannel;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 public class Utilities {
 
+	public static PaginationService paginationService = registry.getGame().getServiceManager().provide(PaginationService.class).get();
+	public static BaseCommand[] baseCommands;
+	
+	public static PaginationService getPaginationService() {
+		return paginationService;
+	}
+	
 	/**
 	 * @param strings to be formatted
 	 * @return String array of formatted strings.

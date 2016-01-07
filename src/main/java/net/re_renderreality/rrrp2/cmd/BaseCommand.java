@@ -1,20 +1,17 @@
 package net.re_renderreality.rrrp2.cmd;
 
-import net.re_renderreality.rrrp2.utils.Utilities;
-
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.source.CommandBlockSource;
 import org.spongepowered.api.command.source.ConsoleSource;
 import org.spongepowered.api.entity.living.player.Player;
 
-@SuppressWarnings("unused")
-
 public class BaseCommand {
 
-	public String name;
-	public String description;
-	public String permission;
-	public String[] aliases;
+	private String name;
+	private String description;
+	private String permission;
+	private String[] aliases;
+	private boolean isUniversal;
 	
 	public CommandSource src;
 	
@@ -39,17 +36,23 @@ public class BaseCommand {
 	 * @param description String to set for command description.
 	 * @param permission string to set for required command permission.
 	 * @param aliases String array to set for command aliases.
+	 * @param isUniversal True = The command can be used by any CommandSource False = Command has a specified CommandSource
 	 */
-	public void setInformation(String name, String description, String permission, String[] aliases) {
+	public void setInformation(String name, String description, String permission, String[] aliases, boolean isUniversal) {
 		this.name = name;
 		this.description = description;
 		this.permission = permission;
 		this.aliases = aliases;
+		this.isUniversal = isUniversal;
 	}
 	
 	/**
 	 * @return permission String for command.
 	 */
+	public boolean isUniversal() {
+		return isUniversal;
+	}
+	
 	public String getPermission() {
 		return permission;
 	}

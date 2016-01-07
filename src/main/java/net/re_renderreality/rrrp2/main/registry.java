@@ -1,7 +1,6 @@
 package net.re_renderreality.rrrp2.main;
 
 import org.slf4j.Logger;
-
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 
