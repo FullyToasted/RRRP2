@@ -53,15 +53,15 @@ public class CommandExecutors implements CommandExecutor {
 		else {
 			if (Utilities.isPlayer(src)) {
 				switch (bc.getName()) {
-					//TO FILL IS SPECIFIC TARGET NEEDED	
+					//TO FILL IF SPECIFIC TARGET NEEDED	
 				}
 			} else if (Utilities.isConsole(src)) {
 				switch (bc.getName()) {
-					//TO FILL IS SPECIFIC TARGET NEEDED
+					//TO FILL IF SPECIFIC TARGET NEEDED
 				}
 			} else if (Utilities.isCommandBlock(src)) {
 				switch (bc.getName()) {
-					//TO FILL IS SPECIFIC TARGET NEEDED
+					//TO FILL IF SPECIFIC TARGET NEEDED
 				}
 			}
 		}
