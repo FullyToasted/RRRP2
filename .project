@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>RRRP2</name>
+<<<<<<< HEAD
 	<comment>Project RRRP2 created by Buildship.</comment>
+=======
+	<comment></comment>
+>>>>>>> 06e996a492088f238cf1fe1ff600d46a207b3cae
 	<projects>
 	</projects>
 	<buildSpec>
@@ -10,6 +14,7 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+<<<<<<< HEAD
 		<buildCommand>
 			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
 			<arguments>
@@ -40,4 +45,11 @@
 			</matcher>
 		</filter>
 	</filteredResources>
+=======
+	</buildSpec>
+	<natures>
+		<nature>org.springsource.ide.eclipse.gradle.core.nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+>>>>>>> 06e996a492088f238cf1fe1ff600d46a207b3cae
 </projectDescription>
