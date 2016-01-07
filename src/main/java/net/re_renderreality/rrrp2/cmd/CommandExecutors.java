@@ -13,6 +13,7 @@ import org.spongepowered.api.command.source.CommandBlockSource;
 import org.spongepowered.api.command.source.ConsoleSource;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.text.Text;
 
 public class CommandExecutors implements CommandExecutor {
 
@@ -42,9 +43,16 @@ public class CommandExecutors implements CommandExecutor {
 		 */
 		if (bc.isUniversal()) {
 			switch (bc.getName()) {
+			
+				case "rrrp":
+					HelpCommand helpCommand = new HelpCommand(src);
+					src.sendMessage(Text.of(helpCommand));
+					break;
+			
 				case "Hello":
 					Utilities.broadcastMessage("HELLO BITCHES!");
 					break;
+				
 			
 			}
 		} 

@@ -12,6 +12,7 @@ public class BaseCommand {
 	private String permission;
 	private String[] aliases;
 	private boolean isUniversal;
+	private boolean isEnabled;
 	
 	public CommandSource src;
 	
@@ -36,7 +37,8 @@ public class BaseCommand {
 	 * @param description String to set for command description.
 	 * @param permission string to set for required command permission.
 	 * @param aliases String array to set for command aliases.
-	 * @param isUniversal True = The command can be used by any CommandSource False = Command has a specified CommandSource
+	 * @param isUniversal True = The command can be used by any CommandSource : False = Command has a specified CommandSource
+	 * @param isEnabled True = The command will be enabled : False = Command won't be registered.
 	 */
 	public void setInformation(String name, String description, String permission, String[] aliases, boolean isUniversal) {
 		this.name = name;

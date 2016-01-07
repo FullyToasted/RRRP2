@@ -22,6 +22,14 @@ public class HelpCommand {
 		for (int i = 0 ; i <= baseCommands.length ; i++) {
 		contents.add(Text.of(baseCommands[i].getName() + " " + baseCommands[i].getDescription()));
 		}
+		
+		Utilities.getPaginationService().builder()
+        .title(Text.of("RRRP2 Commands"))
+        .contents(contents)
+        .header(Text.of("Re-RenderRealityPlugin 2"))
+        .footer(Text.of("Thank you for choosing Re-RenderReality"))
+        .paddingString("-")
+        .sendTo(src);
 	}
 	
 	
