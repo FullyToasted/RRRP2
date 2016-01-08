@@ -2,6 +2,7 @@ package net.re_renderreality.rrrp2.cmd;
 
 import net.re_renderreality.rrrp2.main.RRRP2;
 import net.re_renderreality.rrrp2.utils.Utilities;
+
 import org.slf4j.Logger;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.command.CommandException;
@@ -9,7 +10,6 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
-import org.spongepowered.api.text.Text;
 
 public class CommandExecutors implements CommandExecutor {
 
@@ -39,7 +39,6 @@ public class CommandExecutors implements CommandExecutor {
 			switch (bc.getName()) {
 				case "rrrp":
 					HelpCommand helpCommand = new HelpCommand(src);
-					src.sendMessage(Text.of(helpCommand));
 					break;
 				case "Hello":
 					Utilities.broadcastMessage("HELLO BITCHES!");

@@ -25,8 +25,8 @@ public class ClearEntitiesCommand {
 			return;
 		}
 		
-		for (World w:Registry.getServer().getWorlds()) {
-			for (Entity e:w.getEntities()) {
+		for (World w : Registry.getServer().getWorlds()) {
+			for (Entity e : w.getEntities()) {
 				if (e.getType().getName().equals(entity)) {
 					e.remove();
 					count += 1;
