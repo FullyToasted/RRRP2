@@ -49,6 +49,9 @@ public class CommandExecutors implements CommandExecutor {
 					break;
 				case "listEntities":
 					new ListEntitiesCommand(src).run();
+					break;
+				case "getTps":
+					new GetTpsCommand(src).run();
 			}
 		} 
 		
