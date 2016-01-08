@@ -10,8 +10,8 @@ import org.spongepowered.api.world.World;
 
 public class ClearEntitiesCommand {
 	 
-	public CommandContext arguments;
-	public CommandSource source;
+	private CommandContext arguments;
+	private CommandSource source;
 	
 	public ClearEntitiesCommand(CommandSource src, CommandContext args) { arguments = args; source = src; }
 	
@@ -20,14 +20,20 @@ public class ClearEntitiesCommand {
 		int count = 0;
 		String entity = arguments.<String>getOne("Entity").get();
 		
-		if (entity.equals("player")) {
-			source.sendMessage(Text.of("[ERROR] Do not use \"player\" as a parameter for this command."));
+		if (entity.equalsIgnoreCase("player")) {
+			source.sendMessage(Text.of("[WARNING] Do not use \"player\" as a parameter for this command. Command aborted."));
 			return;
 		}
 		
+<<<<<<< HEAD
 		for (World w : Registry.getServer().getWorlds()) {
 			for (Entity e : w.getEntities()) {
 				if (e.getType().getName().equals(entity)) {
+=======
+		for (World w:Registry.getServer().getWorlds()) {
+			for (Entity e:w.getEntities()) {
+				if (e.getType().getName().equalsIgnoreCase(entity)) {
+>>>>>>> de157c1bf69403a94a96481b7f7cdcebb0f7166b
 					e.remove();
 					count += 1;
 				}
