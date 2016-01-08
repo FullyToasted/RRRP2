@@ -26,6 +26,6 @@ public class ListEntitiesCommand {
 				entities.replace(e.getType().getName(), entities.get(e.getType().getName()).intValue()+1);			
 			}
 		}
-		source.sendMessage(Text.of(entities.toString()));
+		source.sendMessage(Text.of(entities.toString().substring(1, entities.toString().length()-1)));
 	}	
 }
