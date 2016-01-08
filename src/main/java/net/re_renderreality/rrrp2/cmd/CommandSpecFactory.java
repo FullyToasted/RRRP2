@@ -23,7 +23,7 @@ public class CommandSpecFactory {
 	public void buildCommandSpecs() {
 		
 		//Change this number if you add a command
-		final int numoftotalcmds = 3;
+		final int numoftotalcmds = 4;
 		
 		int numofcmd = -1;
 		CommandSpec[] commandSpecs = new CommandSpec[numoftotalcmds];
@@ -62,6 +62,15 @@ public class CommandSpecFactory {
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Entity").toText())))
 				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
+		String[] listAlias = Utilities.stringFormatter("listEntities");
+		numofcmd += 1;
+		aliases[numofcmd] = listAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("listEntities", "List Entities Command", "rrrp2.listEntities", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
 		// DO NOT TOUCH
 		Utilities.baseCommands = baseCommands;
