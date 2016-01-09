@@ -10,8 +10,8 @@ import org.spongepowered.api.world.World;
 
 public class ClearEntitiesCommand {
 	 
-	private CommandContext arguments;
-	private CommandSource source;
+	private final CommandContext arguments;
+	private final CommandSource source;
 	
 	public ClearEntitiesCommand(CommandSource src, CommandContext args) { arguments = args; source = src; }
 	
@@ -25,15 +25,9 @@ public class ClearEntitiesCommand {
 			return;
 		}
 		
-<<<<<<< HEAD
 		for (World w : Registry.getServer().getWorlds()) {
 			for (Entity e : w.getEntities()) {
 				if (e.getType().getName().equals(entity)) {
-=======
-		for (World w:Registry.getServer().getWorlds()) {
-			for (Entity e:w.getEntities()) {
-				if (e.getType().getName().equalsIgnoreCase(entity)) {
->>>>>>> de157c1bf69403a94a96481b7f7cdcebb0f7166b
 					e.remove();
 					count += 1;
 				}

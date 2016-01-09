@@ -10,6 +10,7 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.text.Text;
 
 public class CommandExecutors implements CommandExecutor {
 
@@ -38,6 +39,7 @@ public class CommandExecutors implements CommandExecutor {
 		if (bc.isUniversal()) {
 			switch (bc.getName()) {
 				case "rrrp":
+					@SuppressWarnings("unused")
 					HelpCommand helpCommand = new HelpCommand(src);
 					break;
 				case "Hello":
@@ -50,7 +52,8 @@ public class CommandExecutors implements CommandExecutor {
 					new ListEntitiesCommand(src).run();
 					break;
 				case "getTps":
-					new GetTpsCommand(src).run();
+					src.sendMessage(Text.of("Current server TPS: " + Utilities.getTps()));
+					break;
 			}
 		} 
 		
