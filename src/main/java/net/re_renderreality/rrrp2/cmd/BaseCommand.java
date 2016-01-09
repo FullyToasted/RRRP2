@@ -1,7 +1,5 @@
 package net.re_renderreality.rrrp2.cmd;
 
-import org.spongepowered.api.command.CommandSource;
-
 public class BaseCommand {
 
 	private String name;
@@ -10,9 +8,6 @@ public class BaseCommand {
 	private String[] aliases;
 	private boolean isUniversal;
 	private boolean isEnabled;
-	
-	public CommandSource src;
-	
 	
 	/**
 	 * @param name String of name to set for command name.
@@ -49,13 +44,6 @@ public class BaseCommand {
 	 */
 	public String getPermission() {
 		return permission;
-	}
-	
-	/**
-	 * @return CommandSource calling command. 
-	 */
-	public CommandSource getCommandSource() {
-		return src;
 	}
 	
 	/**

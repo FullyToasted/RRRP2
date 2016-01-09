@@ -9,12 +9,11 @@ import org.spongepowered.api.command.args.GenericArguments;
 
 public class CommandSpecFactory {
 
+	//Change this number if you add a command
+	private static final int numoftotalcmds = 8;
 	private RRRP2 plugin;
-	private static final int numoftotalcmds = 5;
 	
-	public CommandSpecFactory() {
-		this.plugin = Registry.getPlugin();
-	}
+	public CommandSpecFactory() { this.plugin = Registry.getPlugin(); }
 	
 	/**
 	 * @author EliteByte/Avarai
@@ -23,16 +22,14 @@ public class CommandSpecFactory {
 	 */
 	public void buildCommandSpecs() {
 		
-		//Change this number if you add a command
-		
 		int numofcmd = -1;
 		CommandSpec[] commandSpecs = new CommandSpec[numoftotalcmds];
 		BaseCommand[] baseCommands = new BaseCommand[numoftotalcmds];
 		String[][] aliases = new String[numoftotalcmds][];
 		
-		//EXAMPLE FOR A BASIC COMMAND || READ EACH PARAMETER DEFINITION 
-		numofcmd += 1;
+		//EXAMPLE FOR A BASIC COMMAND || READ EACH PARAMETER DEFINITION IN "BaseCommand.Java"
 		String[] helloAlias = Utilities.stringFormatter("Hello", "HelloWorld");
+		numofcmd += 1;
 		aliases[numofcmd] = helloAlias;
 		baseCommands[numofcmd] = new BaseCommand();
 		baseCommands[numofcmd].setInformation("Hello", "Hello Command", "rrrp2.hello", aliases[numofcmd], true);
@@ -40,6 +37,7 @@ public class CommandSpecFactory {
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
 				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		//END BASE COMMAND EXAMPLE
 		
 		String[] rrrpAlias = Utilities.stringFormatter("rrrp");
 		numofcmd += 1;
@@ -82,7 +80,37 @@ public class CommandSpecFactory {
 				.permission(baseCommands[numofcmd].getPermission())
 				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
-		// DO NOT TOUCH
+		String[] posAlias = Utilities.stringFormatter("getPos");
+		numofcmd += 1;
+		aliases[numofcmd] = posAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("getPos", "Get Position Command", "rrrp2.getPos", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] worldAlias = Utilities.stringFormatter("getWorld");
+		numofcmd += 1;
+		aliases[numofcmd] = worldAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("getWorld", "Get World Command", "rrrp2.getWorld", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] dimAlias = Utilities.stringFormatter("getDim");
+		numofcmd += 1;
+		aliases[numofcmd] = dimAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("getDim", "Get Dimension Command", "rrrp2.getDim", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		// DO NOT TOUCH -- COMMAND REGISTRATION
 		Utilities.baseCommands = baseCommands;
 		for (int i = 0 ; i < numoftotalcmds; i++) {
 				Utilities.getCommandManager().register(plugin, commandSpecs[i], aliases[i]);
