@@ -8,7 +8,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import java.util.Hashtable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.slf4j.Logger;
 
@@ -34,8 +35,7 @@ public class RRRP2{
 	private Logger logger;
 	public RRRP2 plugin;
 	private Server server;
-	//Hashtable storing players Keys: UUIDs Values: PLAYER-NAMES
-	private Hashtable<String, String> players = new Hashtable<String, String>();
+	private PlayerRegistry players;
 	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
@@ -48,76 +48,77 @@ public class RRRP2{
 		Registry.setGame(getGame());
 		Registry.setLogger(getLogger());
 		Registry.setPlugin(this);
+		players = new PlayerRegistry();
 		new CommandSpecFactory().buildCommandSpecs();
 		
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("players.rrr"));
 			while (reader.ready()) {
 				String line = reader.readLine();
-				players.put(line.substring(line.indexOf(':', line.lastIndexOf(':'))), line.substring(0, line.indexOf(':')));
+				players.addPlayer(line.substring(line.indexOf('/', line.lastIndexOf('/'))), line.substring(0, line.indexOf('/')));
+				players.addLastSeen(line.substring(line.indexOf('/', line.lastIndexOf('/'))), line.substring(line.lastIndexOf('/')+1, line.length()));
 			}
 			reader.close();
-		} catch (Exception e) { getLogger().info("[ERROR] \"players.rrr\" does not yet exist, will be instantiated on first player login."); }
+		} catch (Exception e) { getLogger().info("[ERROR] Something went wrong with RRRP2."); }
 	
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been initialized.");
 	}
 	
 	/**
-	 * @param event Listener for GameStoppingServerEvent.
+	 * @param event Listener for "GameStoppingServerEvent" event.
 	 */
 	@Listener 
 	public void gameStopping(GameStoppingServerEvent event) {
-		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been un-initialized.");
-	}
-	
-	/**
-	 * @author Avarai
-	 * @note Work in progress -- PLANS: Add "Last seen on server" and expand previously named functionality.
-	 * @param event Listener for "ClientConnectEvent.Login" event.
-	 */
-	@Listener
-	public void playerJoined(ClientConnectionEvent.Login event) {	
 		try {
+			new java.io.File("players.rrr").delete();
 			BufferedWriter writer = new BufferedWriter(new FileWriter("players.rrr"));
-	
-			if(!players.containsKey(event.getTargetUser().getUniqueId()) || !players.get(event.getTargetUser().getUniqueId()).equals(event.getTargetUser().getName())) {
-				writer.write(event.getTargetUser().getName() + ":" + event.getTargetUser().getUniqueId() + ":");
+			for (String uuid:players.getUuidSet()) {
+				writer.write(players.getPlayer(uuid) + "/" + uuid + "/" + players.getTime(uuid));
 				writer.newLine();
 			}
 			writer.close();
 		} catch (IOException e) { e.printStackTrace(); }
+		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been un-initialized.");
 	}
 	
 	/**
-	 * @author Avarai
-	 * @note Work in progress -- PLANS: use to add "Last seen on server".
+	 * @param event Listener for "ClientConnectionEvent.Login" event.
+	 */
+	@Listener
+	public void playerJoined(ClientConnectionEvent.Login event) {
+		players.addPlayer(event.getTargetUser().getUniqueId().toString(), event.getTargetUser().getName());
+		String time = LocalTime.now().toString();
+		time = LocalDate.now().toString() + " " + time.substring(0, time.indexOf('.'));
+		players.addLastSeen(event.getTargetUser().getUniqueId().toString(), time);
+	}
+	
+	/**
 	 * @param event Listener for "ClientConnectionEvent.Disconnect" event.
 	 */
 	@Listener
 	public void playerLeft(ClientConnectionEvent.Disconnect event) {
-		
-		
-		
+		String time = LocalTime.now().toString();
+		time = LocalDate.now().toString() + " " + time.substring(0, time.indexOf('.'));
+		players.addLastSeen(event.getTargetEntity().getUniqueId().toString(), time);	
 	}
 	
 	/**
 	 * @return Logger for logging status messages.
 	 */
-	public Logger getLogger() {
-		return logger;
-	}
+	public Logger getLogger() { return logger; }
 
 	/**
 	 * @return current Server Object.
 	 */
-	public Server getServer() {
-		return server; 
-	}
+	public Server getServer() { return server; }
 	
 	/**
 	 * @return current Game Object.
 	 */
-	public Game getGame() { 
-		return game;
-	}
+	public Game getGame() { return game; }
+	
+	/**
+	 * @return get PlayerRegistry Object.
+	 */
+	public PlayerRegistry getPlayerRegistry() { return players; }
 }
