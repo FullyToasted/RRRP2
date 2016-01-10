@@ -7,9 +7,10 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Hashtable;
 
 import org.slf4j.Logger;
+
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.event.Listener;
@@ -58,32 +59,41 @@ public class RRRP2{
 	
 	/**
 	 * @author Avarai
-	 * @note Work in progress -- PLANS: Add "Last seen on server", replace name if player UUID matches.
-	 * @param event Listener for "ClientConnectEvent.Login event".
+	 * @note Work in progress -- PLANS: Add "Last seen on server" and expand previously named functionality.
+	 * @param event Listener for "ClientConnectEvent.Login" event.
 	 */
 	@Listener
 	public void playerJoined(ClientConnectionEvent.Login event) {
-		ArrayList<String> players = new ArrayList<String>();
+		Hashtable<String, String> players = new Hashtable<String, String>();
 		
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("players.rrr"));
 			while (reader.ready()) {
-				players.add(reader.readLine());
+				String line = reader.readLine();
+				players.put(line.substring(line.indexOf(':', line.lastIndexOf(':'))), line.substring(0, line.indexOf(':')));
 			}
 			reader.close();
-		} catch (Exception e) {	e.printStackTrace(); }
+		} catch (Exception e) { getLogger().info("[ERROR] \"players.rrr\" does not yet exist, will be instantiated on first player login."); }
 
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("players.rrr"));
 	
-			for (String p:players) {
-				writer.write(p);
+			if(!players.containsKey(event.getTargetUser().getUniqueId()) || !players.get(event.getTargetUser().getUniqueId()).equals(event.getTargetUser().getName())) {
+				writer.write(event.getTargetUser().getName() + ":" + event.getTargetUser().getUniqueId() + ":");
 				writer.newLine();
 			}
-			writer.write(event.getTargetUser().getName() + ":" + event.getTargetUser().getUniqueId());
-			writer.newLine();
 			writer.close();
 		} catch (IOException e) { e.printStackTrace(); }
+	}
+	
+	/**
+	 * @author Avarai
+	 * @note Work in progress -- PLANS: use to add "Last seen on server".
+	 * @param event Listener for "ClientConnectionEvent.Disconnect" event.
+	 */
+	@Listener
+	public void playerLeft(ClientConnectionEvent.Disconnect event) {
+		
 	}
 	
 	/**
