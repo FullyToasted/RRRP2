@@ -58,6 +58,7 @@ public class RRRP2{
 	
 	/**
 	 * @author Avarai
+	 * @note Work in progress, plans to look at different event usage and to save more info then just player name.
 	 * @param event Listener for "ClientConnectEvent.Join event".
 	 */
 	@Listener
