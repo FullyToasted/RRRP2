@@ -140,4 +140,12 @@ public class Utilities {
 	public static CommandManager getCommandManager() {
 		return Registry.getGame().getCommandManager();
 	}
+	
+	/**
+	 * @param bool Boolean to convert to a String.
+	 * @return Converted Boolean in a String object.
+	 */
+	public static String boolToString(boolean bool) {
+		return bool ? "True" : "False";
+	}
 }

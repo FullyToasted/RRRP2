@@ -11,10 +11,10 @@ import org.spongepowered.api.world.World;
 
 public class ListEntitiesCommand {
 	
-	private CommandSource source;
+	private CommandSource src;
 	private Hashtable<String, Integer> entities;
 	
-	public ListEntitiesCommand(CommandSource src) { source = src; }
+	public ListEntitiesCommand(CommandSource src) { this.src = src; }
 	
 	public void run() {
 		
@@ -26,6 +26,6 @@ public class ListEntitiesCommand {
 				entities.replace(e.getType().getName(), entities.get(e.getType().getName()).intValue()+1);			
 			}
 		}
-		source.sendMessage(Text.of(entities.toString().substring(1, entities.toString().length()-1)));
+		src.sendMessage(Text.of(entities.toString().substring(1, entities.toString().length()-1)));
 	}	
 }

@@ -1,12 +1,21 @@
 package net.re_renderreality.rrrp2.main;
 
 import net.re_renderreality.rrrp2.cmd.CommandSpecFactory;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
+import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
@@ -47,6 +56,34 @@ public class RRRP2{
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been un-initialized.");
 	}
 	
+	/**
+	 * @author Avarai
+	 * @param event Listener for "ClientConnectEvent.Join event".
+	 */
+	@Listener
+	public void playerJoined(ClientConnectionEvent.Join event) {
+		ArrayList<String> players = new ArrayList<String>();
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("players.rrr"));
+			while (reader.ready()) {
+				players.add(reader.readLine());
+			}
+			reader.close();
+		} catch (Exception e) {	e.printStackTrace(); }
+
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("players.rrr"));
+	
+			for (String p:players) {
+				writer.write(p);
+				writer.newLine();
+			}
+			writer.write(event.getTargetEntity().getName());
+			writer.newLine();
+			writer.close();
+		} catch (IOException e) { e.printStackTrace(); }
+	}
 	
 	/**
 	 * @return Logger for logging status messages.

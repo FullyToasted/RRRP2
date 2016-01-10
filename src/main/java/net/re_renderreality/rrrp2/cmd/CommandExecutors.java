@@ -54,6 +54,11 @@ public class CommandExecutors implements CommandExecutor {
 				case "getTps":
 					src.sendMessage(Text.of("Current server TPS: " + Utilities.getTps()));
 					break;
+				case "whoIs":
+					try {
+						new WhoisCommand(src, args).run();
+					} catch (Exception e) { e.printStackTrace(); }
+					break;
 			}
 		} 
 		

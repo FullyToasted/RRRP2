@@ -10,18 +10,18 @@ import org.spongepowered.api.world.World;
 
 public class ClearEntitiesCommand {
 	 
-	private final CommandContext arguments;
-	private final CommandSource source;
+	private final CommandContext args;
+	private final CommandSource src;
 	
-	public ClearEntitiesCommand(CommandSource src, CommandContext args) { arguments = args; source = src; }
+	public ClearEntitiesCommand(CommandSource src, CommandContext args) { this.src = src; this.args = args; }
 	
 	public void run() {
 		
 		int count = 0;
-		String entity = arguments.<String>getOne("Entity").get();
+		String entity = args.<String>getOne("Entity").get();
 		
 		if (entity.equalsIgnoreCase("player")) {
-			source.sendMessage(Text.of("[WARNING] Do not use \"player\" as a parameter for this command. Command aborted."));
+			src.sendMessage(Text.of("[WARNING] Do not use \"player\" as a parameter for this command. Command aborted."));
 			return;
 		}
 		
@@ -35,6 +35,6 @@ public class ClearEntitiesCommand {
 		}
 		
 		Text result = (count > 0) ? Text.of("[SUCCESS] Removed: " + count + " of entity: " + entity) : Text.of("[ERROR] Could not find entities of: " + entity);
-		source.sendMessage(result);
+		src.sendMessage(result);
 	}
 }
