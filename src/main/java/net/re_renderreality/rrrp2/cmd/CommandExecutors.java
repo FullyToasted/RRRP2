@@ -17,7 +17,7 @@ public class CommandExecutors implements CommandExecutor {
 	@SuppressWarnings("unused") private final Logger logger;
 	@SuppressWarnings("unused") private final Server server;
 	@SuppressWarnings("unused") private String[] arguments;
-	BaseCommand bc;
+	private BaseCommand bc;
 
 	public CommandExecutors (RRRP2 plugin, BaseCommand bc) {
 		logger = plugin.getLogger();
@@ -63,7 +63,15 @@ public class CommandExecutors implements CommandExecutor {
 		else {
 			if (Utilities.isPlayer(src)) {
 				switch (bc.getName()) {
-					//TO FILL IF SPECIFIC TARGET NEEDED	
+				case "getPos":
+					src.sendMessage(Text.of(Utilities.getPlayer(src.getName()).get().getLocation().getBlockPosition().add(0, 0, 1).toString().substring(1, Utilities.getPlayer(src.getName()).get().getLocation().getBlockPosition().toString().length()-1)));
+					break;
+				case "getWorld":
+					src.sendMessage(Text.of(Utilities.getPlayer(src.getName()).get().getWorld().getName()));
+					break;
+				case "getDim":
+					src.sendMessage(Text.of(Utilities.getPlayer(src.getName()).get().getWorld().getDimension().getName()));
+					break;
 				}
 			} else if (Utilities.isConsole(src)) {
 				switch (bc.getName()) {

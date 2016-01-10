@@ -26,14 +26,15 @@ public class RRRP2{
 	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
+	 * @note Initialization of Plugin and Registry.
 	 */
 	@Listener 
 	public void gameStarting(GameStartingServerEvent event) {
 		plugin = this;
 		server = game.getServer();
-		Registry.game = getGame();
-		Registry.logger = getLogger();
-		Registry.plugin = this;
+		Registry.setGame(getGame());
+		Registry.setLogger(getLogger());
+		Registry.setPlugin(this);
 		new CommandSpecFactory().buildCommandSpecs();
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been initialized.");
 	}
