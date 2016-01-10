@@ -1,5 +1,6 @@
 package net.re_renderreality.rrrp2.cmd;
 
+import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 import org.spongepowered.api.command.args.CommandContext;
@@ -37,7 +38,7 @@ public class WhoisCommand{
 				players.add(line.substring(0, line.indexOf(':')));
 			}
 			reader.close();
-		} catch (Exception e) {	e.printStackTrace(); }
+		} catch (Exception e) {	Registry.getLogger().info("[ERROR] \"players.rrr\" does not yet exist, will be instantiated on first player login."); }
 		
 		String name = args.<String>getOne("Player").get();
 		Text status = Text.of("");

@@ -33,6 +33,7 @@ public class RRRP2{
 	private Logger logger;
 	public RRRP2 plugin;
 	private Server server;
+	private Hashtable<String, String> players = new Hashtable<String, String>();
 	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
@@ -46,6 +47,16 @@ public class RRRP2{
 		Registry.setLogger(getLogger());
 		Registry.setPlugin(this);
 		new CommandSpecFactory().buildCommandSpecs();
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("players.rrr"));
+			while (reader.ready()) {
+				String line = reader.readLine();
+				players.put(line.substring(line.indexOf(':', line.lastIndexOf(':'))), line.substring(0, line.indexOf(':')));
+			}
+			reader.close();
+		} catch (Exception e) { getLogger().info("[ERROR] \"players.rrr\" does not yet exist, will be instantiated on first player login."); }
+	
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been initialized.");
 	}
 	
@@ -63,18 +74,7 @@ public class RRRP2{
 	 * @param event Listener for "ClientConnectEvent.Login" event.
 	 */
 	@Listener
-	public void playerJoined(ClientConnectionEvent.Login event) {
-		Hashtable<String, String> players = new Hashtable<String, String>();
-		
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader("players.rrr"));
-			while (reader.ready()) {
-				String line = reader.readLine();
-				players.put(line.substring(line.indexOf(':', line.lastIndexOf(':'))), line.substring(0, line.indexOf(':')));
-			}
-			reader.close();
-		} catch (Exception e) { getLogger().info("[ERROR] \"players.rrr\" does not yet exist, will be instantiated on first player login."); }
-
+	public void playerJoined(ClientConnectionEvent.Login event) {	
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("players.rrr"));
 	
