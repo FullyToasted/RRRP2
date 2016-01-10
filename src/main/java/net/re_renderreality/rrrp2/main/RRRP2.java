@@ -58,11 +58,11 @@ public class RRRP2{
 	
 	/**
 	 * @author Avarai
-	 * @note Work in progress, plans to look at different event usage and to save more info then just player name.
-	 * @param event Listener for "ClientConnectEvent.Join event".
+	 * @note Work in progress -- PLANS: Add "Last seen on server", replace name if player UUID matches.
+	 * @param event Listener for "ClientConnectEvent.Login event".
 	 */
 	@Listener
-	public void playerJoined(ClientConnectionEvent.Join event) {
+	public void playerJoined(ClientConnectionEvent.Login event) {
 		ArrayList<String> players = new ArrayList<String>();
 		
 		try {
@@ -80,7 +80,7 @@ public class RRRP2{
 				writer.write(p);
 				writer.newLine();
 			}
-			writer.write(event.getTargetEntity().getName());
+			writer.write(event.getTargetUser().getName() + ":" + event.getTargetUser().getUniqueId());
 			writer.newLine();
 			writer.close();
 		} catch (IOException e) { e.printStackTrace(); }

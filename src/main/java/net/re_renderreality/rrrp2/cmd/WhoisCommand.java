@@ -33,7 +33,8 @@ public class WhoisCommand{
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("players.rrr"));
 			while (reader.ready()) {
-				players.add(reader.readLine());
+				String line = reader.readLine();
+				players.add(line.substring(0, line.indexOf(':')));
 			}
 			reader.close();
 		} catch (Exception e) {	e.printStackTrace(); }
