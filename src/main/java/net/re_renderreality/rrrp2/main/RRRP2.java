@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.util.Hashtable;
 
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ public class RRRP2{
 	private Logger logger;
 	public RRRP2 plugin;
 	private Server server;
+	//Hashtable storing players Keys: UUIDs Values: PLAYER-NAMES
 	private Hashtable<String, String> players = new Hashtable<String, String>();
 	
 	/**
@@ -93,6 +95,8 @@ public class RRRP2{
 	 */
 	@Listener
 	public void playerLeft(ClientConnectionEvent.Disconnect event) {
+		
+		
 		
 	}
 	
