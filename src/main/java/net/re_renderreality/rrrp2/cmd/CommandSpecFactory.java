@@ -10,7 +10,7 @@ import org.spongepowered.api.command.args.GenericArguments;
 public class CommandSpecFactory {
 
 	//Change this number if you add a command
-	private static final int numoftotalcmds = 12;
+	private static final int numoftotalcmds = 13;
 	private RRRP2 plugin;
 	
 	public CommandSpecFactory() { this.plugin = Registry.getPlugin(); }
@@ -150,6 +150,16 @@ public class CommandSpecFactory {
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Player").toText())))
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] suicideAlias = Utilities.stringFormatter("suicide");
+		numofcmd += 1;
+		aliases[numofcmd] = suicideAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("suicide", "Commit suicide Command", "rrrp2.suicide", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
 				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
 		// DO NOT TOUCH -- COMMAND REGISTRATION

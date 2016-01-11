@@ -9,12 +9,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import org.slf4j.Logger;
+
 import org.spongepowered.api.Server;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.api.text.Text;
 
 public class CommandExecutors implements CommandExecutor {
@@ -95,6 +98,12 @@ public class CommandExecutors implements CommandExecutor {
 				case "getDim":
 					src.sendMessage(Text.of(Utilities.getPlayer(src.getName()).get().getWorld().getDimension().getName()));
 					break;
+				case "suicide":
+					MutableBoundedValue<Double> health = Utilities.getPlayer(src.getName()).get().getValue(Keys.HEALTH).get();
+					health.set(health.getMinValue());
+					Utilities.getPlayer(src.getName()).get().offer(health);
+					Registry.getServer().getBroadcastChannel().send(Text.of(src.getName() + " committed suicide!"));
+					break;
 				}
 			} else if (Utilities.isConsole(src)) {
 				switch (bc.getName()) {
@@ -106,6 +115,6 @@ public class CommandExecutors implements CommandExecutor {
 				}
 			}
 		}
-		return CommandResult.success();
+		return CommandResult.success();	
 	}
 }
