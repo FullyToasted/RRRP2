@@ -14,6 +14,7 @@ import java.time.LocalTime;
 
 /**
  * @author Avarai
+ * @note Plans: Add nickname support and formerly known as support.
  */
 public class WhoisCommand{
 	

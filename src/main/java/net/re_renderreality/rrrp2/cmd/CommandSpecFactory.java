@@ -10,7 +10,7 @@ import org.spongepowered.api.command.args.GenericArguments;
 public class CommandSpecFactory {
 
 	//Change this number if you add a command
-	private static final int numoftotalcmds = 9;
+	private static final int numoftotalcmds = 11;
 	private RRRP2 plugin;
 	
 	public CommandSpecFactory() { this.plugin = Registry.getPlugin(); }
@@ -119,6 +119,26 @@ public class CommandSpecFactory {
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Player").toText())))
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] motdAlias = Utilities.stringFormatter("motd");
+		numofcmd += 1;
+		aliases[numofcmd] = motdAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("motd", "Motd Command", "rrrp2.motd", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] infoAlias = Utilities.stringFormatter("info");
+		numofcmd += 1;
+		aliases[numofcmd] = infoAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("info", "Get info Command", "rrrp2.info", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
 				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
 		// DO NOT TOUCH -- COMMAND REGISTRATION

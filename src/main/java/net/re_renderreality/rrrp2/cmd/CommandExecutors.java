@@ -1,7 +1,11 @@
 package net.re_renderreality.rrrp2.cmd;
 
 import net.re_renderreality.rrrp2.main.RRRP2;
+import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Server;
@@ -55,9 +59,16 @@ public class CommandExecutors implements CommandExecutor {
 					src.sendMessage(Text.of("Current server TPS: " + Utilities.getTps()));
 					break;
 				case "whoIs":
-					try {
-						new WhoisCommand(src, args).run();
-					} catch (Exception e) { e.printStackTrace(); }
+					try { new WhoisCommand(src, args).run(); } catch (Exception e) { e.printStackTrace(); }
+					break;
+				case "motd":
+					src.sendMessage(Registry.getServer().getMotd());
+					break;
+				case "info":
+					String info = "";
+					try { BufferedReader reader = new BufferedReader(new FileReader("rrr.info")); 
+					while (reader.ready()) { info+=reader.readLine(); } reader.close(); } catch (Exception e) { e.printStackTrace(); }
+					src.sendMessage(Text.of(info));
 					break;
 			}
 		} 
