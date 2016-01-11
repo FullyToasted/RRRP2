@@ -10,7 +10,7 @@ import org.spongepowered.api.command.args.GenericArguments;
 public class CommandSpecFactory {
 
 	//Change this number if you add a command
-	private static final int numoftotalcmds = 11;
+	private static final int numoftotalcmds = 12;
 	private RRRP2 plugin;
 	
 	public CommandSpecFactory() { this.plugin = Registry.getPlugin(); }
@@ -139,6 +139,17 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] lastSeenAlias = Utilities.stringFormatter("seen");
+		numofcmd += 1;
+		aliases[numofcmd] = lastSeenAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("seen", "Last seen Command", "rrrp2.seen", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Player").toText())))
 				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
 		// DO NOT TOUCH -- COMMAND REGISTRATION

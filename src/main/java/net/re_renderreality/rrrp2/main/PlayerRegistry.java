@@ -66,7 +66,13 @@ public class PlayerRegistry {
 	 * @param uuid of player to get last seen time for.
 	 * @return String holding last seen time.
 	 */
-	public String getTime(String uuid) { return lastSeen.get(uuid); }
+	public String getTime(String uuid) { 
+		String seen = lastSeen.get(uuid);
+		if (!seen.isEmpty())
+			return seen;
+		else
+			return "never seen on server.";
+	}
 	
 	/**
 	 * @param player Player object to add to registry.

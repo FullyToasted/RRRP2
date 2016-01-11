@@ -1,5 +1,6 @@
 package net.re_renderreality.rrrp2.cmd;
 
+import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.RRRP2;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
@@ -21,15 +22,17 @@ public class CommandExecutors implements CommandExecutor {
 	@SuppressWarnings("unused") private final Logger logger;
 	@SuppressWarnings("unused") private final Server server;
 	@SuppressWarnings("unused") private String[] arguments;
+	private PlayerRegistry register;
 	private BaseCommand bc;
 
 	public CommandExecutors (RRRP2 plugin, BaseCommand bc) {
 		logger = plugin.getLogger();
 		server = plugin.getServer();
+		register = plugin.getPlayerRegistry();
 		this.bc = bc;
 	}
 	/**
-	 * @author EliteByte
+	 * @author EliteByte/Avarai
 	 * @param src Source of the command executor
 	 * @param args Arguments of the command 
 	 * @return Returns the CommandResult (Usually CommandResult.success())
@@ -69,6 +72,10 @@ public class CommandExecutors implements CommandExecutor {
 					try { BufferedReader reader = new BufferedReader(new FileReader("rrr.info")); 
 					while (reader.ready()) { info+=reader.readLine(); } reader.close(); } catch (Exception e) { e.printStackTrace(); }
 					src.sendMessage(Text.of(info));
+					break;
+				case "seen":
+					String name = args.<String>getOne("Player").get();
+					src.sendMessage(Text.of(name + " was last seen on server at: " + register.getTime(register.getUuid(name))));
 					break;
 			}
 		} 
