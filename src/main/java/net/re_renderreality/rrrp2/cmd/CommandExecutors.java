@@ -7,6 +7,7 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Set;
 
 import org.slf4j.Logger;
 
@@ -18,6 +19,8 @@ import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.service.context.Context;
 import org.spongepowered.api.text.Text;
 
 public class CommandExecutors implements CommandExecutor {
@@ -103,6 +106,19 @@ public class CommandExecutors implements CommandExecutor {
 					health.set(health.getMinValue());
 					Utilities.getPlayer(src.getName()).get().offer(health);
 					Registry.getServer().getBroadcastChannel().send(Text.of(src.getName() + " committed suicide!"));
+					break;
+				case "helpop":
+					String msg = args.<String>getOne("Msg").get();
+					Set<Context> contexts = null;
+					for (Player p:Registry.getServer().getOnlinePlayers())
+						if (p.hasPermission(contexts, "rrrp2.helpop"))
+							p.sendMessage(Text.of("Player, " + src.getName() + ", requests help via /helpop, players message: " + msg));
+					break;
+				case "depth":
+					int depth = Utilities.getPlayer(src.getName()).get().getLocation().getBlockY() - 63;
+					String relative = (depth > 0) ? "above" : "below";
+					depth = (depth > 0) ? depth : -depth;
+					src.sendMessage(Text.of("Your current depth " + relative + " sea level is: " + depth));
 					break;
 				}
 			} else if (Utilities.isConsole(src)) {

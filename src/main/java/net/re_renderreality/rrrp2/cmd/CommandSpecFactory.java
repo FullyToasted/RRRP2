@@ -10,7 +10,7 @@ import org.spongepowered.api.command.args.GenericArguments;
 public class CommandSpecFactory {
 
 	//Change this number if you add a command
-	private static final int numoftotalcmds = 13;
+	private static final int numoftotalcmds = 15;
 	private RRRP2 plugin;
 	
 	public CommandSpecFactory() { this.plugin = Registry.getPlugin(); }
@@ -157,6 +157,27 @@ public class CommandSpecFactory {
 		aliases[numofcmd] = suicideAlias;
 		baseCommands[numofcmd] = new BaseCommand();
 		baseCommands[numofcmd].setInformation("suicide", "Commit suicide Command", "rrrp2.suicide", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] helpopAlias = Utilities.stringFormatter("helpop");
+		numofcmd += 1;
+		aliases[numofcmd] = helpopAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("helpop", "Helpop Command", "rrrp2.helpop", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Msg").toText())))
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] depthAlias = Utilities.stringFormatter("depth");
+		numofcmd += 1;
+		aliases[numofcmd] = depthAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("depth", "Get depth Command", "rrrp2.depth", aliases[numofcmd], false);
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
