@@ -3,15 +3,16 @@ package net.re_renderreality.rrrp2.cmd;
 import net.re_renderreality.rrrp2.main.RRRP2;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
+
+import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.command.args.GenericArguments;
 
 public class CommandSpecFactory {
 
 	//Change this number if you add a command
-	private static final int numoftotalcmds = 8;
-	private RRRP2 plugin;
+	private static final int numoftotalcmds = 15;
+	private final RRRP2 plugin;
 	
 	public CommandSpecFactory() { this.plugin = Registry.getPlugin(); }
 	
@@ -32,7 +33,7 @@ public class CommandSpecFactory {
 		numofcmd += 1;
 		aliases[numofcmd] = helloAlias;
 		baseCommands[numofcmd] = new BaseCommand();
-		baseCommands[numofcmd].setInformation("Hello", "Hello Command", "rrrp2.hello", aliases[numofcmd], true);
+		baseCommands[numofcmd].setInformation("hello", "Hello Command", "rrrp2.hello", aliases[numofcmd], true);
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
@@ -105,6 +106,79 @@ public class CommandSpecFactory {
 		aliases[numofcmd] = dimAlias;
 		baseCommands[numofcmd] = new BaseCommand();
 		baseCommands[numofcmd].setInformation("getDim", "Get Dimension Command", "rrrp2.getDim", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] whoisAlias = Utilities.stringFormatter("whoIs");
+		numofcmd += 1;
+		aliases[numofcmd] = whoisAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("whoIs", "Who Is Command", "rrrp2.whoIs", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Player").toText())))
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] motdAlias = Utilities.stringFormatter("motd");
+		numofcmd += 1;
+		aliases[numofcmd] = motdAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("motd", "Motd Command", "rrrp2.motd", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] infoAlias = Utilities.stringFormatter("info");
+		numofcmd += 1;
+		aliases[numofcmd] = infoAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("info", "Get info Command", "rrrp2.info", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] lastSeenAlias = Utilities.stringFormatter("seen");
+		numofcmd += 1;
+		aliases[numofcmd] = lastSeenAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("seen", "Last seen Command", "rrrp2.seen", aliases[numofcmd], true);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Player").toText())))
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] suicideAlias = Utilities.stringFormatter("suicide");
+		numofcmd += 1;
+		aliases[numofcmd] = suicideAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("suicide", "Commit suicide Command", "rrrp2.suicide", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] helpopAlias = Utilities.stringFormatter("helpop");
+		numofcmd += 1;
+		aliases[numofcmd] = helpopAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("helpop", "Helpop Command", "rrrp2.helpop", aliases[numofcmd], false);
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Msg").toText())))
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] depthAlias = Utilities.stringFormatter("depth");
+		numofcmd += 1;
+		aliases[numofcmd] = depthAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("depth", "Get depth Command", "rrrp2.depth", aliases[numofcmd], false);
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())

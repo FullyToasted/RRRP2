@@ -15,6 +15,10 @@ https://github.com/SpongePowered/SpongeAPI
 Forge ver. 1.8-11.14.4.1577
 http://files.minecraftforge.net/minecraftforge/
 
+Sponge Docs ver. 3.1.0
+https://jd.spongepowered.org/3.1.0-SNAPSHOT/
+
+
 ## (For RRR Developers) Step-by-Step to developing RRRP!
 
 1.)
