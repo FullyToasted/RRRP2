@@ -184,6 +184,26 @@ public class CommandSpecFactory {
 				.permission(baseCommands[numofcmd].getPermission())
 				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
 		
+		String[] rankperkAlias = Utilities.stringFormatter("rankperk");
+		numofcmd += 1;
+		aliases[numofcmd] = rankperkAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("rankperk", "Used for getting your rank perk", "rrrp2.rankperk", aliases[numofcmd], false, true, "Usage: </rankperk <RankName> > OR < /rankperk > (Gives you your current rank's perk).");
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
+		String[] rankperkallAlias = Utilities.stringFormatter("rankperkall");
+		numofcmd += 1;
+		aliases[numofcmd] = rankperkallAlias;
+		baseCommands[numofcmd] = new BaseCommand();
+		baseCommands[numofcmd].setInformation("rankperkall", "Used for giving everyone a rankperk", "rrrp2.rankperkall", aliases[numofcmd], true, true, "Usage: < /rankperkall <RankName> >");
+		commandSpecs[numofcmd] = CommandSpec.builder()
+				.description(Text.of(baseCommands[numofcmd].getDescription()))
+				.permission(baseCommands[numofcmd].getPermission())
+				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+		
 		// DO NOT TOUCH -- COMMAND REGISTRATION
 		Utilities.baseCommands = baseCommands;
 		for (int i = 0 ; i < numoftotalcmds; i++) {

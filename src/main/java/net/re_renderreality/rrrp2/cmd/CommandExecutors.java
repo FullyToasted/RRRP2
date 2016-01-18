@@ -1,16 +1,15 @@
 package net.re_renderreality.rrrp2.cmd;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Set;
+
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.RRRP2;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Set;
-
 import org.slf4j.Logger;
-
 import org.spongepowered.api.Server;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -25,11 +24,14 @@ import org.spongepowered.api.text.Text;
 
 public class CommandExecutors implements CommandExecutor {
 
-	@SuppressWarnings("unused") private final Logger logger;
-	@SuppressWarnings("unused") private final Server server;
-	@SuppressWarnings("unused") private String[] arguments;
-	private PlayerRegistry register;
-	private BaseCommand bc;
+	@SuppressWarnings("unused")
+	private final Logger logger;
+	@SuppressWarnings("unused")
+	private final Server server;
+    @SuppressWarnings("unused")
+	private String[] arguments;
+	private final PlayerRegistry register;
+	private final BaseCommand bc;
 
 	public CommandExecutors (RRRP2 plugin, BaseCommand bc) {
 		logger = plugin.getLogger();
@@ -82,6 +84,10 @@ public class CommandExecutors implements CommandExecutor {
 				case "seen":
 					String name = args.<String>getOne("Player").get();
 					src.sendMessage(Text.of(name + " was last seen on server at: " + register.getTime(register.getUuid(name))));
+					break;	
+				case "rankperkall":
+					if (!args.toString().isEmpty())
+						Utilities.broadcastMessage(args.toString() + " RANKPERKALL !!!!!!!");
 					break;
 			}
 		} 
@@ -121,10 +127,13 @@ public class CommandExecutors implements CommandExecutor {
 					src.sendMessage(Text.of("Your current depth " + relative + " sea level is: " + depth));
 					break;
 				}
+				
+				
 			} else if (Utilities.isConsole(src)) {
 				switch (bc.getName()) {
-					//TO FILL IF SPECIFIC TARGET NEEDED
+				
 				}
+							
 			} else if (Utilities.isCommandBlock(src)) {
 				switch (bc.getName()) {
 					//TO FILL IF SPECIFIC TARGET NEEDED

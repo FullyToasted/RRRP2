@@ -6,8 +6,10 @@ public class BaseCommand {
 	private String description;
 	private String permission;
 	private String[] aliases;
+	private String usage;
 	private boolean isUniversal;
 	private boolean isEnabled;
+	private boolean hasMultiArgs;
 	
 	/**
 	 * @param name String of name to set for command name.
@@ -23,6 +25,29 @@ public class BaseCommand {
 		this.permission = permission;
 		this.aliases = aliases;
 		this.isUniversal = isUniversal;
+	}
+	
+	
+	public void setInformation(String name, String description, String permission, String[] aliases, boolean isUniversal, boolean multiArgs, String usage) {
+		this.name = name;
+		this.description = description;
+		this.permission = permission;
+		this.aliases = aliases;
+		this.isUniversal = isUniversal;
+	}
+	
+	/**
+	 * @return usage Returns how the command should be used (If Applicable).
+	 */
+	public String getUsage() {
+		return usage.isEmpty() ? "Tell the Dev's the command " + getName() + "'s usage is broken." : usage;
+	}
+	
+	/**
+	 * @return hasMultiArgs If the command has any additional args make this true (Used for further handling).
+	 */
+	public boolean hasMultiArgs() {
+		return hasMultiArgs;
 	}
 	
 	/**
