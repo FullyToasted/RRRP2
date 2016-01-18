@@ -35,6 +35,11 @@ public class RRRP2 {
 	private Server server;
 	private PlayerRegistry players;
 	
+	public RRRP2 () {
+		System.out.println("Break point");
+		Thread.dumpStack();
+	}
+	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
 	 * @note Initialization of Plugin and Registry.
