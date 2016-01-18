@@ -33,10 +33,10 @@ public class CommandExecutors implements CommandExecutor {
 	private final PlayerRegistry register;
 	private final BaseCommand bc;
 
-	public CommandExecutors (RRRP2 plugin, BaseCommand bc) {
-		logger = plugin.getLogger();
-		server = plugin.getServer();
-		register = plugin.getPlayerRegistry();
+	public CommandExecutors ( BaseCommand bc) {
+		logger = RRRP2.plugin.getLogger();
+		server = RRRP2.plugin.getServer();
+		register = RRRP2.plugin.getPlayerRegistry();
 		this.bc = bc;
 	}
 	/**

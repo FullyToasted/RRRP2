@@ -8,7 +8,6 @@ public class Registry {
 	
 	private static Game game;
 	private static Logger logger;
-	private static RRRP2 plugin;
 	
 	/**
 	 * @param g Game to set registered Game object to.
@@ -23,12 +22,12 @@ public class Registry {
 	/**
 	 * @param p RRRP2 to set registered RRRP2 object to.
 	 */
-	public static void setPlugin(RRRP2 p) { plugin = p; }
+	//public void setPlugin(RRRP2 p) { RRRP2.plugin = plugin; }
 	
 	/**
 	 * @return registered RRRP2 plugin object.
 	 */
-	public static RRRP2 getPlugin() { return plugin; }
+	//public static RRRP2 getPlugin() { return plugin; }
 	
 	/**
 	 * @return the registered Game object.

@@ -1,18 +1,16 @@
 package net.re_renderreality.rrrp2.main;
 
-import net.re_renderreality.rrrp2.cmd.CommandSpecFactory;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.slf4j.Logger;
+import net.re_renderreality.rrrp2.cmd.CommandSpecFactory;
 
+import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.event.Listener;
@@ -25,7 +23,7 @@ import org.spongepowered.api.plugin.PluginContainer;
 import com.google.inject.Inject;
 
 @Plugin(id = "Re-RenderReality", name = "RRRP2", version = "0.1.0-ALPHA") 
-public class RRRP2{
+public class RRRP2 {
 	
 	@Inject 
 	public Game game;
@@ -33,7 +31,7 @@ public class RRRP2{
 	private PluginContainer container;
 	@Inject 
 	private Logger logger;
-	public RRRP2 plugin;
+	public static RRRP2 plugin;
 	private Server server;
 	private PlayerRegistry players;
 	
@@ -47,7 +45,6 @@ public class RRRP2{
 		server = game.getServer();
 		Registry.setGame(getGame());
 		Registry.setLogger(getLogger());
-		Registry.setPlugin(this);
 		players = new PlayerRegistry();
 		new CommandSpecFactory().buildCommandSpecs();
 		

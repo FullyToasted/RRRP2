@@ -1,16 +1,16 @@
 package net.re_renderreality.rrrp2.cmd;
 
-import net.re_renderreality.rrrp2.main.PlayerRegistry;
-import net.re_renderreality.rrrp2.main.Registry;
-import net.re_renderreality.rrrp2.utils.Utilities;
-
-import org.spongepowered.api.command.args.CommandContext;
-import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import net.re_renderreality.rrrp2.main.PlayerRegistry;
+import net.re_renderreality.rrrp2.main.RRRP2;
+import net.re_renderreality.rrrp2.utils.Utilities;
+
+import org.spongepowered.api.command.CommandSource;
+import org.spongepowered.api.command.args.CommandContext;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 /**
  * @author Avarai
@@ -18,8 +18,8 @@ import java.time.LocalTime;
  */
 public class WhoisCommand{
 	
-	private CommandSource src;
-	private CommandContext args;
+	private final CommandSource src;
+	private final CommandContext args;
 	
 	/**
 	 * @param src CommandSource object of command source.
@@ -29,7 +29,7 @@ public class WhoisCommand{
 	
 	public void run() {
 		
-		PlayerRegistry register = Registry.getPlugin().getPlayerRegistry();
+		PlayerRegistry register = RRRP2.plugin.getPlayerRegistry();
 		String name = args.<String>getOne("Player").get();
 		Text status = Text.of("");
 		Text lastSeen = Text.of("");

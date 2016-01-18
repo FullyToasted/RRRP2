@@ -1,7 +1,6 @@
 package net.re_renderreality.rrrp2.cmd;
 
 import net.re_renderreality.rrrp2.main.RRRP2;
-import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 import org.spongepowered.api.command.args.GenericArguments;
@@ -14,7 +13,7 @@ public class CommandSpecFactory {
 	private static final int numoftotalcmds = 15;
 	private final RRRP2 plugin;
 	
-	public CommandSpecFactory() { this.plugin = Registry.getPlugin(); }
+	public CommandSpecFactory() { this.plugin = RRRP2.plugin; }
 	
 	/**
 	 * @author EliteByte/Avarai
@@ -37,7 +36,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		//END BASE COMMAND EXAMPLE
 		
 		String[] rrrpAlias = Utilities.stringFormatter("rrrp");
@@ -48,7 +47,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] clearAlias = Utilities.stringFormatter("clearEntities");
 		numofcmd += 1;
@@ -59,7 +58,7 @@ public class CommandSpecFactory {
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Entity").toText())))
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] listAlias = Utilities.stringFormatter("listEntities");
 		numofcmd += 1;
@@ -69,7 +68,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] tpsAlias = Utilities.stringFormatter("getTps");
 		numofcmd += 1;
@@ -79,7 +78,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] posAlias = Utilities.stringFormatter("getPos");
 		numofcmd += 1;
@@ -89,7 +88,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] worldAlias = Utilities.stringFormatter("getWorld");
 		numofcmd += 1;
@@ -99,7 +98,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] dimAlias = Utilities.stringFormatter("getDim");
 		numofcmd += 1;
@@ -109,7 +108,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] whoisAlias = Utilities.stringFormatter("whoIs");
 		numofcmd += 1;
@@ -120,7 +119,7 @@ public class CommandSpecFactory {
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Player").toText())))
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] motdAlias = Utilities.stringFormatter("motd");
 		numofcmd += 1;
@@ -130,7 +129,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] infoAlias = Utilities.stringFormatter("info");
 		numofcmd += 1;
@@ -140,7 +139,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors( baseCommands[numofcmd])).build();
 		
 		String[] lastSeenAlias = Utilities.stringFormatter("seen");
 		numofcmd += 1;
@@ -151,7 +150,7 @@ public class CommandSpecFactory {
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Player").toText())))
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors( baseCommands[numofcmd])).build();
 		
 		String[] suicideAlias = Utilities.stringFormatter("suicide");
 		numofcmd += 1;
@@ -161,7 +160,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] helpopAlias = Utilities.stringFormatter("helpop");
 		numofcmd += 1;
@@ -172,7 +171,7 @@ public class CommandSpecFactory {
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.builder("Msg").toText())))
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] depthAlias = Utilities.stringFormatter("depth");
 		numofcmd += 1;
@@ -182,7 +181,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors( baseCommands[numofcmd])).build();
 		
 		String[] rankperkAlias = Utilities.stringFormatter("rankperk");
 		numofcmd += 1;
@@ -192,7 +191,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		String[] rankperkallAlias = Utilities.stringFormatter("rankperkall");
 		numofcmd += 1;
@@ -202,7 +201,7 @@ public class CommandSpecFactory {
 		commandSpecs[numofcmd] = CommandSpec.builder()
 				.description(Text.of(baseCommands[numofcmd].getDescription()))
 				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(plugin, baseCommands[numofcmd])).build();
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		// DO NOT TOUCH -- COMMAND REGISTRATION
 		Utilities.baseCommands = baseCommands;
