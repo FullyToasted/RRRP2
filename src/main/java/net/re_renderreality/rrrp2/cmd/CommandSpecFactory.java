@@ -11,9 +11,6 @@ public class CommandSpecFactory {
 
 	//Change this number if you add a command
 	private static final int numoftotalcmds = 15;
-	private final RRRP2 plugin;
-	
-	public CommandSpecFactory() { this.plugin = RRRP2.plugin; }
 	
 	/**
 	 * @author EliteByte/Avarai
@@ -206,8 +203,8 @@ public class CommandSpecFactory {
 		// DO NOT TOUCH -- COMMAND REGISTRATION
 		Utilities.baseCommands = baseCommands;
 		for (int i = 0 ; i < numoftotalcmds; i++) {
-				Utilities.getCommandManager().register(plugin, commandSpecs[i], aliases[i]);
-				plugin.getLogger().info("[CommandFactory] The command: " + baseCommands[i].getName() + " is now registered.");
+				Utilities.getCommandManager().register(RRRP2.plugin, commandSpecs[i], aliases[i]);
+				RRRP2.plugin.getLogger().info("[CommandFactory] The command: " + baseCommands[i].getName() + " is now registered.");
 		}
 	}
 }
