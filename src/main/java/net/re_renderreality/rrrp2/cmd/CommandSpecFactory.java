@@ -10,7 +10,7 @@ import org.spongepowered.api.text.Text;
 public class CommandSpecFactory {
 
 	//Change this number if you add a command
-	private static final int numoftotalcmds = 15;
+	private static final int numoftotalcmds = 17;
 	
 	/**
 	 * @author EliteByte/Avarai
