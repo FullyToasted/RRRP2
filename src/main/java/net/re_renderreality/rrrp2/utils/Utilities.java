@@ -40,7 +40,7 @@ public class Utilities {
 	 */
 	public static double getMean(int[] vals) {
 		double sum = 0.0;
-		for (int val:vals)
+		for (int val : vals)
 			sum+=val;
 		return sum/vals.length;
 	}
