@@ -35,6 +35,8 @@ public class RRRP2 {
 	private Server server;
 	private PlayerRegistry players;
 	
+
+	
 	public RRRP2 () {
 		System.out.println("Break point");
 		Thread.dumpStack();
@@ -102,6 +104,10 @@ public class RRRP2 {
 		String time = LocalTime.now().toString();
 		time = LocalDate.now().toString() + " " + time.substring(0, time.indexOf('.'));
 		players.addLastSeen(event.getTargetEntity().getUniqueId().toString(), time);	
+	}
+	
+	public String goml() {
+		return "";
 	}
 	
 	/**
