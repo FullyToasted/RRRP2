@@ -12,12 +12,12 @@ public class Registry {
 	/**
 	 * @param g Game to set registered Game object to.
 	 */
-	public static void setGame(Game g) { game = g; }
+	public static void setGame(Game g) { game = g; } //sets private game to current Game Object
 	
 	/**
 	 * @param l Logger to set registered Logger object to.
 	 */
-	public static void setLogger(Logger l) { logger = l; }
+	public static void setLogger(Logger l) { logger = l; } //sets private logger to current Logger Object
 	
 	/**
 	 * @param p RRRP2 to set registered RRRP2 object to.
@@ -32,15 +32,15 @@ public class Registry {
 	/**
 	 * @return the registered Game object.
 	 */
-	public static Game getGame() { return game; }
+	public static Game getGame() { return game; } //getter for Current Game Obj
 	
 	/**
 	 * @return the registered Server object.
 	 */
-	public static Server getServer() { return game.getServer(); }	
+	public static Server getServer() { return game.getServer(); } //getter for current Server Object
 	
 	/**
 	 * @return the registered Logger object.
 	 */
-	public static Logger getLogger() { return logger; }
+	public static Logger getLogger() { return logger; } //getter for current logger obj
 }

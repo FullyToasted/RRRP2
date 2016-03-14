@@ -26,14 +26,14 @@ public class CommandSpecFactory {
 		
 		//EXAMPLE FOR A BASIC COMMAND || READ EACH PARAMETER DEFINITION IN "BaseCommand.Java"
 		String[] helloAlias = Utilities.stringFormatter("Hello", "HelloWorld");
-		numofcmd += 1;
-		aliases[numofcmd] = helloAlias;
-		baseCommands[numofcmd] = new BaseCommand();
-		baseCommands[numofcmd].setInformation("hello", "Hello Command", "rrrp2.hello", aliases[numofcmd], true);
-		commandSpecs[numofcmd] = CommandSpec.builder()
-				.description(Text.of(baseCommands[numofcmd].getDescription()))
-				.permission(baseCommands[numofcmd].getPermission())
-				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
+		numofcmd += 1; //inc the index
+		aliases[numofcmd] = helloAlias; //sets the alias alieses[1][helloalies[]]
+		baseCommands[numofcmd] = new BaseCommand(); //sets basecommand to default
+		baseCommands[numofcmd].setInformation("hello", "Hello Command", "rrrp2.hello", aliases[numofcmd], true); //sets information
+		commandSpecs[numofcmd] = CommandSpec.builder()  //begins building of command spec
+				.description(Text.of(baseCommands[numofcmd].getDescription())) //sets text of command spec description
+				.permission(baseCommands[numofcmd].getPermission()) //sets permission node
+				.executor(new CommandExecutors(baseCommands[numofcmd])).build(); //executor of command sent to overridden commandExeecutors in CommandExecutors.java then builds command
 		//END BASE COMMAND EXAMPLE
 		
 		String[] rrrpAlias = Utilities.stringFormatter("rrrp");
@@ -201,10 +201,10 @@ public class CommandSpecFactory {
 				.executor(new CommandExecutors(baseCommands[numofcmd])).build();
 		
 		// DO NOT TOUCH -- COMMAND REGISTRATION
-		Utilities.baseCommands = baseCommands;
+		Utilities.baseCommands = baseCommands; //copeies base commands array to utillity
 		for (int i = 0 ; i < numoftotalcmds; i++) {
-				Utilities.getCommandManager().register(RRRP2.plugin, commandSpecs[i], aliases[i]);
-				RRRP2.plugin.getLogger().info("[CommandFactory] The command: " + baseCommands[i].getName() + " is now registered.");
+				Utilities.getCommandManager().register(RRRP2.plugin, commandSpecs[i], aliases[i]); //registers commands in commandmanager
+				RRRP2.plugin.getLogger().info("[CommandFactory] The command: " + baseCommands[i].getName() + " is now registered."); //writes to the log that commands have been registered
 		}
 	}
 }
