@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import net.re_renderreality.rrrp2.cmd.CommandSpecFactory;
+import net.re_renderreality.rrrp2.backend.CommandSpecFactory;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_rerenderreality.rrrp2.config.Config;
@@ -64,16 +64,19 @@ public class RRRP2{
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event)
 	{
+		getLogger().info(container.getName() + ": Config Initiallation Beginning....");
 		plugin = this;
 
 		// Create Config Directory for EssentialCmds
 		if (!Files.exists(configDir))
 		{
+			getLogger().info(container.getName() + ": Config root not found generating...");
 			if (Files.exists(configDir.resolveSibling("RRRP2")))
 			{
 				try
 				{
 					Files.move(configDir.resolveSibling("RRRP2"), configDir);
+					getLogger().info(container.getName() + ": Config root generated");
 				}
 				catch (IOException e)
 				{
@@ -85,6 +88,7 @@ public class RRRP2{
 				try
 				{
 					Files.createDirectories(configDir);
+					getLogger().info(container.getName() + ": Config root generated");
 				}
 				catch (IOException e)
 				{
@@ -96,8 +100,10 @@ public class RRRP2{
 		// Create data Directory for EssentialCmds
 		if (!Files.exists(configDir.resolve("data")))
 		{
+			getLogger().info(container.getName() + ": Config data subfolder not found generating...");
 			try
 			{
+				getLogger().info(container.getName() + ": Config data subfolder generated");
 				Files.createDirectories(configDir.resolve("data"));
 			}
 			catch (IOException e)
@@ -108,6 +114,8 @@ public class RRRP2{
 		
 		// Create config.conf
 		Config.getConfig().setup();
+		
+		getLogger().info(container.getName() + ": Config Initiallation Finished");
 	}
 	@Listener 
 	public void gameStarting(GameStartingServerEvent event) {
@@ -129,7 +137,7 @@ public class RRRP2{
 		} catch (Exception e) { getLogger().info("[ERROR] Something went wrong with RRRP2."); }
 		//END TO BE REPLACED SECTION
 		
-		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been initialized.");
+		getLogger().info(container.getName() + " v" + container.getVersion().get() + " has successfully been initialized.");
 	}
 	
 	/**

@@ -75,6 +75,8 @@ public class Config implements Configurable {
 
 	@Override
 	public void populate() {
+		get().getNode("mysql").setComment("RRRP2 Configuration Options");
+		get().getNode("mysql").setComment("");
 		get().getNode("mysql").setComment("Enable MySQL support for RRRP2.");
 		get().getNode("mysql", "use").setValue(false).setComment("Enables/Disables MySQL usage for RRRP2.");
 		get().getNode("mysql", "port").setValue("8080").setComment("Port of MySQL Database.");

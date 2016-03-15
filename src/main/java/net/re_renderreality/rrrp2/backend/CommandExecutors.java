@@ -1,10 +1,14 @@
-package net.re_renderreality.rrrp2.cmd;
+package net.re_renderreality.rrrp2.backend;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Set;
 
 import net.re_renderreality.rrrp2.RRRP2;
+import net.re_renderreality.rrrp2.cmd.ClearEntitiesCommand;
+import net.re_renderreality.rrrp2.cmd.HelpCommand;
+import net.re_renderreality.rrrp2.cmd.ListEntitiesCommand;
+import net.re_renderreality.rrrp2.cmd.WhoisCommand;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;

@@ -1,4 +1,4 @@
-package net.re_renderreality.rrrp2.cmd;
+package net.re_renderreality.rrrp2.backend;
 
 public class BaseCommand {
 

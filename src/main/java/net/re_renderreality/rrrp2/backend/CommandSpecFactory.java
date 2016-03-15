@@ -1,4 +1,4 @@
-package net.re_renderreality.rrrp2.cmd;
+package net.re_renderreality.rrrp2.backend;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.utils.Utilities;

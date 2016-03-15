@@ -2,7 +2,7 @@ package net.re_renderreality.rrrp2.utils;
 
 import java.util.Optional;
 
-import net.re_renderreality.rrrp2.cmd.BaseCommand;
+import net.re_renderreality.rrrp2.backend.BaseCommand;
 import net.re_renderreality.rrrp2.main.Registry;
 
 import org.spongepowered.api.command.CommandManager;

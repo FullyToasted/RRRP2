@@ -1,4 +1,4 @@
-package net.re_renderreality.rrrp2.utils;
+package net.re_renderreality.rrrp2.main;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.service.sql.SqlService;
