@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Set;
 
-import net.re_renderreality.rrp2.RRRP2;
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;

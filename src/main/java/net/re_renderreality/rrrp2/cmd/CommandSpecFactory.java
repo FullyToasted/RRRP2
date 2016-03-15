@@ -1,6 +1,6 @@
 package net.re_renderreality.rrrp2.cmd;
 
-import net.re_renderreality.rrp2.RRRP2;
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 import org.spongepowered.api.command.args.GenericArguments;

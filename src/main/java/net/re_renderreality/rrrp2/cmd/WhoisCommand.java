@@ -3,7 +3,7 @@ package net.re_renderreality.rrrp2.cmd;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import net.re_renderreality.rrp2.RRRP2;
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.utils.Utilities;
 

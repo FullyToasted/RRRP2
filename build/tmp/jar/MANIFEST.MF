@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
-Implementation-Title: Gradle Quickstart
+Implementation-Title: RRR2
+Implementation-Version: 0.1.0-ALPHA
 
