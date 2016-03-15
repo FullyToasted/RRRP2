@@ -5,18 +5,22 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import net.re_renderreality.rrrp2.cmd.CommandSpecFactory;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
-
+import net.re_rerenderreality.rrrp2.config.Config;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
+import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
@@ -29,7 +33,11 @@ import me.flibio.updatifier.Updatifier;
 
 @Updatifier(repoName = "RRRP2", repoOwner = "ReRenderReality", version = "v" + PluginInfo.VERSION)
 @Plugin(id = "rrr.commands", name = "RRRP2", version = "0.1.0-ALPHA", description = "basic commands for RRP2 Bundle") 
-public class RRRP2 {
+public class RRRP2{
+	
+	protected RRRP2 () {
+		
+	}
 	
 	@Inject 
 	public Game game;
@@ -37,22 +45,72 @@ public class RRRP2 {
 	private PluginContainer container;
 	@Inject 
 	private Logger logger;
+	@Inject
+	@ConfigDir(sharedRoot = false)
+	private Path configDir;
+	
 	public static RRRP2 plugin;
 	private Server server;
 	private PlayerRegistry players;
 	
-	public RRRP2 () {
-		//System.out.println("Break point");
-		//Thread.dumpStack();
+	public static RRRP2 getRRRP2() {
+		return plugin;
 	}
-	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
 	 * @note Initialization of Plugin and Registry.
 	 */
+	
+	@Listener
+	public void onPreInitialization(GamePreInitializationEvent event)
+	{
+		plugin = this;
+
+		// Create Config Directory for EssentialCmds
+		if (!Files.exists(configDir))
+		{
+			if (Files.exists(configDir.resolveSibling("RRRP2")))
+			{
+				try
+				{
+					Files.move(configDir.resolveSibling("RRRP2"), configDir);
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				try
+				{
+					Files.createDirectories(configDir);
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// Create data Directory for EssentialCmds
+		if (!Files.exists(configDir.resolve("data")))
+		{
+			try
+			{
+				Files.createDirectories(configDir.resolve("data"));
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		// Create config.conf
+		Config.getConfig().setup();
+	}
 	@Listener 
 	public void gameStarting(GameStartingServerEvent event) {
-		plugin = this;
 		server = game.getServer();
 		Registry.setGame(getGame());
 		Registry.setLogger(getLogger());
@@ -118,6 +176,10 @@ public class RRRP2 {
 	
 	public String goml() {
 		return "";
+	}
+	
+	public Path getConfigDir() {
+		return configDir;
 	}
 	
 	/**
