@@ -1,0 +1,8 @@
+[
+    {
+        "modid": "rrr.commands",
+        "name": "RRRP2",
+        "version": "0.1.0-ALPHA",
+        "description": "basic commands for RRP2 Bundle"
+    }
+]
