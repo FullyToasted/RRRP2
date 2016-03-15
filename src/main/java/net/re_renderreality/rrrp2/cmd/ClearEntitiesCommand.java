@@ -10,31 +10,31 @@ import org.spongepowered.api.world.World;
 
 public class ClearEntitiesCommand {
 	 
-	private final CommandContext args; //command's args
-	private final CommandSource src; //commands src
+	private final CommandContext args;
+	private final CommandSource src;
 	
 	public ClearEntitiesCommand(CommandSource src, CommandContext args) { this.src = src; this.args = args; }
 	
 	public void run() {
 		
-		int count = 0; 
-		String entity = args.<String>getOne("Entity").get(); //turns entity string to string
+		int count = 0;
+		String entity = args.<String>getOne("Entity").get();
 		
-		if (entity.equalsIgnoreCase("player")) { //If entity is player
-			src.sendMessage(Text.of("[WARNING] Do not use \"player\" as a parameter for this command. Command aborted.")); //can't kill off players
+		if (entity.equalsIgnoreCase("player")) {
+			src.sendMessage(Text.of("[WARNING] Do not use \"player\" as a parameter for this command. Command aborted."));
 			return;
 		}
 		
-		for (World w : Registry.getServer().getWorlds()) { //for every world
-			for (Entity e : w.getEntities()) { //loop through every entity in the world
-				if (e.getType().getName().equals(entity)) { //if entity matches desired
-					e.remove(); //remove it
+		for (World w : Registry.getServer().getWorlds()) {
+			for (Entity e : w.getEntities()) {
+				if (e.getType().getName().equals(entity)) {
+					e.remove();
 					count += 1;
 				}
 			}
 		}
 		
-		Text result = (count > 0) ? Text.of("[SUCCESS] Removed: " + count + " of entity: " + entity) : Text.of("[ERROR] Could not find entities of: " + entity); //returns how many entities were removed
+		Text result = (count > 0) ? Text.of("[SUCCESS] Removed: " + count + " of entity: " + entity) : Text.of("[ERROR] Could not find entities of: " + entity);
 		src.sendMessage(result);
 	}
 }

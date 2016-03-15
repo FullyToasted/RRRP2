@@ -19,7 +19,7 @@ public class BaseCommand {
 	 * @param isUniversal True = The command can be used by any CommandSource : False = Command has a specified CommandSource
 	 * @param isEnabled True = The command will be enabled : False = Command won't be registered.
 	 */
-	public void setInformation(String name, String description, String permission, String[] aliases, boolean isUniversal) { //constructor for basic command
+	public void setInformation(String name, String description, String permission, String[] aliases, boolean isUniversal) {
 		this.name = name;
 		this.description = description;
 		this.permission = permission;
@@ -28,7 +28,7 @@ public class BaseCommand {
 	}
 	
 	
-	public void setInformation(String name, String description, String permission, String[] aliases, boolean isUniversal, boolean multiArgs, String usage) { //Constructor for command with multi args
+	public void setInformation(String name, String description, String permission, String[] aliases, boolean isUniversal, boolean multiArgs, String usage) {
 		this.name = name;
 		this.description = description;
 		this.permission = permission;
@@ -39,56 +39,56 @@ public class BaseCommand {
 	/**
 	 * @return usage Returns how the command should be used (If Applicable).
 	 */
-	public String getUsage() { //gets usage of command or returns that it isn't there. 
+	public String getUsage() {
 		return usage.isEmpty() ? "Tell the Dev's the command " + getName() + "'s usage is broken." : usage;
 	}
 	
 	/**
 	 * @return hasMultiArgs If the command has any additional args make this true (Used for further handling).
 	 */
-	public boolean hasMultiArgs() { //getter for multiargs
+	public boolean hasMultiArgs() {
 		return hasMultiArgs;
 	}
 	
 	/**
 	 * @return isEnabled Returns true or false depending if it will be enabled
 	 */
-	public boolean isEnabled(){ //gets if cmd is enabled
+	public boolean isEnabled(){
 		return isEnabled;
 	}
 	
 	/**
 	 * @return isUniversal Returns true if the command can be used by all CommandSources
 	 */
-	public boolean isUniversal() { //returns if command can be used by any source
+	public boolean isUniversal() {
 		return isUniversal;
 	}
 	
 	/**
 	 * @return permission String for command.
 	 */
-	public String getPermission() { //gets permission node
+	public String getPermission() {
 		return permission;
 	}
 	
 	/**
 	 * @return String of name for command.
 	 */
-	public String getName() { //gets command name
+	public String getName() {
 		return name;
 	}
 	
 	/**
 	 * @return String of description for command.
 	 */
-	public String getDescription() { //gets command description
+	public String getDescription() {
 		return description;
 	}
 	
 	/**
 	 * @return String array of command aliases.
 	 */
-	public String[] getAliases() { //Gets command aliases
+	public String[] getAliases() {
 		return aliases;
 	}
 }

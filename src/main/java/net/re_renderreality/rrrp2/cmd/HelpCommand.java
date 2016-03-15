@@ -13,15 +13,15 @@ public class HelpCommand {
 	
 	public HelpCommand(CommandSource src) {
 		
-		contents = new ArrayList<>(); //sets contents to be a an Array List of Text Objects
+		contents = new ArrayList<>();
 		
-		BaseCommand[] baseCommands = Utilities.baseCommands; //copies Base COmmands here
+		BaseCommand[] baseCommands = Utilities.baseCommands;
 		
-		for (int i = 0 ; i < baseCommands.length ; i++) { //loops through every command
-			contents.add(Text.of(baseCommands[i].getName() + " " + baseCommands[i].getDescription())); //adds the command name to list
+		for (int i = 0 ; i < baseCommands.length ; i++) {
+			contents.add(Text.of(baseCommands[i].getName() + ": " + baseCommands[i].getDescription()));
 		}
 		
-		Utilities.getPaginationService().builder() //uses pages to output commands adds them to sponges commands
+		Utilities.getPaginationService().builder()
         	.title(Text.of("RRRP2 Commands"))
         	.contents(contents)
         	.header(Text.of("Re-RenderRealityPlugin 2"))
