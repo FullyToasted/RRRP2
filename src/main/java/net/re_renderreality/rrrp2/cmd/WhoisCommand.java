@@ -67,7 +67,9 @@ public class WhoisCommand extends CommandExecutorBase{
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
-		return CommandSpec.builder().description(Text.of("Gives detailed information about the requested player")).permission("rrrp2.admin.whois")
+		return CommandSpec.builder()
+				.description(Text.of("Gives detailed information about the requested player"))
+				.permission("rrrp2.admin.whois")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 				.executor(this).build();
 	}

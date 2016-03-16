@@ -29,7 +29,7 @@ public class HealCommand extends CommandExecutorBase
 		{
 			Player player = (Player) src;
 
-			if (player.hasPermission("essentialcmds.heal.others") && p.isPresent())
+			if (player.hasPermission("rrr.cheat.heal.others") && p.isPresent())
 			{
 				Player recipient = p.get();
 				recipient.offer(Keys.HEALTH, player.get(Keys.MAX_HEALTH).get());
@@ -67,7 +67,7 @@ public class HealCommand extends CommandExecutorBase
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
-		return CommandSpec.builder().description(Text.of("Heal Command")).permission("rrrp2.heal.use")
+		return CommandSpec.builder().description(Text.of("Heal Command")).permission("rrrp2.cheat.heal.self")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 				.executor(this).build();
 	}

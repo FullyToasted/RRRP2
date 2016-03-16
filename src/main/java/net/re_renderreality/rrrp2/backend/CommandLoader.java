@@ -1,8 +1,10 @@
 package net.re_renderreality.rrrp2.backend;
 
 import com.google.common.collect.Sets;
+
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.cmd.*;
+
 import org.spongepowered.api.Sponge;
 
 import java.util.Set;
@@ -36,7 +38,7 @@ public final class CommandLoader {
     public static void registerCommands() {
         // TODO: Put module checks here in a stream.
         // getCommands().stream().filter(c -> c.getAssociatedModules().length == 0 && checkModules).forEach(CommandLoader::registerCommand);
-        getCommands().forEach(cmd -> Sponge.getCommandManager().register(RRRP2.getRRRP2(), cmd.getSpec(), cmd.getAliases()));
+        getCommands().forEach(cmd -> Sponge.getCommandManager().register(RRRP2.getRRRP2(), cmd.getSpec(), cmd.getAliases()));   		
     }
     
 }
