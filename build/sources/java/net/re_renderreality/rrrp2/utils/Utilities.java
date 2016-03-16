@@ -2,7 +2,7 @@ package net.re_renderreality.rrrp2.utils;
 
 import java.util.Optional;
 
-import net.re_renderreality.rrrp2.backend.BaseCommand;
+import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.main.Registry;
 
 import org.spongepowered.api.command.CommandManager;
@@ -17,7 +17,7 @@ import org.spongepowered.api.world.World;
 
 public class Utilities {
 	
-	public static BaseCommand[] baseCommands;
+	public static CommandExecutorBase[] baseCommands;
 	
 	/**
 	 * @return PaginationService object associated with Registry's Game object.

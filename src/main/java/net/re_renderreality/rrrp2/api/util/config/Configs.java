@@ -1,4 +1,4 @@
-package net.re_rerenderreality.rrrp2.api.util.config;
+package net.re_renderreality.rrrp2.api.util.config;
 
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 

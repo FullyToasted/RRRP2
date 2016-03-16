@@ -1,8 +1,7 @@
-package net.re_rerenderreality.rrrp2.config;
+package net.re_renderreality.rrrp2.config;
 
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_rerenderreality.rrrp2.api.util.config.Configurable;
-
+import net.re_renderreality.rrrp2.api.util.config.Configurable;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;

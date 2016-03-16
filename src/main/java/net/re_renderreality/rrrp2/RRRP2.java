@@ -10,10 +10,10 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import net.re_renderreality.rrrp2.backend.CommandSpecFactory;
+import net.re_renderreality.rrrp2.backend.CommandLoader;
+import net.re_renderreality.rrrp2.config.Config;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
-import net.re_rerenderreality.rrrp2.config.Config;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -123,7 +123,7 @@ public class RRRP2{
 		Registry.setGame(getGame());
 		Registry.setLogger(getLogger());
 		players = new PlayerRegistry();
-		new CommandSpecFactory().buildCommandSpecs();
+		CommandLoader.registerCommands();
 		
 		//To be replaced with local SQL database usage instead of text file
 		try {
