@@ -14,7 +14,6 @@ import net.re_renderreality.rrrp2.backend.CommandLoader;
 import net.re_renderreality.rrrp2.config.Config;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
-import net.re_renderreality.rrrp2.utils.HelpGenerator;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -125,7 +124,6 @@ public class RRRP2{
 		Registry.setLogger(getLogger());
 		players = new PlayerRegistry();
 		CommandLoader.registerCommands();
-		HelpGenerator.populate();
 		
 		//To be replaced with local SQL database usage instead of text file
 		try {
