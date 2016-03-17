@@ -11,7 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import net.re_renderreality.rrrp2.backend.CommandLoader;
-import net.re_renderreality.rrrp2.config.Config;
+import net.re_renderreality.rrrp2.config.config;
+import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
 
@@ -112,8 +113,7 @@ public class RRRP2{
 			}
 		}
 		
-		// Create config.conf
-		Config.getConfig().setup();
+		config.setup();
 		
 		getLogger().info(container.getName() + ": Config Initiallation Finished");
 	}
@@ -124,6 +124,9 @@ public class RRRP2{
 		Registry.setLogger(getLogger());
 		players = new PlayerRegistry();
 		CommandLoader.registerCommands();
+		
+		Database.setup(game);
+    	Database.load(game);
 		
 		//To be replaced with local SQL database usage instead of text file
 		try {
