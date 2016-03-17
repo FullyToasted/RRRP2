@@ -3,7 +3,7 @@ package net.re_renderreality.rrrp2.database;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.service.sql.SqlService;
 
-import net.re_renderreality.rrrp2.config.config;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class Database {
 			
 			sql = game.getServiceManager().provide(SqlService.class).get();
 			
-			if(!config.MYSQL_USE()) {
+			if(!ReadConfigDatabase.useMySQL()) {
 				
 		    	File folder = new File("config/rrr.commands/data");
 		    	if(!folder.exists()) 
@@ -48,11 +48,11 @@ public class Database {
 			}
 			else {
 				
-				String host = config.MYSQL_HOST();
-				String port = String.valueOf(config.MYSQL_PORT());
-				String username = config.MYSQL_USERNAME();
-				String password = config.MYSQL_PASSWORD();
-				String database = config.MYSQL_DATABASE();
+				String host = ReadConfigDatabase.getMySQLHost();
+				String port = String.valueOf(ReadConfigDatabase.getMySQLPort());
+				String username = ReadConfigDatabase.getMySQLUsername();
+				String password = ReadConfigDatabase.getMySQLPassword();
+				String database = ReadConfigDatabase.getMySQLDatabase();
 				
 				datasource = sql.getDataSource("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + username + "&password=" + password);
 				

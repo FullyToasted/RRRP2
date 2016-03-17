@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import net.re_renderreality.rrrp2.backend.CommandLoader;
-import net.re_renderreality.rrrp2.config.config;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
@@ -112,8 +111,6 @@ public class RRRP2{
 				e.printStackTrace();
 			}
 		}
-		
-		config.setup();
 		
 		getLogger().info(container.getName() + ": Config Initiallation Finished");
 	}
