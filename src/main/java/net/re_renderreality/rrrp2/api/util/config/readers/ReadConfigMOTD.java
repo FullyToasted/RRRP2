@@ -3,7 +3,6 @@ package net.re_renderreality.rrrp2.api.util.config.readers;
 import net.re_renderreality.rrrp2.api.util.config.ConfigManager;
 import net.re_renderreality.rrrp2.api.util.config.Configs;
 import net.re_renderreality.rrrp2.api.util.config.Configurable;
-//import org.spongepowered.api.Sponge;
 import net.re_renderreality.rrrp2.config.Messages;
 
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;

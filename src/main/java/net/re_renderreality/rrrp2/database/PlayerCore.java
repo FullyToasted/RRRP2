@@ -19,8 +19,8 @@ public class PlayerCore {
 	private String mails;
 	private String lastlocation;
 	private String lastdeath;
-	private double firstseen;
-	private double lastseen;
+	private String firstseen;
+	private String lastseen;
 	
 	//private CoreSelection selection;
 	private double lastaction;
@@ -34,7 +34,21 @@ public class PlayerCore {
 	private Text page_title;
 	private Text page_header;
 	
-	public PlayerCore(String uuid, String name, String nick, String channel, double money, double god, double fly, double tptoggle, double invisible, double onlinetime, String mails, String lastlocation, String lastdeath, double firstseen, double lastseen) {
+	public PlayerCore(String uuid, 
+					  String name, 
+					  String nick, 
+					  String channel, 
+					  double money, 
+					  double god, 
+					  double fly, 
+					  double tptoggle, 
+					  double invisible, 
+					  double onlinetime, 
+					  String mails, 
+					  String lastlocation, 
+					  String lastdeath, 
+					  String firstseen, 
+					  String lastseen) {
 		
 		this.uuid = uuid;
 		this.name = name;
@@ -97,8 +111,8 @@ public class PlayerCore {
 	public void setMails(String mails) { this.mails = mails; }
 	public void setLastlocation(String lastlocation) { this.lastlocation = lastlocation; }
 	public void setLastdeath(String lastdeath) { this.lastdeath = lastdeath; }
-	public void setFirstseen(double firstseen) { this.firstseen = firstseen; }
-	public void setLastseen(double lastseen) { this.lastseen = lastseen; }
+	public void setFirstseen(String firstseen) { this.firstseen = firstseen; }
+	public void setLastseen(String lastseen) { this.lastseen = lastseen; }
 
 	//public void setSelection(CoreSelection selection) { this.selection = selection; }
 	public void setLastaction(double lastaction) { this.lastaction = lastaction; }
@@ -126,8 +140,8 @@ public class PlayerCore {
 	public String getMails() { return mails; }
 	public String getLastlocation() { return lastlocation; }
 	public String getLastdeath() { return lastdeath; }
-	public double getFirstseen() { return firstseen; }
-	public double getLastseen() { return lastseen; }
+	public String getFirstseen() { return firstseen; }
+	public String getLastseen() { return lastseen; }
 	
 	//public CoreSelection getSelection() { return selection; }
 	public double getLastaction() { return lastaction; }

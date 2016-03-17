@@ -9,16 +9,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 import net.re_renderreality.rrrp2.backend.CommandLoader;
+import net.re_renderreality.rrrp2.config.*;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
+import net.re_renderreality.rrrp2.utils.AFK;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
@@ -27,6 +33,7 @@ import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 import me.flibio.updatifier.Updatifier;
@@ -52,6 +59,8 @@ public class RRRP2{
 	public static RRRP2 plugin;
 	private Server server;
 	private PlayerRegistry players;
+	public static HashMap<UUID, AFK> afkList = new HashMap<>();
+	public static List<Player> recentlyJoined = Lists.newArrayList();
 	
 	public static RRRP2 getRRRP2() {
 		return plugin;
@@ -121,6 +130,12 @@ public class RRRP2{
 		Registry.setLogger(getLogger());
 		players = new PlayerRegistry();
 		CommandLoader.registerCommands();
+		
+		Config.getConfig().setup();
+		Messages.getConfig().setup();
+		MOTD.getConfig().setup();
+		Warps.getConfig().setup();
+		Spawn.getConfig().setup();
 		
 		Database.setup(game);
     	Database.load(game);

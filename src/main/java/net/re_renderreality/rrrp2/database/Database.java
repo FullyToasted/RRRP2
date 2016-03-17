@@ -1,6 +1,7 @@
 package net.re_renderreality.rrrp2.database;
 
 import org.spongepowered.api.Game;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.service.sql.SqlService;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
@@ -79,7 +80,7 @@ public class Database {
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (uuid TEXT, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god DOUBLE, fly DOUBLE, tptoggle DOUBLE, invisible DOUBLE, onlinetime DOUBLE, mails TEXT, lastlocation TEXT, lastdeath TEXT, firstseen DOUBLE, lastseen DOUBLE)");
+				execute("CREATE TABLE players (uuid TEXT, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god DOUBLE, fly DOUBLE, tptoggle DOUBLE, invisible DOUBLE, onlinetime DOUBLE, mails TEXT, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
 			}
 				
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -122,7 +123,7 @@ public class Database {
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM players");
 			while(rs.next()) {
-				PlayerCore player = new PlayerCore(rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getDouble("god"), rs.getDouble("fly"), rs.getDouble("tptoggle"), rs.getDouble("invisible"), rs.getDouble("onlinetime"), rs.getString("mails"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getDouble("firstseen"), rs.getDouble("lastseen"));
+				PlayerCore player = new PlayerCore(rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getDouble("god"), rs.getDouble("fly"), rs.getDouble("tptoggle"), rs.getDouble("invisible"), rs.getDouble("onlinetime"), rs.getString("mails"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
 				Database.addPlayer(player.getUUID(), player);
 				Database.addUUID(player.getName(), player.getUUID());
 			}
@@ -240,15 +241,41 @@ public class Database {
 			players.put(uuid, player); 
 	}
 	
-	public static void removePlayer(String uuid) { if(players.containsKey(uuid)) players.remove(uuid); }
-	public static PlayerCore getPlayer(String uuid) { return players.containsKey(uuid) ? players.get(uuid) : null; }
+	public static void setLastTimePlayerJoined(Player player, String time)
+	{
+		if(players.containsKey(getPlayer(player.getName()))) {
+			players.get(player.getName()).setLastseen(time);
+			if(players.get(player.getName()).getFirstseen() == null) {
+				players.get(player.getName()).setFirstseen(time);
+			}
+		}
+		
+	}
+	
+	public static void removePlayer(String uuid) { 
+		if(players.containsKey(uuid)) 
+			players.remove(uuid); 
+	}
+	
+	public static PlayerCore getPlayer(String uuid) { 
+		return players.containsKey(uuid) ? players.get(uuid) : null; 
+	
+	}
 	public static HashMap<String, PlayerCore> getPlayers() { return players; }
 	//End Players
 	
 	//Start UUID
 	private static HashMap<String, String> uuids = new HashMap<String, String>();
-	public static void addUUID(String name, String uuid) { uuids.put(name, uuid); }
-	public static void removeUUID(String name) { if(uuids.containsKey(name)) uuids.remove(name); }
+	
+	public static void addUUID(String name, String uuid) { 
+		uuids.put(name, uuid); 
+	}
+	
+	public static void removeUUID(String name) { 
+		if(uuids.containsKey(name)) 
+			uuids.remove(name); 
+		}
+	
 	public static String getUUID(String name) { return uuids.containsKey(name) ? uuids.get(name) : null; }	
 	//End UUID
 }
