@@ -19,6 +19,7 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.AFK;
+import net.re_renderreality.rrrp2.utils.HelpGenerator;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -136,6 +137,8 @@ public class RRRP2{
 		MOTD.getConfig().setup();
 		Warps.getConfig().setup();
 		Spawn.getConfig().setup();
+		
+		HelpGenerator.getHelp().populate();
 		
 		Database.setup(game);
     	Database.load(game);

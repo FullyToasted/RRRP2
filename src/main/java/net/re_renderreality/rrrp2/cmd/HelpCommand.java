@@ -12,7 +12,6 @@ import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
 import net.re_renderreality.rrrp2.utils.Utilities;
@@ -22,72 +21,53 @@ public class HelpCommand extends CommandExecutorBase{
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<String> s = ctx.<String> getOne("SubDirectory");
 		if (s.isPresent()) {
-			if (s.get() == "admin") {
+			if (s.get().equals("admin")) {
 				Utilities.getPaginationService().builder()
 		        	.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.admin)
-		        	.header(Text.of("Re-RenderRealityPlugin 2"))
+		        	.contents(HelpGenerator.getHelp().admin)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
-		        	.padding(Text.of(""))
-		        	.linesPerPage(7)
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == "cheat") {
+			} else if (s.get().equals("cheat")) {
 				Utilities.getPaginationService().builder()
-		        	.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.cheat)
-		        	.header(Text.of("Re-RenderRealityPlugin 2"))
+					.title(Text.of("RRRP2 Commands"))
+		        	.contents(HelpGenerator.getHelp().cheat)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
-		        	.padding(Text.of(""))
-		        	.linesPerPage(7)
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == "general") {
+			} else if (s.get().equals("general")) {
 				Utilities.getPaginationService().builder()
-		        	.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.general)
-		        	.header(Text.of("Re-RenderRealityPlugin 2"))
+					.title(Text.of("RRRP2 Commands"))
+		        	.contents(HelpGenerator.getHelp().general)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
-		        	.padding(Text.of(""))
-		        	.linesPerPage(7)
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == "teleport") {
+			} else if (s.get().equals("teleport")) {
 				Utilities.getPaginationService().builder()
-		        	.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.teleport)
-		        	.header(Text.of("Re-RenderRealityPlugin 2"))
+					.title(Text.of("RRRP2 Commands"))
+		        	.contents(HelpGenerator.getHelp().teleport)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
-		        	.padding(Text.of(""))
-		        	.linesPerPage(7)
-	        	.sendTo(src);
+		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == "various") {
+			} else if (s.get().equals("various")) {
 				Utilities.getPaginationService().builder()
-		        	.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.various)
-		        	.header(Text.of("Re-RenderRealityPlugin 2"))
+					.title(Text.of("RRRP2 Commands"))
+		        	.contents(HelpGenerator.getHelp().various)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
-		        	.padding(Text.of(""))
-		        	.linesPerPage(7)
 		        	.sendTo(src);
 				return CommandResult.success();
 			} else {
 				Utilities.getPaginationService().builder()
-		        	.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.all)
-		        	.header(Text.of("Re-RenderRealityPlugin 2"))
+					.title(Text.of("RRRP2 Commands"))
+		        	.contents(HelpGenerator.getHelp().all)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
-		        	.padding(Text.of(""))
-		        	.linesPerPage(7)
 		        	.sendTo(src);
 				return CommandResult.success();
 			}
 		} else {
 			Utilities.getPaginationService().builder()
 	        	.title(Text.of("RRRP2 Commands"))
-	        	.contents(HelpGenerator.all)
-	        	.header(Text.of("Re-RenderRealityPlugin 2"))
+	        	.contents(HelpGenerator.getHelp().all)
 	        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 	        	.sendTo(src);
 			return CommandResult.success();
@@ -104,7 +84,7 @@ public class HelpCommand extends CommandExecutorBase{
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder().description(Text.of("Displays a list of commands for the user")).permission("rrrp2.general.help")
-				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("SubDirectory")))))
+				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("SubDirectory")))))
 				.executor(this).build();
 	}
 }
