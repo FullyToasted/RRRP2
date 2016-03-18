@@ -50,7 +50,7 @@ public class ReadConfigMesseges {
 	}
 	
 	public static String getLeaveMsg() {
-		CommentedConfigurationNode node = Configs.getConfig(messageConfig).getNode("events", "join", "message");
+		CommentedConfigurationNode node = Configs.getConfig(messageConfig).getNode("events", "leave", "message");
 		if (configManager.getString(node).isPresent())
 			return node.getString();
 		setJoinMsg("&e%player &7has left.");

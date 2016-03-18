@@ -7,8 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +14,7 @@ import java.util.UUID;
 import net.re_renderreality.rrrp2.backend.CommandLoader;
 import net.re_renderreality.rrrp2.config.*;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.listeners.*;
 import net.re_renderreality.rrrp2.main.PlayerRegistry;
 import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.AFK;
@@ -27,10 +26,10 @@ import org.spongepowered.api.Server;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
-import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
@@ -88,7 +87,7 @@ public class RRRP2{
 					Files.move(configDir.resolveSibling("RRRP2"), configDir);
 					getLogger().info(container.getName() + ": Config root generated");
 				}
-				catch (IOException e)
+				catch (IOException e) 
 				{
 					e.printStackTrace();
 				}
@@ -105,6 +104,7 @@ public class RRRP2{
 					e.printStackTrace();
 				}
 			}
+			
 		}
 
 		// Create data Directory for EssentialCmds
@@ -121,17 +121,6 @@ public class RRRP2{
 				e.printStackTrace();
 			}
 		}
-		
-		getLogger().info(container.getName() + ": Config Initiallation Finished");
-	}
-	@Listener 
-	public void gameStarting(GameStartingServerEvent event) {
-		server = game.getServer();
-		Registry.setGame(getGame());
-		Registry.setLogger(getLogger());
-		players = new PlayerRegistry();
-		CommandLoader.registerCommands();
-		
 		Config.getConfig().setup();
 		Messages.getConfig().setup();
 		MOTD.getConfig().setup();
@@ -139,6 +128,24 @@ public class RRRP2{
 		Spawn.getConfig().setup();
 		
 		HelpGenerator.getHelp().populate();
+		getLogger().info(container.getName() + ": Config Initiallation Finished");
+	}
+	
+	@Listener
+	public void onServerInit(GameInitializationEvent event)
+	{
+		getGame().getEventManager().registerListeners(this, new PlayerJoinListener());
+		getGame().getEventManager().registerListeners(this, new MailListener());
+		getGame().getEventManager().registerListeners(this, new PlayerLeftEvent());
+	}
+	
+	@Listener 
+	public void gameStarting(GameStartingServerEvent event) {
+		server = game.getServer();
+		Registry.setGame(getGame());
+		Registry.setLogger(getLogger());
+		players = new PlayerRegistry();
+		CommandLoader.registerCommands();
 		
 		Database.setup(game);
     	Database.load(game);
@@ -180,25 +187,8 @@ public class RRRP2{
 	}
 	
 	/**
-	 * @param event Listener for "ClientConnectionEvent.Login" event.
-	 */
-	@Listener
-	public void playerJoined(ClientConnectionEvent.Login event) {
-		players.addPlayer(event.getTargetUser().getUniqueId().toString(), event.getTargetUser().getName());
-		String time = LocalTime.now().toString();
-		time = LocalDate.now().toString() + " " + time.substring(0, time.indexOf('.'));
-		players.addLastSeen(event.getTargetUser().getUniqueId().toString(), time);
-	}
-	
-	/**
 	 * @param event Listener for "ClientConnectionEvent.Disconnect" event.
 	 */
-	@Listener
-	public void playerLeft(ClientConnectionEvent.Disconnect event) {
-		String time = LocalTime.now().toString();
-		time = LocalDate.now().toString() + " " + time.substring(0, time.indexOf('.'));
-		players.addLastSeen(event.getTargetEntity().getUniqueId().toString(), time);	
-	}
 	
 	public String goml() {
 		return "";

@@ -11,10 +11,10 @@ public class PlayerCore {
 	private String nick;
 	private String channel;
 	private double money;
-	private double god;
-	private double fly;
-	private double tptoggle;
-	private double invisible;
+	private boolean god;
+	private boolean fly;
+	private boolean tptoggle;
+	private boolean invisible;
 	private double onlinetime;
 	private String mails;
 	private String lastlocation;
@@ -39,10 +39,10 @@ public class PlayerCore {
 					  String nick, 
 					  String channel, 
 					  double money, 
-					  double god, 
-					  double fly, 
-					  double tptoggle, 
-					  double invisible, 
+					  boolean god, 
+					  boolean fly, 
+					  boolean tptoggle, 
+					  boolean invisible, 
 					  double onlinetime, 
 					  String mails, 
 					  String lastlocation, 
@@ -103,10 +103,10 @@ public class PlayerCore {
 	public void setNick(String nick) { this.nick = nick; }
 	public void setChannel(String channel) { this.channel = channel; }
 	public void setMoney(double money) { this.money = money; }
-	public void setGod(double god) { this.god = god; }
-	public void setFly(double fly) { this.fly = fly; }
-	public void setTPToggle(double tptoggle) { this.tptoggle = tptoggle; }
-	public void setInvisible(double invisible) { this.invisible = invisible; }
+	public void setGod(boolean god) { this.god = god; }
+	public void setFly(boolean fly) { this.fly = fly; }
+	public void setTPToggle(boolean tptoggle) { this.tptoggle = tptoggle; }
+	public void setInvisible(boolean invisible) { this.invisible = invisible; }
 	public void setOnlinetime(double onlinetime) { this.onlinetime = onlinetime; }
 	public void setMails(String mails) { this.mails = mails; }
 	public void setLastlocation(String lastlocation) { this.lastlocation = lastlocation; }
@@ -132,10 +132,10 @@ public class PlayerCore {
 	public String getNick() { return nick; }
 	public String getChannel() { return channel; }
 	public double getMoney() { return Math.round(money * 100) / 100; }
-	public double getGod() { return god; }
-	public double getFly() { return fly; }
-	public double getTPToggle() { return tptoggle; }
-	public double getInvisible() { return invisible; }
+	public boolean getGod() { return god; }
+	public boolean getFly() { return fly; }
+	public boolean getTPToggle() { return tptoggle; }
+	public boolean getInvisible() { return invisible; }
 	public double getOnlinetime() { return onlinetime; }
 	public String getMails() { return mails; }
 	public String getLastlocation() { return lastlocation; }

@@ -10,8 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.slf4j.Logger;
-
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.Configurable;
 
@@ -45,9 +43,7 @@ public class Messages implements Configurable {
 		{
 			try
 			{
-				Logger l = RRRP2.getRRRP2().getLogger();
 				File folder = new File("config/rrr.commands/files");
-				l.info("RRRRRRRRRRRRRRRRRRR " + folder.exists());
 				if(!folder.exists()) 
 					folder.mkdir();
 				

@@ -3,14 +3,14 @@ package net.re_renderreality.rrrp2.database;
 public class HomeCore {
 	private String uuid;
 	private String name;
-	private String world;
+	private int world;
 	private double x;
 	private double y;
 	private double z;
 	private double yaw;
 	private double pitch;
 	
-	public HomeCore(String uuid, String name, String world, double x, double y, double z, double yaw, double pitch) {
+	public HomeCore(String uuid, String name, int world, double x, double y, double z, double yaw, double pitch) {
 		this.uuid = uuid;
 		this.name = name;
 		this.world = world;
@@ -35,7 +35,7 @@ public class HomeCore {
 	
 	public void setUUID(String uuid) { this.uuid = uuid; }
 	public void setName(String name) { this.name = name; }
-	public void setWorld(String world) { this.world = world; }
+	public void setWorld(int world) { this.world = world; }
 	public void setX(double x) { this.x = x; }
 	public void setY(double y) { this.y = y; }
 	public void setZ(double z) { this.z = z; }
@@ -44,7 +44,7 @@ public class HomeCore {
 	
 	public String getUUID() { return uuid; }
 	public String getName() { return name; }
-	public String getWorld() { return world; }
+	public int getWorld() { return world; }
 	public double getX() { return x; }
 	public double getY() { return y; }
 	public double getZ() { return z; }

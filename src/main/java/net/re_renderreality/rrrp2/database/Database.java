@@ -68,19 +68,19 @@ public class Database {
 			}
 
 			if(!tables.contains("bans")) {
-				execute("CREATE TABLE bans (uuid TEXT, sender TEXT, reason TEXT, time DOUBLE, duration DOUBLE)");
+				execute("CREATE TABLE bans (uuid VARCHAR, sender VARCHAR, reason TEXT, time DOUBLE, duration DOUBLE)");
 			}
 			
 			if(!tables.contains("homes")) {
-				execute("CREATE TABLE homes (uuid TEXT, name TEXT, world TEXT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE)");
+				execute("CREATE TABLE homes (uuid VARCHAR, name TEXT, world INT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE)");
 			}
 			
 			if(!tables.contains("mutes")) {
-				execute("CREATE TABLE mutes (uuid TEXT, duration DOUBLE, reason TEXT)");
+				execute("CREATE TABLE mutes (uuid VARCHAR, duration DOUBLE, reason TEXT)");
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (uuid TEXT, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god DOUBLE, fly DOUBLE, tptoggle DOUBLE, invisible DOUBLE, onlinetime DOUBLE, mails TEXT, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
+				execute("CREATE TABLE players (uuid VARCHAR, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, mails TEXT, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
 			}
 				
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -123,7 +123,7 @@ public class Database {
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM players");
 			while(rs.next()) {
-				PlayerCore player = new PlayerCore(rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getDouble("god"), rs.getDouble("fly"), rs.getDouble("tptoggle"), rs.getDouble("invisible"), rs.getDouble("onlinetime"), rs.getString("mails"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
+				PlayerCore player = new PlayerCore(rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getBoolean("god"), rs.getBoolean("fly"), rs.getBoolean("tptoggle"), rs.getBoolean("invisible"), rs.getDouble("onlinetime"), rs.getString("mails"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
 				Database.addPlayer(player.getUUID(), player);
 				Database.addUUID(player.getName(), player.getUUID());
 			}
@@ -138,7 +138,7 @@ public class Database {
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM homes");
 			while(rs.next()) {
-				HomeCore home = new HomeCore(rs.getString("uuid"), rs.getString("name"), rs.getString("world"), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getDouble("yaw"), rs.getDouble("pitch"));
+				HomeCore home = new HomeCore(rs.getString("uuid"), rs.getString("name"), rs.getInt("world"), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getDouble("yaw"), rs.getDouble("pitch"));
 				PlayerCore player = Database.getPlayer(home.getUUID());
 				player.setHome(home.getName(), home);
 				Database.removePlayer(home.getUUID());
