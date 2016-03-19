@@ -29,32 +29,6 @@ public class WhoisCommand extends CommandExecutorBase{
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		PlayerRegistry register = RRRP2.plugin.getPlayerRegistry();
-		Optional<Player> player = ctx.<Player> getOne("player");
-		String name = player.get().getName();
-		Text status = Text.of("");
-		Text lastSeen = Text.of("");
-		
-		if (register.containsPlayer(name)) {
-			if (Utilities.getPlayer(name).isPresent()) {
-				status = Text.builder(Utilities.boolToString(true)).color(TextColors.GREEN).build();
-				String time = LocalTime.now().toString();
-				lastSeen = Text.builder(LocalDate.now().toString() + " " + time.substring(0, time.indexOf('.'))).color(TextColors.BLUE).build();
-			}
-			else {
-				status = Text.builder(Utilities.boolToString(false)).color(TextColors.RED).build();
-				String time = register.getTime(register.getUuid(name));
-				if (!time.isEmpty())
-					lastSeen = Text.builder(time).color(TextColors.BLUE).build();
-				else
-					lastSeen = Text.builder("Not Seen").color(TextColors.BLUE).build();
-			}
-			src.sendMessage(Text.joinWith(Text.of(""), Text.of(name + " -- Online: "), status, Text.of(" Last seen: ", lastSeen)));
-		}
-		else {
-			src.sendMessage(Text.of("That player has not been seen on the server."));
-			return CommandResult.empty();
-		}
 		return CommandResult.success();
 	}
 	

@@ -85,6 +85,7 @@ public class Spawn implements Configurable
 	@Override
 	public void populate()
 	{
+		//Spawn Information goes here. Will be auto-populated to begin with but then can be overridden
 		get().getNode("spawn").setComment("Contains spawn data.");
 	}
 

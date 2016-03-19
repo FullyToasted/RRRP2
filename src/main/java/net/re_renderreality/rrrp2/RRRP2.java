@@ -10,9 +10,8 @@ import java.util.UUID;
 import net.re_renderreality.rrrp2.backend.CommandLoader;
 import net.re_renderreality.rrrp2.config.*;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.listeners.*;
-import net.re_renderreality.rrrp2.main.PlayerRegistry;
-import net.re_renderreality.rrrp2.main.Registry;
 import net.re_renderreality.rrrp2.utils.AFK;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
 
@@ -54,7 +53,6 @@ public class RRRP2{
 	
 	public static RRRP2 plugin;
 	private Server server;
-	private PlayerRegistry players;
 	public static HashMap<UUID, AFK> afkList = new HashMap<>();
 	public static List<Player> recentlyJoined = Lists.newArrayList();
 	
@@ -63,9 +61,8 @@ public class RRRP2{
 	}
 	/**
 	 * @param event Listener for GameStartingServerEvent.
-	 * @note Initialization of Plugin and Registry.
+	 * @note Initialization of configs.
 	 */
-	
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event)
 	{
@@ -103,7 +100,7 @@ public class RRRP2{
 			
 		}
 
-		// Create data Directory for EssentialCmds
+		// Create data Directory for the Plugin
 		if (!Files.exists(configDir.resolve("data")))
 		{
 			getLogger().info(container.getName() + ": Config data subfolder not found generating...");
@@ -127,6 +124,10 @@ public class RRRP2{
 		getLogger().info(container.getName() + ": Config Initiallation Finished");
 	}
 	
+	/**
+	 * @param event Listener for GameInitializationEvent.
+	 * @note Initialization of Listeners.
+	 */
 	@Listener
 	public void onServerInit(GameInitializationEvent event)
 	{
@@ -135,12 +136,15 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new PlayerLeftEvent());
 	}
 	
+	/**
+	 * @param event Listener for GameStartingServerEvent.
+	 * @note Initialization of Plugin, registry, and Database.
+	 */
 	@Listener 
 	public void gameStarting(GameStartingServerEvent event) {
 		server = game.getServer();
 		Registry.setGame(getGame());
 		Registry.setLogger(getLogger());
-		players = new PlayerRegistry();
 		CommandLoader.registerCommands();
 		
 		Database.setup(game);
@@ -151,6 +155,7 @@ public class RRRP2{
 	
 	/**
 	 * @param event Listener for "GameStoppingServerEvent" event.
+	 * @note will push everything to database emergency commit
 	 */
 	@Listener 
 	public void gameStopping(GameStoppingServerEvent event) {
@@ -159,13 +164,8 @@ public class RRRP2{
 	}
 	
 	/**
-	 * @param event Listener for "ClientConnectionEvent.Disconnect" event.
+	 * @return returns the directory of the configuration files
 	 */
-	
-	public String goml() {
-		return "";
-	}
-	
 	public Path getConfigDir() {
 		return configDir;
 	}
@@ -184,9 +184,4 @@ public class RRRP2{
 	 * @return current Game Object.
 	 */
 	public Game getGame() { return game; }
-	
-	/**
-	 * @return get PlayerRegistry Object.
-	 */
-	public PlayerRegistry getPlayerRegistry() { return players; }
 }

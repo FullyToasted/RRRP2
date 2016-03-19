@@ -9,7 +9,7 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 
 /**
- * Represents a command that can be run on an Async thread.
+ * Represents a command that can be run on an Async thread. 
  */
 public abstract class AsyncCommandExecutorBase extends CommandExecutorBase {
 

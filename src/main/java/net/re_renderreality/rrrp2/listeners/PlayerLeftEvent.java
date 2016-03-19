@@ -11,6 +11,11 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 
 public class PlayerLeftEvent
 {
+	/**
+	 * @param event client disconnection event
+	 * 
+	 * TODO: update playerCore, update Database, set lastSeen location
+	 */
 	@Listener
 	public void onPlayerDisconnect(ClientConnectionEvent.Disconnect event)
 	{

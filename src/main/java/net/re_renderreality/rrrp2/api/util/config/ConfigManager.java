@@ -17,7 +17,7 @@ public class ConfigManager
 	/**
 	 * Get boolean {@link Optional} value for CommentedConfigurationNode if it is not null; Otherwise return Optional.empty.
 	 *
-	 * @param node The node for which the boolean value is needed
+	 * @param node The node for which the boolean value is needed 
 	 * @return Optional.empty if null or Optional#of(Boolean) if not
 	 */
 	public Optional<Boolean> getBoolean(CommentedConfigurationNode node)

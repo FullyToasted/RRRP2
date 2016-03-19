@@ -20,6 +20,9 @@ public final class CommandLoader {
      */
     private CommandLoader() {}
 
+    /**
+     * @return returns A set of all the command Objects
+     */
     private static Set<? extends CommandExecutorBase> getCommands() {
         return Sets.newHashSet(
             new HealCommand(),
@@ -28,7 +31,6 @@ public final class CommandLoader {
             new ListEntitiesCommand(),
             new WhoisCommand()
            
-            
         );
     }
 

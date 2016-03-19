@@ -1,10 +1,10 @@
 package net.re_renderreality.rrrp2.database;
 
 import org.spongepowered.api.Game;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.service.sql.SqlService;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
+import net.re_renderreality.rrrp2.database.core.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +32,7 @@ public class Database {
 			
 			sql = game.getServiceManager().provide(SqlService.class).get();
 			
+			//creates a .db file if MySQL file is not provieded
 			if(!ReadConfigDatabase.useMySQL()) {
 				
 		    	File folder = new File("config/rrr.commands/data");
@@ -48,7 +49,7 @@ public class Database {
 				
 			}
 			else {
-				
+				//Gets MySQL data from the congig file
 				String host = ReadConfigDatabase.getMySQLHost();
 				String port = String.valueOf(ReadConfigDatabase.getMySQLPort());
 				String username = ReadConfigDatabase.getMySQLUsername();
@@ -62,6 +63,7 @@ public class Database {
 			DatabaseMetaData metadata = datasource.getConnection().getMetaData();
 			ResultSet resultset = metadata.getTables(null, null, "%", null);
 			
+			//Creates all the tables in the selected database
 			List<String> tables = new ArrayList<String>();		
 			while(resultset.next()) {
 				tables.add(resultset.getString(3));
@@ -80,23 +82,23 @@ public class Database {
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (ID INT, uuid VARCHAR, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, mails TEXT, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
+				execute("CREATE TABLE players (ID INT, uuid VARCHAR, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
 			}
 				
 		} catch (SQLException e) { e.printStackTrace(); }
 			
 		
 	}
-	
+	//REPLACE EVERYTHING FROM HERE
 	public static void load(Game game) {
-		
+		//Imports the entire BanList into HashMap
 		try {
 			Connection c = datasource.getConnection();
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM bans");
 			while(rs.next()) {
 				BanCore ban = new BanCore(rs.getInt("ID"),rs.getString("uuid"), rs.getString("sender"), rs.getString("reason"), rs.getDouble("time"), rs.getDouble("duration"));
-				Database.addBan(ban.getID(), ban);
+				Bans.addBan(ban.getID(), ban);
 			}
 			s.close();
 			c.close();
@@ -104,27 +106,28 @@ public class Database {
 			e.printStackTrace();
 		}
 		
+		//Imports the entire MuteList into HashMap
 		try {
 			Connection c = datasource.getConnection();
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM mutes");
 			while(rs.next()) {
 				MuteCore mute = new MuteCore(rs.getInt("ID"), rs.getString("uuid"), rs.getDouble("duration"), rs.getString("reason"));
-				Database.addMute(mute.getID(), mute);
+				Mutes.addMute(mute.getID(), mute);
 			}
 			s.close();
 			c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		//Imports the entire PlayerList into hashmap
 		try {
 			Connection c = datasource.getConnection();
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM players");
 			while(rs.next()) {
-				PlayerCore player = new PlayerCore(rs.getInt("ID"), rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getBoolean("god"), rs.getBoolean("fly"), rs.getBoolean("tptoggle"), rs.getBoolean("invisible"), rs.getDouble("onlinetime"), rs.getString("mails"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
-				Database.addPlayer(player.getID(), player);
+				PlayerCore player = new PlayerCore(rs.getInt("ID"), rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getBoolean("god"), rs.getBoolean("fly"), rs.getBoolean("tptoggle"), rs.getBoolean("invisible"), rs.getDouble("onlinetime"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
+				Players.addPlayer(player.getID(), player);
 			}
 			s.close();
 			c.close();
@@ -132,16 +135,14 @@ public class Database {
 			e.printStackTrace();
 		}
 		
+		//Imports the entire HomeList into HashMap
 		try {
 			Connection c = datasource.getConnection();
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM homes");
 			while(rs.next()) {
 				HomeCore home = new HomeCore(rs.getInt("ID"), rs.getString("uuid"), rs.getString("name"), rs.getInt("world"), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getDouble("yaw"), rs.getDouble("pitch"));
-				PlayerCore player = Database.getPlayer(home.getUUID());
-				player.setHome(home.getName(), home);
-				Database.removePlayer(home.getID());
-				Database.addPlayer(home.getID(), player);
+				Homes.addHome(home.getID(), home);
 			}
 			s.close();
 			c.close();
@@ -149,7 +150,11 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	//TO HERE
 	
+	/**
+	 * @param execute string MySQL command to execute
+	 */
 	public static void execute(String execute) {	
 		try {
 			
@@ -164,6 +169,9 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * @param execute executes a list of MySQL commands in the order they were provided
+	 */
 	public static void execute(List<String> execute) {	
 		try {
 		
@@ -178,103 +186,46 @@ public class Database {
 		}
 	}
 	
+	/**
+	 *  Executes the queue of MySQL commands
+	 */
 	public static void commit() {
 		
 		if(queue.isEmpty()) return;
 		execute(queue);
 		queue.clear();
+		return;
 		
 	}
 	
+	/**
+	 * @param queue command to add to the MySQL command queue
+	 */
 	public static void queue(String queue) { 
 		Database.queue.add(queue); 
+	}	
+	
+	//Start UUID This whole hashmap is used to populate people uuid and ID as they join so they can be tracked. Flushed on server shutdown.
+	private static HashMap<String, Integer> uuids = new HashMap<String, Integer>();
+	
+	//adds a UUID/ID value pair to table
+	public static void addUUID(String uuid, int ID) { 
+		uuids.put(uuid, ID); 
 	}
 	
-	//Start Bans
-	private static HashMap<Integer, BanCore> bans = new HashMap<Integer, BanCore>();
-	
-	public static void addBan(int ID, BanCore ban) { 
-		if(!bans.containsKey(ID)) 
-			bans.put(ID, ban); 
-	}
-	
-	public static void removeBan(int ID) { 
-		if(bans.containsKey(ID)) 
-			bans.remove(ID); 
-	}
-	
-	public static BanCore getBan(int ID) { 
-		return bans.containsKey(ID) ? bans.get(ID) : null; 
-	}
-	
-	public static HashMap<Integer, BanCore> getBans() { 
-		return bans; 
-	}
-	//End Bans
-	
-	//Start Mute
-	private static HashMap<Integer, MuteCore> mutes = new HashMap<Integer, MuteCore>();
-	
-	public static void addMute(int ID, MuteCore mute) { 
-		if(!mutes.containsKey(ID)) mutes.put(ID, mute); 
-	
-	}
-	public static void removeMute(int ID) { 
-		if(mutes.containsKey(ID)) mutes.remove(ID); 
-	}
-	
-	public static MuteCore getMute(int ID) { 
-		return mutes.containsKey(ID) ? mutes.get(ID) : null; 
-	}
-	
-	public static HashMap<Integer, MuteCore> getMutes() { 
-		return mutes; 
-	}
-	//End Mute
-	
-	//Start Players
-	private static HashMap<Integer, PlayerCore> players = new HashMap<Integer, PlayerCore>();
-	
-	public static void addPlayer(int ID, PlayerCore player) { 
-		if(!players.containsKey(ID)) 
-			players.put(ID, player); 
-	}
-	
-	public static void setLastTimePlayerJoined(Player player, String time)
-	{
-		if(players.containsKey(getPlayer(player.getName()))) {
-			players.get(player.getName()).setLastseen(time);
-			if(players.get(player.getName()).getFirstseen() == null) {
-				players.get(player.getName()).setFirstseen(time);
-			}
-		}
-		
-	}
-	
-	public static void removePlayer(String uuid) { 
-		if(players.containsKey(uuid)) 
-			players.remove(uuid); 
-	}
-	
-	public static PlayerCore getPlayer(String uuid) { 
-		return players.containsKey(uuid) ? players.get(uuid) : null; 
-	
-	}
-	public static HashMap<Integer, PlayerCore> getPlayers() { return players; }
-	//End Players
-	
-	//Start UUID
-	private static HashMap<Integer, String> uuids = new HashMap<Integer, String>();
-	
-	public static void addUUID(int ID, String uuid) { 
-		uuids.put(ID, uuid); 
-	}
-	
-	public static void removeUUID(int ID) { 
-		if(uuids.containsKey(ID)) 
-			uuids.remove(ID); 
+	//removes a player upon disconnect
+	public static void removeUUID(String uuid) { 
+		if(uuids.containsKey(uuid)) 
+			uuids.remove(uuid); 
 		}
 	
-	public static String getUUID(int ID) { return uuids.containsKey(ID) ? uuids.get(ID) : null; }	
+	
+	/**
+	 * @param uuid 
+	 * @return ID 
+	 * 
+	 * @note Checks what the ID is of a player given their uuid
+	 */
+	public static int getID(String uuid) { return uuids.containsKey(uuid) ? uuids.get(uuid) : -1; }	
 	//End UUID
 }

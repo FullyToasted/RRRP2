@@ -14,7 +14,9 @@ import javax.annotation.Nonnull;
 
 public class Template extends CommandExecutorBase
 {
-
+	/**
+	 * Explanation of what command does and if complicated how to do it
+	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 

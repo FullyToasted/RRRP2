@@ -92,18 +92,19 @@ public class Messages implements Configurable {
 	@Override
 	public void populate()
 	{
-			get().getNode("events", "join", "enable").setValue(true);
-			get().getNode("events", "join", "message").setValue("&e%player &7has joined.");
+		//Any generic Messages that are broadcasted server-wide go here
+		get().getNode("events", "join", "enable").setValue(true);
+		get().getNode("events", "join", "message").setValue("&e%player &7has joined.");
+		
+		get().getNode("events", "leave", "enable").setValue(true);
+		get().getNode("events", "leave", "message").setValue("&e%player &7has left.");
 			
-			get().getNode("events", "leave", "enable").setValue(true);
-			get().getNode("events", "leave", "message").setValue("&e%player &7has left.");
-				
-			get().getNode("events", "firstjoin", "enable").setValue(true);
-			get().getNode("events", "firstjoin", "message").setValue("&e%player &7has joined for the first time!");
-			get().getNode("events", "firstjoin", "uniqueplayers", "show").setValue(true);
-			get().getNode("events", "firstjoin", "uniqueplayers", "message").setValue("&e%players &7unique players already joined.");
-			
-			get().getNode("version").setValue(1);			
+		get().getNode("events", "firstjoin", "enable").setValue(true);
+		get().getNode("events", "firstjoin", "message").setValue("&e%player &7has joined for the first time!");
+		get().getNode("events", "firstjoin", "uniqueplayers", "show").setValue(true);
+		get().getNode("events", "firstjoin", "uniqueplayers", "message").setValue("&e%players &7unique players already joined.");
+		
+		get().getNode("version").setValue(1);			
 	}
 	
 	@Override

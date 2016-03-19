@@ -82,6 +82,6 @@ public abstract class CommandExecutorBase implements CommandExecutor {
      */
     @Override
     public boolean equals(Object obj) {
-        return obj.getClass().equals(getClass());
+        return obj.getClass().equals(getClass()); 
     }
 }

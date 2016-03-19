@@ -85,6 +85,7 @@ public class Config implements Configurable
 	@Override
 	public void populate()
 	{
+		//Populates with General COnfig information. Anything specialized will be given dedicated .conf file
 		get().getNode("mysql").setComment("MySQL Options for EssentialCmds.");
 		get().getNode("mysql", "use").setValue(false).setComment("Enables/Disables MySQL usage for EssentialCmds.");
 		get().getNode("mysql", "port").setValue("8080").setComment("Port of MySQL Database.");

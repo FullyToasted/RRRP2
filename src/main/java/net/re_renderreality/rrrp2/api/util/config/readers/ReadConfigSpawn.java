@@ -18,14 +18,17 @@ public class ReadConfigSpawn {
 	private static Configurable spawn = Spawn.getConfig();
 	private static Configurable warps = Warps.getConfig();
 	
-	//private static ConfigManager configManager = new ConfigManager();
-	
-	public static void setSpawn(Transform<World> transform, String worldName) {
+	/**
+	 * @param transform x,y,z, pitch, yaw encased in  Transform World
+	 * @param worldID world ID of the world
+	 * @note saves spawn location to the spawn.conf file
+	 */
+	public static void setSpawn(Transform<World> transform, int worldID) {
 		{
 			Configs.getConfig(spawn).getNode("spawn", "X").setValue(transform.getLocation().getX());
 			Configs.getConfig(spawn).getNode("spawn", "Y").setValue(transform.getLocation().getY());
 			Configs.getConfig(spawn).getNode("spawn", "Z").setValue(transform.getLocation().getZ());
-			Configs.getConfig(spawn).getNode("spawn", "world").setValue(worldName);
+			Configs.getConfig(spawn).getNode("spawn", "world").setValue(worldID);
 			Configs.getConfig(spawn).getNode("spawn", "transform", "pitch").setValue(transform.getRotation().getX());
 			Configs.getConfig(spawn).getNode("spawn", "transform", "yaw").setValue(transform.getRotation().getY());
 			Configs.getConfig(spawn).getNode("spawn", "transform", "roll").setValue(transform.getRotation().getZ());
@@ -34,11 +37,17 @@ public class ReadConfigSpawn {
 		}
 	}
 	
+	/**
+	 * @return returns if there is a spawn location in the config file
+	 */
 	public static boolean isSpawnInConfig()
 	{
 		return Configs.getConfig(spawn).getNode("spawn", "X").getValue() != null;
 	}
-
+	
+	/**
+	 * @return the spawn location in the form of Transform World
+	 */
 	public static Transform<World> getSpawn()
 	{
 		String worldName = Configs.getConfig(spawn).getNode("spawn", "world").getString();

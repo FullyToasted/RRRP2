@@ -1,9 +1,8 @@
 package net.re_renderreality.rrrp2;
 
-/*
+/**
  * General Plugin Info
  */
-
 public class PluginInfo {
 	public static final String ID =  "rrr.commands";
 	public static final String NAME = "RRR2";

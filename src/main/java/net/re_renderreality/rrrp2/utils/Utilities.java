@@ -2,8 +2,6 @@ package net.re_renderreality.rrrp2.utils;
 
 import java.util.Optional;
 
-import net.re_renderreality.rrrp2.main.Registry;
-
 import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.command.source.CommandBlockSource;
 import org.spongepowered.api.command.source.ConsoleSource;
@@ -13,6 +11,8 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.channel.MessageChannel;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
+
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class Utilities {
 	

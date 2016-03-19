@@ -2,42 +2,65 @@ package net.re_renderreality.rrrp2.utils;
 
 public class Mail
 {
-	public String recipientName;
-	public String senderName;
+	public int recipientID;
+	public int senderID;
 	public String message;
 
-	public Mail(String recipientName, String senderName, String message)
+	/**
+	 * @param recipientID ID of the recipient
+	 * @param senderID ID of the sender
+	 * @param message Contents of the message
+	 */ 
+	public Mail(int recipientID, int senderID, String message)
 	{
-		this.recipientName = recipientName;
-		this.senderName = senderName;
+		this.recipientID = recipientID;
+		this.senderID = senderID;
 		this.message = message;
 	}
 
-	public void setRecipientName(String recipientName)
+	/**
+	 * @param recipientID the ID number of the recipient
+	 */
+	public void setRecipientName(int recipientID)
 	{
-		this.recipientName = recipientName;
+		this.recipientID = recipientID;
 	}
 
-	public void setSenderName(String senderName)
+	/**
+	 * @param senderID the ID number of the sender
+	 */
+	public void setSenderID(int senderID)
 	{
-		this.senderName = senderName;
+		this.senderID = senderID;
 	}
 
+	/**
+	 * @param message the message to set the mail to
+	 */
 	public void setMessage(String message)
 	{
 		this.message = message;
 	}
 
-	public String getRecipientName()
+	/**
+	 * @return the ID of the recipient
+	 */
+	public int getRecipientID()
 	{
-		return recipientName;
+		return recipientID;
 	}
 
-	public String getSenderName()
+	/**
+	 * @return the ID of the sender
+	 */
+	public int getSenderID()
 	{
-		return senderName;
+		return senderID;
 	}
 
+	/**
+	 * @return the Message of the mail
+	 */
 	public String getMessage()
 	{
 		return message;

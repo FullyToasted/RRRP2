@@ -11,41 +11,82 @@ public class MailSendEvent extends AbstractEvent implements Cancellable
 	private boolean cancelled = false;
 
 	private Player sender;
-	private String recipientName;
+	private int senderID;
+	private int receiverID;
+	private String recipient;
 	private String message;
-
-	public Player getSender()
-	{
+	
+	//Getters
+	/**
+	 * @return sender of the mail
+	 */
+	public Player getSender() {
 		return sender;
 	}
 
-	public String getRecipientName()
-	{
-		return recipientName;
+	/**
+	 * @return name of the recepient of the mail
+	 */
+	public String getRecipient() {
+		return recipient;
 	}
-
+	
+	/**
+	 * @return the ID of the sender
+	 */
+	public int getSenderID() {
+		return senderID;
+	}
+	
+	/**
+	 * @return the ID of the receiver
+	 */
+	public int getreceiverID() {
+		return receiverID;
+	}
+	
+	/**
+	 * @return returns if the mail is cancelled
+	 */
 	public boolean isCancelled()
 	{
 		return cancelled;
 	}
 
+	/**
+	 * @return returns the content of the email
+	 */
 	public String getMessage()
 	{
 		return message;
 	}
 
+	//Setters
+	/**
+	 * @param cancel set if the mail has been cancelled T or F
+	 */
 	public void setCancelled(boolean cancel)
 	{
 		cancelled = cancel;
 	}
 
+	/**
+	 * @param sender sender of the mail
+	 * @param recipientName
+	 * @param message
+	 * 
+	 * @TODO: Implement IDs
+	 */
 	public MailSendEvent(Player sender, String recipientName, String message)
 	{
 		this.sender = sender;
-		this.recipientName = recipientName;
+		this.recipient = recipientName;
 		this.message = message;
 	}
 
+	/**
+	 * @return returns the cause of the mail
+	 */
 	@Override
 	public Cause getCause()
 	{

@@ -11,13 +11,15 @@ public class HelpGenerator {
 	public Iterable<Text> teleport;
 	public Iterable<Text> various;
 	public Iterable<Text> all;
+	//creates a HelpGenerator instance
 	private static HelpGenerator help = new HelpGenerator();
 
 	private HelpGenerator()
 	{
 		;
 	}
-	
+	//Dont Change Spacing on first two Text lines of each function
+	//Keep space-Text at end of command list
 	private ArrayList<Text> admin() {
 		ArrayList<Text> array = new ArrayList<Text>();
 		array.add(Text.of("                              Admin Commands"));
@@ -68,6 +70,9 @@ public class HelpGenerator {
 		return array;
 	}
 	
+	/**
+	 * populates the help generator object
+	 */
 	public void populate() {
 		admin = admin();
 		cheat = cheat();
@@ -86,6 +91,9 @@ public class HelpGenerator {
 		return ;
 	}
 	
+	/**
+	 * @return returns the populated helpGenerator object
+	 */
 	public static HelpGenerator getHelp() {
 		return help;
 	}

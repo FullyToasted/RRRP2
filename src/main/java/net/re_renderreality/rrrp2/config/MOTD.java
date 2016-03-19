@@ -89,10 +89,8 @@ public class MOTD implements Configurable
 	@Override
 	public void populate()
 	{
-		get()
-		.getNode("motd")
-		.setValue("&6This is the default MOTD")
-		.setComment("Contains The Message of the day.");
+		//Any Messages of the Day go here. Can add more later and have it randomly pick one
+		get().getNode("motd").setValue("&6This is the default MOTD").setComment("Contains The Message of the day.");
 	}
 
 	@Override

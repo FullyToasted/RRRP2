@@ -13,14 +13,21 @@ public class MailListener
 {
 	private Game game = RRRP2.getRRRP2().getGame();
 
+	/**
+	 * @param event MailSendEvent
+	 * 
+	 * @notes adds mail to database
+	 * @TODO add way for players to recieve their mail, get the ID of the recipient
+	 */
 	@Listener
 	public void onMailSend(MailSendEvent event)
 	{
-		String recipientName = event.getRecipientName();
+		String recipientName = event.getRecipient();
 
 		if (game.getServer().getPlayer(recipientName).isPresent())
 		{
-			MailHandler.addMail(event.getSender().getName(), recipientName, event.getMessage());
+			//MailHandler.addMail(event.getSender().getName(), recipientName, event.getMessage());
+			MailHandler.addMail(0, 0, event.getMessage());
 			game.getServer()
 				.getPlayer(recipientName)
 				.get()
@@ -30,7 +37,7 @@ public class MailListener
 		}
 		else
 		{
-			MailHandler.addMail(event.getSender().getName(), recipientName, event.getMessage());
+			MailHandler.addMail(0, 0, event.getMessage());
 		}
 	}
 }

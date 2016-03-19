@@ -85,6 +85,7 @@ public class Warps implements Configurable
 	@Override
 	public void populate()
 	{
+		//All Server Warps go here
 		get().getNode("warps").setComment("Contains all warps.");
 	}
 
