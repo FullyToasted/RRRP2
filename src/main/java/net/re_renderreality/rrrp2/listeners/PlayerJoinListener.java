@@ -17,7 +17,7 @@ public class PlayerJoinListener
 	
 		Player player = event.getTargetEntity();
 		String connectionMessage = ReadConfigMesseges.getJoinMsg();
-	
+		
 		if (connectionMessage != null && !connectionMessage.equals(""))
 		{
 			connectionMessage = connectionMessage.replaceAll("%player", player.getName());

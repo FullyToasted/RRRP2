@@ -1,9 +1,5 @@
 package net.re_renderreality.rrrp2;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -150,18 +146,6 @@ public class RRRP2{
 		Database.setup(game);
     	Database.load(game);
 		
-		//To be replaced with local SQL database usage instead of text file
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader("players.rrr"));
-			while (reader.ready()) {
-				String line = reader.readLine();
-				players.addPlayer(line.substring(line.indexOf('/', line.lastIndexOf('/'))), line.substring(0, line.indexOf('/')));
-				players.addLastSeen(line.substring(line.indexOf('/', line.lastIndexOf('/'))), line.substring(line.lastIndexOf('/')+1, line.length()));
-			}
-			reader.close();
-		} catch (Exception e) { getLogger().info("[ERROR] Something went wrong with RRRP2."); }
-		//END TO BE REPLACED SECTION
-		
 		getLogger().info(container.getName() + " v" + container.getVersion().get() + " has successfully been initialized.");
 	}
 	
@@ -170,18 +154,6 @@ public class RRRP2{
 	 */
 	@Listener 
 	public void gameStopping(GameStoppingServerEvent event) {
-		
-		//To be replaced with local SQL database usage instead of text file
-		try {
-			new java.io.File("players.rrr").delete();
-			BufferedWriter writer = new BufferedWriter(new FileWriter("players.rrr"));
-			for (String uuid:players.getUuidSet()) {
-				writer.write(players.getPlayer(uuid) + "/" + uuid + "/" + players.getTime(uuid));
-				writer.newLine();
-			}
-			writer.close();
-		} catch (IOException e) { e.printStackTrace(); }
-		//END TO BE REPLACED SECTION
 		
 		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been un-initialized.");
 	}

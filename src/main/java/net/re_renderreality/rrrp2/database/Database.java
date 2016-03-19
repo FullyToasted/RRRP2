@@ -68,19 +68,19 @@ public class Database {
 			}
 
 			if(!tables.contains("bans")) {
-				execute("CREATE TABLE bans (uuid VARCHAR, sender VARCHAR, reason TEXT, time DOUBLE, duration DOUBLE)");
+				execute("CREATE TABLE bans (ID INT, uuid VARCHAR, sender VARCHAR, reason TEXT, time DOUBLE, duration DOUBLE)");
 			}
 			
 			if(!tables.contains("homes")) {
-				execute("CREATE TABLE homes (uuid VARCHAR, name TEXT, world INT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE)");
+				execute("CREATE TABLE homes (ID INT, uuid VARCHAR, name TEXT, world INT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE)");
 			}
 			
 			if(!tables.contains("mutes")) {
-				execute("CREATE TABLE mutes (uuid VARCHAR, duration DOUBLE, reason TEXT)");
+				execute("CREATE TABLE mutes (ID INT, uuid VARCHAR, duration DOUBLE, reason TEXT)");
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (uuid VARCHAR, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, mails TEXT, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
+				execute("CREATE TABLE players (ID INT, uuid VARCHAR, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, mails TEXT, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
 			}
 				
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -95,8 +95,8 @@ public class Database {
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM bans");
 			while(rs.next()) {
-				BanCore ban = new BanCore(rs.getString("uuid"), rs.getString("sender"), rs.getString("reason"), rs.getDouble("time"), rs.getDouble("duration"));
-				Database.addBan(ban.getUUID(), ban);
+				BanCore ban = new BanCore(rs.getInt("ID"),rs.getString("uuid"), rs.getString("sender"), rs.getString("reason"), rs.getDouble("time"), rs.getDouble("duration"));
+				Database.addBan(ban.getID(), ban);
 			}
 			s.close();
 			c.close();
@@ -109,8 +109,8 @@ public class Database {
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM mutes");
 			while(rs.next()) {
-				MuteCore mute = new MuteCore(rs.getString("uuid"), rs.getDouble("duration"), rs.getString("reason"));
-				Database.addMute(mute.getUUID(), mute);
+				MuteCore mute = new MuteCore(rs.getInt("ID"), rs.getString("uuid"), rs.getDouble("duration"), rs.getString("reason"));
+				Database.addMute(mute.getID(), mute);
 			}
 			s.close();
 			c.close();
@@ -123,9 +123,8 @@ public class Database {
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM players");
 			while(rs.next()) {
-				PlayerCore player = new PlayerCore(rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getBoolean("god"), rs.getBoolean("fly"), rs.getBoolean("tptoggle"), rs.getBoolean("invisible"), rs.getDouble("onlinetime"), rs.getString("mails"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
-				Database.addPlayer(player.getUUID(), player);
-				Database.addUUID(player.getName(), player.getUUID());
+				PlayerCore player = new PlayerCore(rs.getInt("ID"), rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getBoolean("god"), rs.getBoolean("fly"), rs.getBoolean("tptoggle"), rs.getBoolean("invisible"), rs.getDouble("onlinetime"), rs.getString("mails"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
+				Database.addPlayer(player.getID(), player);
 			}
 			s.close();
 			c.close();
@@ -138,11 +137,11 @@ public class Database {
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery("SELECT * FROM homes");
 			while(rs.next()) {
-				HomeCore home = new HomeCore(rs.getString("uuid"), rs.getString("name"), rs.getInt("world"), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getDouble("yaw"), rs.getDouble("pitch"));
+				HomeCore home = new HomeCore(rs.getInt("ID"), rs.getString("uuid"), rs.getString("name"), rs.getInt("world"), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getDouble("yaw"), rs.getDouble("pitch"));
 				PlayerCore player = Database.getPlayer(home.getUUID());
 				player.setHome(home.getName(), home);
-				Database.removePlayer(home.getUUID());
-				Database.addPlayer(home.getUUID(), player);
+				Database.removePlayer(home.getID());
+				Database.addPlayer(home.getID(), player);
 			}
 			s.close();
 			c.close();
@@ -192,53 +191,53 @@ public class Database {
 	}
 	
 	//Start Bans
-	private static HashMap<String, BanCore> bans = new HashMap<String, BanCore>();
+	private static HashMap<Integer, BanCore> bans = new HashMap<Integer, BanCore>();
 	
-	public static void addBan(String uuid, BanCore ban) { 
-		if(!bans.containsKey(uuid)) 
-			bans.put(uuid, ban); 
+	public static void addBan(int ID, BanCore ban) { 
+		if(!bans.containsKey(ID)) 
+			bans.put(ID, ban); 
 	}
 	
-	public static void removeBan(String uuid) { 
-		if(bans.containsKey(uuid)) 
-			bans.remove(uuid); 
+	public static void removeBan(int ID) { 
+		if(bans.containsKey(ID)) 
+			bans.remove(ID); 
 	}
 	
-	public static BanCore getBan(String uuid) { 
-		return bans.containsKey(uuid) ? bans.get(uuid) : null; 
+	public static BanCore getBan(int ID) { 
+		return bans.containsKey(ID) ? bans.get(ID) : null; 
 	}
 	
-	public static HashMap<String, BanCore> getBans() { 
+	public static HashMap<Integer, BanCore> getBans() { 
 		return bans; 
 	}
 	//End Bans
 	
 	//Start Mute
-	private static HashMap<String, MuteCore> mutes = new HashMap<String, MuteCore>();
+	private static HashMap<Integer, MuteCore> mutes = new HashMap<Integer, MuteCore>();
 	
-	public static void addMute(String uuid, MuteCore mute) { 
-		if(!mutes.containsKey(uuid)) mutes.put(uuid, mute); 
+	public static void addMute(int ID, MuteCore mute) { 
+		if(!mutes.containsKey(ID)) mutes.put(ID, mute); 
 	
 	}
-	public static void removeMute(String uuid) { 
-		if(mutes.containsKey(uuid)) mutes.remove(uuid); 
+	public static void removeMute(int ID) { 
+		if(mutes.containsKey(ID)) mutes.remove(ID); 
 	}
 	
-	public static MuteCore getMute(String uuid) { 
-		return mutes.containsKey(uuid) ? mutes.get(uuid) : null; 
+	public static MuteCore getMute(int ID) { 
+		return mutes.containsKey(ID) ? mutes.get(ID) : null; 
 	}
 	
-	public static HashMap<String, MuteCore> getMutes() { 
+	public static HashMap<Integer, MuteCore> getMutes() { 
 		return mutes; 
 	}
 	//End Mute
 	
 	//Start Players
-	private static HashMap<String, PlayerCore> players = new HashMap<String, PlayerCore>();
+	private static HashMap<Integer, PlayerCore> players = new HashMap<Integer, PlayerCore>();
 	
-	public static void addPlayer(String uuid, PlayerCore player) { 
-		if(!players.containsKey(players)) 
-			players.put(uuid, player); 
+	public static void addPlayer(int ID, PlayerCore player) { 
+		if(!players.containsKey(ID)) 
+			players.put(ID, player); 
 	}
 	
 	public static void setLastTimePlayerJoined(Player player, String time)
@@ -261,21 +260,21 @@ public class Database {
 		return players.containsKey(uuid) ? players.get(uuid) : null; 
 	
 	}
-	public static HashMap<String, PlayerCore> getPlayers() { return players; }
+	public static HashMap<Integer, PlayerCore> getPlayers() { return players; }
 	//End Players
 	
 	//Start UUID
-	private static HashMap<String, String> uuids = new HashMap<String, String>();
+	private static HashMap<Integer, String> uuids = new HashMap<Integer, String>();
 	
-	public static void addUUID(String name, String uuid) { 
-		uuids.put(name, uuid); 
+	public static void addUUID(int ID, String uuid) { 
+		uuids.put(ID, uuid); 
 	}
 	
-	public static void removeUUID(String name) { 
-		if(uuids.containsKey(name)) 
-			uuids.remove(name); 
+	public static void removeUUID(int ID) { 
+		if(uuids.containsKey(ID)) 
+			uuids.remove(ID); 
 		}
 	
-	public static String getUUID(String name) { return uuids.containsKey(name) ? uuids.get(name) : null; }	
+	public static String getUUID(int ID) { return uuids.containsKey(ID) ? uuids.get(ID) : null; }	
 	//End UUID
 }

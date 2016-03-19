@@ -1,6 +1,7 @@
 package net.re_renderreality.rrrp2.database;
 
 public class HomeCore {
+	private int ID;
 	private String uuid;
 	private String name;
 	private int world;
@@ -10,7 +11,8 @@ public class HomeCore {
 	private double yaw;
 	private double pitch;
 	
-	public HomeCore(String uuid, String name, int world, double x, double y, double z, double yaw, double pitch) {
+	public HomeCore(int ID, String uuid, String name, int world, double x, double y, double z, double yaw, double pitch) {
+		this.ID = ID;
 		this.uuid = uuid;
 		this.name = name;
 		this.world = world;
@@ -30,9 +32,10 @@ public class HomeCore {
 	}
 	
 	public void delete() {
-		Database.queue("DELETE FROM homes WHERE uuid = '" + uuid + "' AND name = '" + name + "'");
+		Database.queue("DELETE FROM homes WHERE ID = '" + ID + "' AND name = '" + name + "'");
 	}
 	
+	public void setID(int ID) {this.ID = ID; }
 	public void setUUID(String uuid) { this.uuid = uuid; }
 	public void setName(String name) { this.name = name; }
 	public void setWorld(int world) { this.world = world; }
@@ -42,6 +45,7 @@ public class HomeCore {
 	public void setYaw(double yaw) { this.yaw = yaw; }
 	public void setPitch(double pitch) { this.pitch = pitch; }
 	
+	public int getID(int ID) { return ID; }
 	public String getUUID() { return uuid; }
 	public String getName() { return name; }
 	public int getWorld() { return world; }
