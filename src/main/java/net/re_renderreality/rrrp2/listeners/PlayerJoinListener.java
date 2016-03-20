@@ -8,6 +8,7 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigMesseges;
+import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Players;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
@@ -24,8 +25,10 @@ public class PlayerJoinListener
 	
 		Player player = event.getTargetEntity();
 		String connectionMessage = ReadConfigMesseges.getJoinMsg();
-		PlayerCore thePlayer = new PlayerCore(0,"UUID","Poesidon2012","", "default", 0.0, false, false, true, false, 0.0, "", "", "", "" );
-		Players.addPlayer(0, thePlayer);
+		int id = Database.findNextID();
+		PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, "LastLocation", "LastDeath", "FirstSeen", "LastSeen" );
+		Database.addUUID(player.getUniqueId().toString(), thePlayer.getID());
+		thePlayer.insert();
 		if (connectionMessage != null && !connectionMessage.equals(""))
 		{
 			connectionMessage = connectionMessage.replaceAll("%player", player.getName());

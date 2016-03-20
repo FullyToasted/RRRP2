@@ -82,7 +82,8 @@ public class Database {
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (ID INT, uuid VARCHAR, name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen String, lastseen String)");
+				execute("CREATE TABLE players (ID INT, uuid VARCHAR(20), name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen TEXT, lastseen TEXT)");
+				execute("INSERT INTO players VALUES (0, '" + "uuid" + "', '" + "name" + "', '" + "nick" + "', '" + "channel" + "', 123.0, 1, 0, 1, 0, 123.0, '" + "LastLocation" + "', '" + "LastDeath" + "', '" + "FirstSeen" + "', '" + "LastSeen" + "');");
 			}
 				
 		} catch (SQLException e) { e.printStackTrace(); }
@@ -167,6 +168,29 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 
+	 * @param execute string MySQL command to execute
+	 * @return int to use
+	 */
+	public static int findNextID() {	
+		int x = 0;
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT ID FROM players ORDER BY id DESC LIMIT 1;");
+			if(rs.next()) {
+				x = rs.getInt("ID");
+			}
+			statement.close();
+			connection.close();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return x + 1;
 	}
 	
 	/**

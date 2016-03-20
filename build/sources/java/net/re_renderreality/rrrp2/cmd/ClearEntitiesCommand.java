@@ -1,7 +1,7 @@
 package net.re_renderreality.rrrp2.cmd;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
-import net.re_renderreality.rrrp2.main.Registry;
+import net.re_renderreality.rrrp2.database.Registry;
 
 import javax.annotation.Nonnull;
 
@@ -17,6 +17,11 @@ import org.spongepowered.api.world.World;
 
 public class ClearEntitiesCommand extends CommandExecutorBase {
 	
+	/**
+	 * arg = entity to be removed by the command
+	 * 
+	 * Removes only one entity at a time
+	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{	
 		int count = 0;

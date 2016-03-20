@@ -1,7 +1,11 @@
 package net.re_renderreality.rrrp2.database.core;
 
+import org.slf4j.Logger;
+
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Players;
+import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class PlayerCore {
 	private int ID;
@@ -74,7 +78,12 @@ public class PlayerCore {
 	 * inserts original player into the database
 	 */
 	public void insert() {
-		Database.queue("INSERT INTO players VALUES (" + ID + ", '" + uuid + "', '" + name + "', '" + nick + "', '" + channel + "', " + money + ", " + god + ", " + fly + ", " + tptoggle + ", " + invisible + ", " + onlinetime + ", '" + mails + "', '" + lastlocation + "', '" + lastdeath + "', " + firstseen + ", " + lastseen + ")");
+		String command = "INSERT INTO players VALUES (" + ID + ", '" + uuid + "', '" + name + "', '" + nick + "', '" + channel + "', " + money + ", " + Utilities.boolToInt(god) + ", " 
+												 + Utilities.boolToInt(fly) + ", " + Utilities.boolToInt(tptoggle) + ", " + Utilities.boolToInt(invisible) + ", " + onlinetime 
+												 + ", '" + lastlocation + "', '" + lastdeath + "', '" + firstseen + "', '" + lastseen + "')";
+		Logger l = RRRP2.getRRRP2().getLogger();
+		l.info(command);
+		Database.execute(command);
 		Players.addPlayer(ID, this);
 		Database.addUUID(uuid, ID);
 	}
@@ -84,7 +93,9 @@ public class PlayerCore {
 	 * @note update on login
 	 */
 	public void update() {
-		Database.queue("UPDATE players SET name = '" + name + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money + ", god = " + god + ", fly = " + fly + ", tptoggle = " + tptoggle + ", invisible = " + invisible + ", onlinetime = " + onlinetime + ", mails = '" + mails + "', lastlocation = '" + lastlocation + "', lastdeath = '" + lastdeath + "', firstseen = " + firstseen + ", lastseen = " + lastseen + " WHERE uuid = '" + uuid + "'");
+		Database.queue("UPDATE players SET name = '" + name + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money + ", god = " + god + ", fly = " + fly 
+				 									 + ", tptoggle = " + tptoggle + ", invisible = " + invisible + ", onlinetime = " + onlinetime + ", lastlocation = '" + lastlocation 
+				 									 + "', lastdeath = '" + lastdeath + "', firstseen = " + firstseen + ", lastseen = " + lastseen + " WHERE uuid = '" + uuid + "'");
 		Players.removePlayer(ID);
 		Database.removeUUID(uuid);
 		Players.addPlayer(ID, this);

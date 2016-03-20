@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import javax.annotation.Nonnull;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
-import net.re_renderreality.rrrp2.main.Registry;
+import net.re_renderreality.rrrp2.database.Registry;
 
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -18,6 +18,9 @@ import org.spongepowered.api.world.World;
 
 public class ListEntitiesCommand extends CommandExecutorBase{
 	
+	/**
+	 * Lists all entities currently loaded on the server
+	 */
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException{ 
 	
 		Hashtable<String, Integer> entities = new Hashtable<String, Integer>();

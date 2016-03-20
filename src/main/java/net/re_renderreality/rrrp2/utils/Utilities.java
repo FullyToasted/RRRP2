@@ -146,4 +146,8 @@ public class Utilities {
 	public static String boolToString(boolean bool) {
 		return bool ? "True" : "False";
 	}
+	
+	public static int boolToInt(boolean bool) {
+		return bool ? 1 : 0;
+	}
 }
