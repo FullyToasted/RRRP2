@@ -9,8 +9,8 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigMesseges;
 import net.re_renderreality.rrrp2.database.Database;
-import net.re_renderreality.rrrp2.database.Players;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
+import net.re_renderreality.rrrp2.utils.Utilities;
 
 
 public class PlayerJoinListener
@@ -24,21 +24,44 @@ public class PlayerJoinListener
 	public void onPlayerJoin(ClientConnectionEvent.Join event) {
 	
 		Player player = event.getTargetEntity();
-		String connectionMessage = ReadConfigMesseges.getJoinMsg();
-		int id = Database.findNextID();
-		PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, "LastLocation", "LastDeath", "FirstSeen", "LastSeen" );
-		Database.addUUID(player.getUniqueId().toString(), thePlayer.getID());
-		thePlayer.insert();
-		if (connectionMessage != null && !connectionMessage.equals(""))
-		{
-			connectionMessage = connectionMessage.replaceAll("%player", player.getName());
-			Text newMessage = TextSerializers.formattingCode('&').deserialize(connectionMessage);
-			event.setMessage(newMessage);
-		}
-	
-		if (RRRP2.afkList.containsKey(player.getUniqueId()))
-		{
-			RRRP2.afkList.remove(player.getUniqueId());
+		String uuid = player.getUniqueId().toString();
+		int id = Database.getIDFromDatabase(uuid);
+		if ( id == 0) {
+			int newID = Database.findNextID();
+			
+			PlayerCore thePlayer = new PlayerCore(newID,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, "LastLocation", "LastDeath", "FirstSeen", "LastSeen" );
+			Database.addUUID(uuid, newID);
+			thePlayer.insert();
+
+			if (ReadConfigMesseges.getFirstJoinMsgEnabled()); {
+				String connectionMessage = ReadConfigMesseges.getFirstJoinMsg();
+				connectionMessage = connectionMessage.replaceAll("%player", player.getName());
+				Text newMessage = TextSerializers.formattingCode('&').deserialize(connectionMessage);
+				event.setMessage(newMessage);
+				
+			}
+			if (ReadConfigMesseges.getUniqueMsgShow()) {
+				String uniquePlayerCount = ReadConfigMesseges.getUniqueMsg();
+				uniquePlayerCount = uniquePlayerCount.replaceAll("%players", String.valueOf(newID));
+				Text newMessage = TextSerializers.formattingCode('&').deserialize(uniquePlayerCount);
+				Utilities.broadcastMessage(newMessage);
+			}
+			
+		} else {
+		
+			String connectionMessage = ReadConfigMesseges.getJoinMsg();
+			Database.addUUID(uuid, id);
+			if (ReadConfigMesseges.getJoinMsgEnabled())
+			{
+				connectionMessage = connectionMessage.replaceAll("%player", player.getName());
+				Text newMessage = TextSerializers.formattingCode('&').deserialize(connectionMessage);
+				event.setMessage(newMessage);
+			}
+		
+			if (RRRP2.afkList.containsKey(player.getUniqueId()))
+			{
+				RRRP2.afkList.remove(player.getUniqueId());
+			}
 		}
 	}
 }

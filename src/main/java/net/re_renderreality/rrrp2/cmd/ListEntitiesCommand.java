@@ -38,7 +38,7 @@ public class ListEntitiesCommand extends CommandExecutorBase{
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "ListEntities", "listEntities", "listentities", "Listentities", "lEntities", "LEntities", "LEntities", "li"};
+		return new String[] { "ListEntities", "listEntities", "listentities", "Listentities", "lEntities", "LEntities", "LEntities", "li", "entities"};
 	}
 	
 	@Nonnull

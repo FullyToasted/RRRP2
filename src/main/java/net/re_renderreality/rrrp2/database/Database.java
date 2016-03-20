@@ -243,7 +243,24 @@ public class Database {
 			uuids.remove(uuid); 
 		}
 	
-	
+	public static int getIDFromDatabase(String uuid){
+		
+		int x = 0;
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select ID from players where uuid LIKE '%" + uuid + "%';");
+			if(rs.next()) {
+				x = rs.getInt("ID");
+			}
+			statement.close();
+			connection.close();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return x;
+	}
 	/**
 	 * @param uuid 
 	 * @return ID 

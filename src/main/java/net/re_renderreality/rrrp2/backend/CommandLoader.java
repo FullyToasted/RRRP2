@@ -29,8 +29,9 @@ public final class CommandLoader {
             new ClearEntitiesCommand(),
             new HelpCommand(),
             new ListEntitiesCommand(),
-            new WhoisCommand()
-           
+            new WhoisCommand(),
+            new TPSCommand(),
+            new FlyCommand()
         );
     }
 

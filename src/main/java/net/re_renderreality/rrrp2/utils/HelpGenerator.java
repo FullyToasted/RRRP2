@@ -26,7 +26,8 @@ public class HelpGenerator {
 		array.add(Text.of("-----------------------------------------------------"));
 		array.add(Text.of("/ClearEntities: Clears all the entities of the specified type"));
 		array.add(Text.of("/ListEntities: List all entities currently loaded"));
-		array.add(Text.of("/whois: Gives all known information about player"));
+		array.add(Text.of("/TPS: Show useful information about the server performance"));
+		array.add(Text.of("/Whois: Gives all known information about player"));
 		array.add(Text.of(" "));
 		return array;
 	}
@@ -35,7 +36,8 @@ public class HelpGenerator {
 		ArrayList<Text> array = new ArrayList<Text>();
 		array.add(Text.of("                            Cheater Commands =)"));
 		array.add(Text.of("-----------------------------------------------------"));
-		array.add(Text.of("/Heal: Heal Command"));
+		array.add(Text.of("/Heal: Heals self or can heal another player"));
+		array.add(Text.of("/Fly: Enable fly mode for self or another player"));
 		
 		array.add(Text.of(" "));
 		return array;
