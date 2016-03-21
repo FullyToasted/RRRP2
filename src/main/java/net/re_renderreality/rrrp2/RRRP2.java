@@ -3,9 +3,6 @@ package net.re_renderreality.rrrp2;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 import net.re_renderreality.rrrp2.backend.CommandLoader;
 import net.re_renderreality.rrrp2.config.*;
@@ -13,14 +10,12 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.OnlinePlayers;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.listeners.*;
-import net.re_renderreality.rrrp2.utils.AFK;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.config.ConfigDir;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
@@ -29,7 +24,6 @@ import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 import me.flibio.updatifier.Updatifier;
@@ -54,8 +48,6 @@ public class RRRP2{
 	
 	public static RRRP2 plugin;
 	private Server server;
-	public static HashMap<UUID, AFK> afkList = new HashMap<>();
-	public static List<Player> recentlyJoined = Lists.newArrayList();
 	private OnlinePlayers onlinePlayer = new OnlinePlayers();
 	
 	public static RRRP2 getRRRP2() {

@@ -96,13 +96,14 @@ public class PlayerCore {
 	 * @note update on login
 	 */
 	public void update() {
-		Database.queue("UPDATE players SET name = '" + name + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money + ", god = " + god + ", fly = " + fly 
-				 									 + ", tptoggle = " + tptoggle + ", invisible = " + invisible + ", onlinetime = " + onlinetime + ", lastlocation = '" + lastlocation 
-				 									 + "', lastdeath = '" + lastdeath + "', firstseen = " + firstseen + ", lastseen = " + lastseen + " WHERE uuid = '" + uuid + "'");
-		Players.removePlayer(ID);
-		Database.removeUUID(uuid);
-		Players.addPlayer(ID, this);
-		Database.addUUID(uuid, ID);
+		Logger l = RRRP2.getRRRP2().getLogger();
+		String command = "UPDATE players SET ID = " + ID + ", uuid = '" + uuid + "', name = '" + name + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money 
+													+ ", god = " + Utilities.boolToInt(god) + ", fly = " + Utilities.boolToInt(fly) + ", tptoggle = " + Utilities.boolToInt(tptoggle) 
+													+ ", invisible = " + Utilities.boolToInt(invisible) + ", onlinetime = " + onlinetime + ", lastlocation = '" + lastlocation 
+													+ "', lastdeath = '" + lastdeath + "', firstseen = '" + firstseen + "', lastseen = '" + lastseen + "' WHERE ID = " + ID + ";";
+		l.info(command);
+		Database.execute(command);
+
 	}
 	
 	/**
@@ -112,6 +113,138 @@ public class PlayerCore {
 		Database.queue("DELETE FROM players WHERE uuid = '" + uuid + "'");
 		Players.removePlayer(ID);
 		Database.removeUUID(uuid);
+	}
+	
+	public void setIDUpdate(int ID) {
+		this.ID = ID; 
+		String command = "UPDATE players SET ID = " + this.ID + " WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param uuid set uuid of the player
+	 */
+	public void setUUIDUpdate(String uuid) { 
+		this.uuid = uuid; 
+		String command = "UPDATE players SET uuid = '" + this.uuid + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/** 
+	 * @param name set Username of Player
+	 */
+	public void setNameUpdate(String name) { 
+		this.name = name; 
+		String command = "UPDATE players SET name = '" + this.name + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param nick set nickname of player
+	 */
+	public void setNickUpdate(String nick) { 
+		this.nick = nick; 
+		String command = "UPDATE players SET nick = '" + this.nick + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param channel set chat channel the player is currently
+	 */
+	public void setChannelUpdate(String channel) { 
+		this.channel = channel; 
+		String command = "UPDATE players SET channel = '" + this.channel + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param set money the players current balance
+	 */
+	public void setMoneyUpdate(double money) { 
+		this.money = money; 
+		String command = "UPDATE players SET money = " + this.money + " WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param god set the player in god mode
+	 */
+	public void setGodUpdate(boolean god) { 
+		this.god = god;
+		String command = "UPDATE players SET god = " + Utilities.boolToInt(this.god) + " WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param fly set the player to fly mode
+	 */
+	public void setFlyUpdate(boolean fly) { 
+		this.fly = fly; 
+		String command = "UPDATE players SET fly = " + Utilities.boolToInt(this.fly) + " WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param tptoggle set if the player has TPToggle Enabled
+	 */
+	public void setTPToggleUpdate(boolean tptoggle) { 
+		this.tptoggle = tptoggle;
+		String command = "UPDATE players SET tptoggle = " + Utilities.boolToInt(this.tptoggle) + " WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param invisible set if the player is invisible
+	 */
+	public void setInvisibleUpdate(boolean invisible) { 
+		this.invisible = invisible;
+		String command = "UPDATE players SET invisible = " + Utilities.boolToInt(this.invisible) + " WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param onlinetime sets how long the player has been onlibe
+	 */
+	public void setOnlinetimeUpdate(double onlinetime) { 
+		this.onlinetime = onlinetime; 
+		String command = "UPDATE players SET onlinetime = " + this.onlinetime + " WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/** 
+	 * @param lastlocation Sets last location of player
+	 */
+	public void setLastlocationUpdate(String lastlocation) { 
+		this.lastlocation = lastlocation; 
+		String command = "UPDATE players SET lastlocation = '" + this.lastlocation + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param lastdeath sets last death point of player
+	 */
+	public void setLastdeathUpdate(String lastdeath) { 
+		this.lastdeath = lastdeath; 
+		String command = "UPDATE players SET lastdeath = '" + this.lastdeath + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param firstseen sets the first time player was seen
+	 */
+	public void setFirstseenUpdate(String firstseen) { 
+		this.firstseen = firstseen; 
+		String command = "UPDATE players SET firstseen  = '" + this.firstseen + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
+	}
+	
+	/**
+	 * @param lastseen sets the time the player was last seen
+	 */
+	public void setLastseenUpdate(String lastseen) { 
+		this.lastseen = lastseen; 
+		String command = "UPDATE players SET lastseen = '" + this.lastseen + "' WHERE ID = "+ this.ID + ";";
+		Database.queue(command);
 	}
 	
 	//Setters

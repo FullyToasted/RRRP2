@@ -150,4 +150,12 @@ public class Utilities {
 	public static int boolToInt(boolean bool) {
 		return bool ? 1 : 0;
 	}
+	
+	public static String convertLocation(Player player) {
+		String location = "";
+		Location<World> los = player.getLocation();
+		location += player.getWorld() + " ";
+		location += los.getBlockX() + " " + los.getBlockY() + " " + los.getBlockZ();
+		return location;
+	}
 }

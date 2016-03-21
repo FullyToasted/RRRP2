@@ -1,5 +1,9 @@
 package net.re_renderreality.rrrp2.listeners;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.slf4j.Logger;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -20,19 +24,25 @@ public class PlayerJoinListener
 	/**
 	 * @param event client connection event
 	 * 
-	 * TODO: Show Mail Notification, Show Player Join message, player first join message, load Playercore for new users, find unclaimed ID, check Username for changes, find id for returning users
+	 * TODO: Show Mail Notification, check Username for changes,
 	 */
 	@Listener
 	public void onPlayerJoin(ClientConnectionEvent.Join event) {
-	
 		Player player = event.getTargetEntity();
 		String uuid = player.getUniqueId().toString();
 		int id = Database.getIDFromDatabase(uuid);
+		
+		boolean firstjoin = false;
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		String todaysDate = dateFormat.format(cal.getTime());
 		if ( id == 0) {
-			int newID = Database.findNextID();
+			id = Database.findNextID();
 			
-			PlayerCore thePlayer = new PlayerCore(newID,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, "LastLocation", "LastDeath", "FirstSeen", "LastSeen" );
-			Database.addUUID(uuid, newID);
+			firstjoin = true;
+			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, "LastLocation", "LastDeath", "FirstSeen", "LastSeen" );
+			Database.addUUID(uuid, id);
 			thePlayer.insert();
 
 			if (ReadConfigMesseges.getFirstJoinMsgEnabled()); {
@@ -44,7 +54,7 @@ public class PlayerJoinListener
 			}
 			if (ReadConfigMesseges.getUniqueMsgShow()) {
 				String uniquePlayerCount = ReadConfigMesseges.getUniqueMsg();
-				uniquePlayerCount = uniquePlayerCount.replaceAll("%players", String.valueOf(newID));
+				uniquePlayerCount = uniquePlayerCount.replaceAll("%players", String.valueOf(id));
 				Text newMessage = TextSerializers.formattingCode('&').deserialize(uniquePlayerCount);
 				Utilities.broadcastMessage(newMessage);
 			}
@@ -58,17 +68,17 @@ public class PlayerJoinListener
 				Text newMessage = TextSerializers.formattingCode('&').deserialize(connectionMessage);
 				event.setMessage(newMessage);
 			}
-		
-			if (RRRP2.afkList.containsKey(player.getUniqueId()))
-			{
-				RRRP2.afkList.remove(player.getUniqueId());
-			}
 		}
+		
 		OnlinePlayers OP = RRRP2.getRRRP2().getOnlinePlayer();
 		PlayerCore players = Database.getPlayerCore(id);
 		Logger l = RRRP2.getRRRP2().getLogger();
-		if(OP == null)
-			l.info("null");
+		l.info(players.toString());
+		if (firstjoin) {
+			players.setFirstseenUpdate(todaysDate);
+		}
+		players.setLastseenUpdate(todaysDate);
+		Database.commit();
 		OP.addPlayer(players);
 	}
 }

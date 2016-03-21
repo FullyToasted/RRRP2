@@ -66,6 +66,11 @@ public class OnlinePlayers {
 			players.replace(playercore.getID(), playercore);
 	}
 	
+	public void removePlayer(PlayerCore playercore) {
+		if (!players.contains(playercore.getID())) 
+			players.remove(playercore.getID());
+	}
+	
 	/**
 	 * @param name Name of player to check for in registry.
 	 * @return Boolean, True if registry contains player, False otherwise.

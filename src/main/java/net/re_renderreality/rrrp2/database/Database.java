@@ -1,9 +1,11 @@
 package net.re_renderreality.rrrp2.database;
 
 
+import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.service.sql.SqlService;
 
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
 import net.re_renderreality.rrrp2.database.core.*;
 
@@ -83,7 +85,7 @@ public class Database {
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (ID INT, uuid VARCHAR(20), name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen TEXT, lastseen TEXT)");
+				execute("CREATE TABLE players (ID INT, uuid VARCHAR(36), name TEXT, nick TEXT, channel TEXT, money DOUBLE, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen TEXT, lastseen TEXT)");
 				execute("INSERT INTO players VALUES (0, '" + "uuid" + "', '" + "name" + "', '" + "nick" + "', '" + "channel" + "', 123.0, 1, 0, 1, 0, 123.0, '" + "LastLocation" + "', '" + "LastDeath" + "', '" + "FirstSeen" + "', '" + "LastSeen" + "');");
 			}
 				
@@ -147,7 +149,8 @@ public class Database {
 	 */
 	public static void execute(String execute) {	
 		try {
-			
+			Logger l = RRRP2.getRRRP2().getLogger();
+			l.info(execute);
 			Connection connection = datasource.getConnection();
 			Statement statement = connection.createStatement();
 			statement.execute(execute);
@@ -262,9 +265,10 @@ public class Database {
 	public static PlayerCore getPlayerCore(int ID) {
 		PlayerCore player = new PlayerCore();
 		try {
-			Connection c = datasource.getConnection();
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM players WHERE ID = " + ID + ";");
+			Logger l = RRRP2.getRRRP2().getLogger();
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM players WHERE ID = " + ID + ";");
 			while(rs.next()) {
 				player.setID(rs.getInt("ID"));
 				player.setUUID(rs.getString("uuid")); 
@@ -281,9 +285,11 @@ public class Database {
 				player.setLastdeath(rs.getString("lastdeath"));
 				player.setFirstseen(rs.getString("firstseen"));
 				player.setLastseen(rs.getString("lastseen"));
+				rs.close();
 			}	
-			s.close();
-			c.close();
+			statement.close();
+			connection.close();
+			l.info("CLOSED CONNECTION");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
