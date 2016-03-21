@@ -19,7 +19,6 @@ public class PlayerCore {
 	private boolean tptoggle;
 	private boolean invisible;
 	private double onlinetime;
-	private String mails;
 	private String lastlocation;
 	private String lastdeath;
 	private String firstseen;
@@ -74,6 +73,10 @@ public class PlayerCore {
 		this.lastseen = lastseen;		
 	}
 	
+	public PlayerCore() {
+		;
+	}
+
 	/**
 	 * inserts original player into the database
 	 */
@@ -339,5 +342,26 @@ public class PlayerCore {
 	public void removeMoney(double amount) {
 		amount *= 100; amount = Math.round(amount); amount /= 100;
 		this.money -= amount;
+	}
+	
+	public String toString() {
+		String player = "";
+		player = player + "ID: " + getID() + "\n";
+		player = player + "UUID: " + getUUID() + "\n";
+		player = player + "NAME: " + getName() + "\n";
+		player = player + "NICK: " + getNick() + "\n";
+		player = player + "CHANNEL: " + getChannel() + "\n";
+		player = player + "MONEY: " + getMoney() + "\n";
+		player = player + "GOD: " + getGod() + "\n";
+		player = player + "FLY: " + getFly() + "\n";
+		player = player + "TPTOGGLE: " + getTPToggle() + "\n";
+		player = player + "INVISIBLE: " + getInvisible() + "\n";
+		player = player + "ONLINETIME: " + getOnlinetime() + "\n";
+		player = player + "LAST LOCATION: " + getLastlocation() + "\n";
+		player = player + "LAST DEATH: " + getLastdeath() + "\n";
+		player = player + "FIRST SEEN: " + getFirstseen() + "\n";
+		player = player + "Last SEEN: " + getLastseen();
+		
+		return player;
 	}
 }

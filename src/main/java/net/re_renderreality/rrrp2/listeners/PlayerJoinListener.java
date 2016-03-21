@@ -1,5 +1,6 @@
 package net.re_renderreality.rrrp2.listeners;
 
+import org.slf4j.Logger;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
@@ -11,6 +12,7 @@ import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigMesseges;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
+import net.re_renderreality.rrrp2.database.OnlinePlayers;
 
 
 public class PlayerJoinListener
@@ -46,7 +48,6 @@ public class PlayerJoinListener
 				Text newMessage = TextSerializers.formattingCode('&').deserialize(uniquePlayerCount);
 				Utilities.broadcastMessage(newMessage);
 			}
-			
 		} else {
 		
 			String connectionMessage = ReadConfigMesseges.getJoinMsg();
@@ -63,5 +64,11 @@ public class PlayerJoinListener
 				RRRP2.afkList.remove(player.getUniqueId());
 			}
 		}
+		OnlinePlayers OP = RRRP2.getRRRP2().getOnlinePlayer();
+		PlayerCore players = Database.getPlayerCore(id);
+		Logger l = RRRP2.getRRRP2().getLogger();
+		if(OP == null)
+			l.info("null");
+		OP.addPlayer(players);
 	}
 }

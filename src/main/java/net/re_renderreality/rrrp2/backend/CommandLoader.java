@@ -31,7 +31,8 @@ public final class CommandLoader {
             new ListEntitiesCommand(),
             new WhoisCommand(),
             new TPSCommand(),
-            new FlyCommand()
+            new FlyCommand(),
+            new PlayerCountCommand()
         );
     }
 

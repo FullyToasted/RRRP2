@@ -10,6 +10,7 @@ import java.util.UUID;
 import net.re_renderreality.rrrp2.backend.CommandLoader;
 import net.re_renderreality.rrrp2.config.*;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.OnlinePlayers;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.listeners.*;
 import net.re_renderreality.rrrp2.utils.AFK;
@@ -55,6 +56,7 @@ public class RRRP2{
 	private Server server;
 	public static HashMap<UUID, AFK> afkList = new HashMap<>();
 	public static List<Player> recentlyJoined = Lists.newArrayList();
+	private OnlinePlayers onlinePlayer = new OnlinePlayers();
 	
 	public static RRRP2 getRRRP2() {
 		return plugin;
@@ -146,7 +148,7 @@ public class RRRP2{
 		Registry.setGame(getGame());
 		Registry.setLogger(getLogger());
 		CommandLoader.registerCommands();
-		
+	
 		Database.setup(game);
     	Database.load(game);
 		
@@ -184,4 +186,9 @@ public class RRRP2{
 	 * @return current Game Object.
 	 */
 	public Game getGame() { return game; }
+	
+	/**
+	 * @return current Online Player object
+	 */
+	public OnlinePlayers getOnlinePlayer() { return onlinePlayer;	}
 }

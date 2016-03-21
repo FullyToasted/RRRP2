@@ -33,7 +33,6 @@ public class TPSCommand extends AsyncCommandExecutorBase
 			src.sendMessage(Text.of(TextColors.GREEN, "World: ", world.getName()));
 			src.sendMessage(Text.of(TextColors.GOLD, "Loaded Chunks: ", TextColors.GRAY, loadedChunks));
 			src.sendMessage(Text.of(TextColors.GOLD, "Entities: ", TextColors.GRAY, numOfEntities));
-			src.sendMessage(Text.of());
 			
 		}
 	}

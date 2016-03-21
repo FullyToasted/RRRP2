@@ -1,5 +1,6 @@
 package net.re_renderreality.rrrp2.database;
 
+
 import org.spongepowered.api.Game;
 import org.spongepowered.api.service.sql.SqlService;
 
@@ -122,19 +123,7 @@ public class Database {
 			e.printStackTrace();
 		}
 		//Imports the entire PlayerList into hashmap
-		try {
-			Connection c = datasource.getConnection();
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM players");
-			while(rs.next()) {
-				PlayerCore player = new PlayerCore(rs.getInt("ID"), rs.getString("uuid"), rs.getString("name"), rs.getString("nick"), rs.getString("channel"), rs.getDouble("money"), rs.getBoolean("god"), rs.getBoolean("fly"), rs.getBoolean("tptoggle"), rs.getBoolean("invisible"), rs.getDouble("onlinetime"), rs.getString("lastlocation"), rs.getString("lastdeath"), rs.getString("firstseen"), rs.getString("lastseen"));
-				Players.addPlayer(player.getID(), player);
-			}
-			s.close();
-			c.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
 		
 		//Imports the entire HomeList into HashMap
 		try {
@@ -269,4 +258,36 @@ public class Database {
 	 */
 	public static int getID(String uuid) { return uuids.containsKey(uuid) ? uuids.get(uuid) : -1; }	
 	//End UUID
+	
+	public static PlayerCore getPlayerCore(int ID) {
+		PlayerCore player = new PlayerCore();
+		try {
+			Connection c = datasource.getConnection();
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery("SELECT * FROM players WHERE ID = " + ID + ";");
+			while(rs.next()) {
+				player.setID(rs.getInt("ID"));
+				player.setUUID(rs.getString("uuid")); 
+				player.setName(rs.getString("name"));
+				player.setNick(rs.getString("nick"));
+				player.setChannel(rs.getString("channel"));
+				player.setMoney(rs.getDouble("money"));
+				player.setGod(rs.getBoolean("god"));
+				player.setFly(rs.getBoolean("fly"));
+				player.setTPToggle(rs.getBoolean("tptoggle"));
+				player.setInvisible(rs.getBoolean("invisible"));
+				player.setOnlinetime(rs.getDouble("onlinetime"));
+				player.setLastlocation(rs.getString("lastlocation"));
+				player.setLastdeath(rs.getString("lastdeath"));
+				player.setFirstseen(rs.getString("firstseen"));
+				player.setLastseen(rs.getString("lastseen"));
+			}	
+			s.close();
+			c.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return player;
+	}
 }
+
