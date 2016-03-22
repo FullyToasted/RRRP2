@@ -17,7 +17,10 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class FlyCommand extends CommandExecutorBase {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
@@ -27,16 +30,20 @@ public class FlyCommand extends CommandExecutorBase {
 		if(!targetPlayer.isPresent() && src.hasPermission("rrrp2.fly.self")) {
 			if( src instanceof Player) {
 				Player player = (Player) src;
+				int id = Database.getID(player.getUniqueId().toString());
+				PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
 				if(player.get(Keys.CAN_FLY).isPresent()) {
 					boolean canFly = player.get(Keys.CAN_FLY).get();
 					player.offer(Keys.CAN_FLY, !canFly);
 					if (canFly)
 					{
+						playerz.setFlyUpdate(false);
 						player.sendMessage(Text.of(TextColors.GOLD, "Toggled flying: ", TextColors.GRAY, "off."));
 					}
 					else
 					{
 						player.sendMessage(Text.of(TextColors.GOLD, "Toggled flying: ", TextColors.GRAY, "on."));
+						playerz.setFlyUpdate(true);
 					}
 				}
 			}else if (src instanceof ConsoleSource)
@@ -48,7 +55,8 @@ public class FlyCommand extends CommandExecutorBase {
 			}
 		} else if (src.hasPermission("fly.others")) {
 			Player player = targetPlayer.get();
-
+			int id = Database.getID(player.getUniqueId().toString());
+			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
 			if (player.get(Keys.CAN_FLY).isPresent())
 			{
 				boolean canFly = player.get(Keys.CAN_FLY).get();
@@ -58,11 +66,13 @@ public class FlyCommand extends CommandExecutorBase {
 				{
 					src.sendMessage(Text.of(TextColors.GOLD, "Toggled flying for " + player.getName() + ": ", TextColors.GRAY, "off."));
 					player.sendMessage(Text.of(TextColors.GOLD, "Toggled flying: ", TextColors.GRAY, "off."));
+					playerz.setFlyUpdate(false);
 				}
 				else
 				{
 					src.sendMessage(Text.of(TextColors.GOLD, "Toggled flying for " + player.getName() + ": ", TextColors.GRAY, "on."));
 					player.sendMessage(Text.of(TextColors.GOLD, "Toggled flying: ", TextColors.GRAY, "on."));
+					playerz.setFlyUpdate(false);
 				}
 			}
 		}

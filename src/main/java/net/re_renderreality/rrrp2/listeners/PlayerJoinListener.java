@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
@@ -41,7 +40,7 @@ public class PlayerJoinListener
 			id = Database.findNextID();
 			
 			firstjoin = true;
-			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, "LastLocation", "LastDeath", "FirstSeen", "LastSeen" );
+			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, null, null, null, null );
 			Database.addUUID(uuid, id);
 			thePlayer.insert();
 
@@ -72,8 +71,6 @@ public class PlayerJoinListener
 		
 		OnlinePlayers OP = RRRP2.getRRRP2().getOnlinePlayer();
 		PlayerCore players = Database.getPlayerCore(id);
-		Logger l = RRRP2.getRRRP2().getLogger();
-		l.info(players.toString());
 		if (firstjoin) {
 			players.setFirstseenUpdate(todaysDate);
 		}

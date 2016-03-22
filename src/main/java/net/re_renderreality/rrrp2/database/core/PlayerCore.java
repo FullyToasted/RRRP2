@@ -118,7 +118,7 @@ public class PlayerCore {
 	public void setIDUpdate(int ID) {
 		this.ID = ID; 
 		String command = "UPDATE players SET ID = " + this.ID + " WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class PlayerCore {
 	public void setUUIDUpdate(String uuid) { 
 		this.uuid = uuid; 
 		String command = "UPDATE players SET uuid = '" + this.uuid + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/** 
@@ -136,7 +136,7 @@ public class PlayerCore {
 	public void setNameUpdate(String name) { 
 		this.name = name; 
 		String command = "UPDATE players SET name = '" + this.name + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -145,7 +145,7 @@ public class PlayerCore {
 	public void setNickUpdate(String nick) { 
 		this.nick = nick; 
 		String command = "UPDATE players SET nick = '" + this.nick + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class PlayerCore {
 	public void setChannelUpdate(String channel) { 
 		this.channel = channel; 
 		String command = "UPDATE players SET channel = '" + this.channel + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class PlayerCore {
 	public void setMoneyUpdate(double money) { 
 		this.money = money; 
 		String command = "UPDATE players SET money = " + this.money + " WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public class PlayerCore {
 	public void setGodUpdate(boolean god) { 
 		this.god = god;
 		String command = "UPDATE players SET god = " + Utilities.boolToInt(this.god) + " WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -181,7 +181,7 @@ public class PlayerCore {
 	public void setFlyUpdate(boolean fly) { 
 		this.fly = fly; 
 		String command = "UPDATE players SET fly = " + Utilities.boolToInt(this.fly) + " WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class PlayerCore {
 	public void setTPToggleUpdate(boolean tptoggle) { 
 		this.tptoggle = tptoggle;
 		String command = "UPDATE players SET tptoggle = " + Utilities.boolToInt(this.tptoggle) + " WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class PlayerCore {
 	public void setInvisibleUpdate(boolean invisible) { 
 		this.invisible = invisible;
 		String command = "UPDATE players SET invisible = " + Utilities.boolToInt(this.invisible) + " WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -208,7 +208,7 @@ public class PlayerCore {
 	public void setOnlinetimeUpdate(double onlinetime) { 
 		this.onlinetime = onlinetime; 
 		String command = "UPDATE players SET onlinetime = " + this.onlinetime + " WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/** 
@@ -217,7 +217,7 @@ public class PlayerCore {
 	public void setLastlocationUpdate(String lastlocation) { 
 		this.lastlocation = lastlocation; 
 		String command = "UPDATE players SET lastlocation = '" + this.lastlocation + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -226,7 +226,7 @@ public class PlayerCore {
 	public void setLastdeathUpdate(String lastdeath) { 
 		this.lastdeath = lastdeath; 
 		String command = "UPDATE players SET lastdeath = '" + this.lastdeath + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -235,7 +235,7 @@ public class PlayerCore {
 	public void setFirstseenUpdate(String firstseen) { 
 		this.firstseen = firstseen; 
 		String command = "UPDATE players SET firstseen  = '" + this.firstseen + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class PlayerCore {
 	public void setLastseenUpdate(String lastseen) { 
 		this.lastseen = lastseen; 
 		String command = "UPDATE players SET lastseen = '" + this.lastseen + "' WHERE ID = "+ this.ID + ";";
-		Database.queue(command);
+		Database.execute(command);
 	}
 	
 	//Setters

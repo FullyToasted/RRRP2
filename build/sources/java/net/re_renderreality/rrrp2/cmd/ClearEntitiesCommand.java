@@ -49,7 +49,7 @@ public class ClearEntitiesCommand extends CommandExecutorBase {
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "clearentities", "centities", "ClearEntities", "Clearentities", "clearEntities", "cEntities", "CEntities" };
+		return new String[] { "clearentities", "centities", "ClearEntities", "Clearentities", "clearEntities", "cEntities", "CEntities", "ClearEntity", "clearentity", "Clearentity" };
 	}
 
 	@Nonnull

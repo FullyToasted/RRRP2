@@ -32,7 +32,10 @@ public final class CommandLoader {
             new WhoisCommand(),
             new TPSCommand(),
             new FlyCommand(),
-            new PlayerCountCommand()
+            new PlayerCountCommand(),
+            new GodCommand(),
+            new NickCommand(),
+            new BackCommand()
         );
     }
 

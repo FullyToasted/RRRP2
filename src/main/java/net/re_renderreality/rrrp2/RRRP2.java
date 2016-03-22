@@ -3,6 +3,7 @@ package net.re_renderreality.rrrp2;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
 
 import net.re_renderreality.rrrp2.backend.CommandLoader;
 import net.re_renderreality.rrrp2.config.*;
@@ -24,6 +25,7 @@ import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import me.flibio.updatifier.Updatifier;
@@ -49,6 +51,7 @@ public class RRRP2{
 	public static RRRP2 plugin;
 	private Server server;
 	private OnlinePlayers onlinePlayer = new OnlinePlayers();
+	public static Set<Integer> teleportingPlayers = Sets.newHashSet();
 	
 	public static RRRP2 getRRRP2() {
 		return plugin;
@@ -113,6 +116,7 @@ public class RRRP2{
 		MOTD.getConfig().setup();
 		Warps.getConfig().setup();
 		Spawn.getConfig().setup();
+		Teleport.getConfig().setup();
 		
 		HelpGenerator.getHelp().populate();
 		getLogger().info(container.getName() + ": Config Initiallation Finished");
@@ -128,6 +132,8 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new PlayerJoinListener());
 		getGame().getEventManager().registerListeners(this, new MailListener());
 		getGame().getEventManager().registerListeners(this, new PlayerLeftEvent());
+		getGame().getEventManager().registerListeners(this, new DamageListener());
+		getGame().getEventManager().registerListeners(this, new DeathListener());
 	}
 	
 	/**

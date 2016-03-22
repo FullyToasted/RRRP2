@@ -12,6 +12,7 @@ import org.spongepowered.api.text.channel.MessageChannel;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.database.Registry;
 
 public class Utilities {
@@ -154,8 +155,22 @@ public class Utilities {
 	public static String convertLocation(Player player) {
 		String location = "";
 		Location<World> los = player.getLocation();
-		location += player.getWorld() + " ";
+		location += player.getWorld().getName() + " ";
 		location += los.getBlockX() + " " + los.getBlockY() + " " + los.getBlockZ();
 		return location;
+	}
+	
+	public static Location<World> convertLocation(String Location) {
+		String[] array = Location.split(" ");
+		String worldName = array[0];
+		Optional<World> world = RRRP2.getRRRP2().getServer().getWorld(worldName);
+		int xPos = Integer.parseInt(array[1]);
+		int yPos = Integer.parseInt(array[2]);
+		int zPos = Integer.parseInt(array[3]);
+		
+		Location<World> loc = new Location<World>(world.get(), xPos, yPos, zPos);
+		
+		return loc;
+		
 	}
 }
