@@ -35,7 +35,9 @@ public final class CommandLoader {
             new PlayerCountCommand(),
             new GodCommand(),
             new NickCommand(),
-            new BackCommand()
+            new BackCommand(),
+            new SpawnCommand(),
+            new SetSpawnCommand()
         );
     }
 

@@ -14,7 +14,6 @@ public class DeathListener {
 	
 	@Listener
 	public void onPlayerDamage(DestructEntityEvent.Death event) {
-		Utilities.broadcastMessage(event.getTargetEntity().getType().toString());
 		if(event.getTargetEntity().getType() == EntityTypes.PLAYER) {
 			Living player = event.getTargetEntity();
 			Player playa = (Player) player;

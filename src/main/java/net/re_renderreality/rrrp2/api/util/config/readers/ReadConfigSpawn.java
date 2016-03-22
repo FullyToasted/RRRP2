@@ -23,12 +23,12 @@ public class ReadConfigSpawn {
 	 * @param worldID world ID of the world
 	 * @note saves spawn location to the spawn.conf file
 	 */
-	public static void setSpawn(Transform<World> transform, int worldID) {
+	public static void setSpawn(Transform<World> transform, String worldName) {
 		{
 			Configs.getConfig(spawn).getNode("spawn", "X").setValue(transform.getLocation().getX());
 			Configs.getConfig(spawn).getNode("spawn", "Y").setValue(transform.getLocation().getY());
 			Configs.getConfig(spawn).getNode("spawn", "Z").setValue(transform.getLocation().getZ());
-			Configs.getConfig(spawn).getNode("spawn", "world").setValue(worldID);
+			Configs.getConfig(spawn).getNode("spawn", "world").setValue(worldName);
 			Configs.getConfig(spawn).getNode("spawn", "transform", "pitch").setValue(transform.getRotation().getX());
 			Configs.getConfig(spawn).getNode("spawn", "transform", "yaw").setValue(transform.getRotation().getY());
 			Configs.getConfig(spawn).getNode("spawn", "transform", "roll").setValue(transform.getRotation().getZ());

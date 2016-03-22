@@ -39,7 +39,7 @@ public class BackCommand extends CommandExecutorBase
 			{
 				Location<World> location = Utilities.convertLocation(playerz.getLastlocation());
 
-				if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("essentialcmds.teleport.cooldown.override"))
+				if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("rrp2.teleport.cooldown.override"))
 				{
 					RRRP2.teleportingPlayers.add(playerz.getID());
 					src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleporting to Last Location. Please wait " + ReadConfigTeleport.getTeleportCooldown() + " seconds."));

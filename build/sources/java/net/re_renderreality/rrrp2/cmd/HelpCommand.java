@@ -16,7 +16,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class HelpCommand extends CommandExecutorBase{
+public class HelpCommand extends CommandExecutorBase {
 	
 	/**
 	 * Lists a Pagination Generated help page for either all commands or the specified subcategory
