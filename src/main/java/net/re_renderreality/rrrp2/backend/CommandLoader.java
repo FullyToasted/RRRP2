@@ -37,7 +37,9 @@ public final class CommandLoader {
             new NickCommand(),
             new BackCommand(),
             new SpawnCommand(),
-            new SetSpawnCommand()
+            new SetSpawnCommand(),
+            new TreeCommand(),
+            new BigTreeCommand()
         );
     }
 

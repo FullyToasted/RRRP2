@@ -265,7 +265,6 @@ public class Database {
 	public static PlayerCore getPlayerCore(int ID) {
 		PlayerCore player = new PlayerCore();
 		try {
-			Logger l = RRRP2.getRRRP2().getLogger();
 			Connection connection = datasource.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM players WHERE ID = " + ID + ";");
@@ -289,11 +288,29 @@ public class Database {
 			}	
 			statement.close();
 			connection.close();
-			l.info("CLOSED CONNECTION");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return player;
+	}
+	
+	public static int getPlayerIDfromUsername(String Username) {
+		int id = 0;
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT ID FROM players WHERE name = '" + Username + "';");
+			while(rs.next()) {
+				id = rs.getInt("ID");
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 }
 
