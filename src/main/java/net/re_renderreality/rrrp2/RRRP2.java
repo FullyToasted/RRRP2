@@ -117,6 +117,8 @@ public class RRRP2{
 		Warps.getConfig().setup();
 		Spawn.getConfig().setup();
 		Teleport.getConfig().setup();
+		Rules.getConfig().setup();
+		Announcements.getConfig().setup();
 		
 		HelpGenerator.getHelp().populate();
 		getLogger().info(container.getName() + ": Config Initiallation Finished");

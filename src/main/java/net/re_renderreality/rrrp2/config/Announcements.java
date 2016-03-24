@@ -1,6 +1,5 @@
 package net.re_renderreality.rrrp2.config;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,25 +11,24 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 
-public class Teleport implements Configurable {
-	
-	
-	private static Teleport teleport = new Teleport();
+public class Announcements implements Configurable
+{
+	private static Announcements announcements = new Announcements();
 
-	private Teleport()
+	private Announcements()
 	{
 		;
 	}
-	
-	public static Teleport getConfig()
+
+	public static Announcements getConfig()
 	{
-		return teleport;
+		return announcements;
 	}
-	
-	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir() + "/teleport.conf");
+
+	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir() + "/announcements.conf");
 	private ConfigurationLoader<CommentedConfigurationNode> configLoader = HoconConfigurationLoader.builder().setPath(configFile).build();
 	private CommentedConfigurationNode configNode;
-	
+
 	@Override
 	public void setup()
 	{
@@ -38,10 +36,6 @@ public class Teleport implements Configurable {
 		{
 			try
 			{
-				File folder = new File("config/rrr.commands/");
-				if(!folder.exists()) 
-					folder.mkdir();
-				
 				Files.createFile(configFile);
 				load();
 				populate();
@@ -57,7 +51,7 @@ public class Teleport implements Configurable {
 			load();
 		}
 	}
-	
+
 	@Override
 	public void load()
 	{
@@ -70,7 +64,7 @@ public class Teleport implements Configurable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void save()
 	{
@@ -83,15 +77,17 @@ public class Teleport implements Configurable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void populate()
 	{
-		//Any generic Messages that are broadcasted server-wide go here
-		get().getNode("teleport", "cooldown", "enable").setValue(true);
-		get().getNode("teleport", "cooldown", "timer").setValue(30000);			
+		//Spawn Information goes here. Will be auto-populated to begin with but then can be overridden
+		get().getNode("Announcement Count").setValue(0).setComment("Keep this current with the number of rules");
+		get().getNode("Header").setValue("&6Announcements For Re-RenderReality").setComment("Contains announcement header.");
+		get().getNode("Footer").setValue("Footer(Change this in production envionment)").setComment("Contains announcement footer");
+		get().getNode("Announcements").setComment("Rules to be added manually or by /addannouncement");
 	}
-	
+
 	@Override
 	public CommentedConfigurationNode get()
 	{
