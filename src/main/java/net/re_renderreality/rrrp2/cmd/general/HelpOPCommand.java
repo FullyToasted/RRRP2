@@ -29,7 +29,7 @@ public class HelpOPCommand extends CommandExecutorBase{
 				String msg = themsg.get();
 				int id = Database.findNextID("helpop");
 				for (Player p:Registry.getServer().getOnlinePlayers()) {
-					if (p.hasPermission("rrr.general.helpop.recieve")) {
+					if (p.hasPermission("rrr.admin.helpop.recieve")) {
 						p.sendMessage(Text.of("Player, " + src.getName() + ", requests help. Ticket# " + id + ": " + msg)); //sends them the message
 						src.sendMessage(Text.of(TextColors.GREEN, "Message has been sent successfully!"));
 					}
@@ -57,7 +57,7 @@ public class HelpOPCommand extends CommandExecutorBase{
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
 				.description(Text.of("Request help from Staff"))
-				.permission("rrr.general.helpop.send")
+				.permission("rrr.general.helpop")
 				.arguments(GenericArguments.remainingJoinedStrings(Text.of("Msg")))
 				.executor(this).build();
 	}

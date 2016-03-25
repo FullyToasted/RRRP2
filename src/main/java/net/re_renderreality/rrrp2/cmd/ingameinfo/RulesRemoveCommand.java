@@ -48,7 +48,7 @@ public class RulesRemoveCommand extends CommandExecutorBase{
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Displays Server Rules"))
-			.permission("rrr.admin.rules.modify")
+			.permission("rrr.admin.rules.remove")
 			.arguments(GenericArguments.onlyOne(GenericArguments.integer(Text.of("Rule Number"))))
 			.executor(this)
 			.build();

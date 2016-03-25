@@ -92,7 +92,7 @@ public class BackCommand extends CommandExecutorBase
 	{
 		return CommandSpec.builder()
 				.description(Text.of("Back Command"))
-				.permission("rrrp2.general.back")
+				.permission("rrr.general.back")
 				.executor(this).build();
 	}
 }

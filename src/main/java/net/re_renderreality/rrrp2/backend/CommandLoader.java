@@ -55,6 +55,7 @@ public final class CommandLoader {
                 new RulesCommand(),
                 new RulesModifyCommand(),
                 new RulesRemoveCommand(),
+                new SeenCommand(),
                 new SetSpawnCommand(),
                 new SpawnCommand(),
                 new SuicideCommand(),

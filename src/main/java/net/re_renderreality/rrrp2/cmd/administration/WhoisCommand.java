@@ -117,7 +117,7 @@ public class WhoisCommand extends CommandExecutorBase{
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
 				.description(Text.of("Gives detailed information about the requested player"))
-				.permission("rrrp2.general.whois.self")
+				.permission("rrr.general.whois.self")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("player")))))
 				.executor(this).build();
 	}

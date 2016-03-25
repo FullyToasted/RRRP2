@@ -25,7 +25,7 @@ public class GodCommand extends CommandExecutorBase{
 	{
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		
-		if(!targetPlayer.isPresent() && src.hasPermission("rrrp2.fly.self") && src instanceof Player) {
+		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.god.self") && src instanceof Player) {
 			Player player = (Player) src;
 			int id = Database.getID(player.getUniqueId().toString());
 			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
@@ -36,7 +36,7 @@ public class GodCommand extends CommandExecutorBase{
 				playerz.setGodUpdate(true);
 				player.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode: ", TextColors.GRAY, "on."));
 			}
-		} else if (src.hasPermission("fly.others")) {
+		} else if (src.hasPermission("rrr.cheat.god.others")) {
 			Player player = targetPlayer.get();
 			int id = Database.getID(player.getUniqueId().toString());
 			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
@@ -77,7 +77,7 @@ public class GodCommand extends CommandExecutorBase{
 	{
 		return CommandSpec.builder()
 			.description(Text.of("God Command"))
-			.permission("rrrp2.god.self")
+			.permission("rrr.cheat.god.self")
 			.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 			.executor(this)
 			.build();

@@ -38,7 +38,7 @@ public class MOTDCommand extends CommandExecutorBase
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Depth Command"))
-			.permission("rrr.general.getworld")
+			.permission("rrr.general.motd")
 			.executor(this)
 			.build();
 	}

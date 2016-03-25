@@ -31,7 +31,7 @@ public class NickCommand  extends CommandExecutorBase
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		String nick = ctx.<String>getOne("nick").get();
 		
-		if (!targetPlayer.isPresent() && src.hasPermission("rrrp2.general.nick") && src instanceof Player)
+		if (!targetPlayer.isPresent() && src instanceof Player)
 		{
 			Player player = (Player) src;
 			int id = Database.getID(player.getUniqueId().toString());
@@ -40,7 +40,7 @@ public class NickCommand  extends CommandExecutorBase
 			Utilities.broadcastMessage("&6 " + playerz.getName() + " &7 is now known as: " + playerz.getNick());
 			
 			playerz.setNickUpdate(nick);
-		} else if(src.hasPermission("fly.others") && targetPlayer.isPresent()) {
+		} else if(src.hasPermission("rrr.general.nick.others") && targetPlayer.isPresent()) {
 			int id = Database.getID(targetPlayer.get().getUniqueId().toString());
 			PlayerCore players = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
 			players.setNickUpdate(nick);
@@ -69,7 +69,7 @@ public class NickCommand  extends CommandExecutorBase
 		return CommandSpec
 			.builder()
 			.description(Text.of("Nick Command"))
-			.permission("rrrp2.general.nick.use")
+			.permission("rrr.general.nick")
 			.arguments(
 				GenericArguments.seq(
 					GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))),

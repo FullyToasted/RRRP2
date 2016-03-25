@@ -390,5 +390,28 @@ public class Database {
 		}
 		return completedString;
 	}
+	
+	public static String getLastSeen(int id) {
+		
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT lastseen from players WHERE id = " + id + ";");
+			String lastseen = "";
+			
+			while(rs.next()) {
+				lastseen = rs.getString("lastseen");
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return lastseen;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 }
 

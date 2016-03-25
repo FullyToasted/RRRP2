@@ -45,7 +45,7 @@ public class AnnouncementsModifyCommand extends CommandExecutorBase{
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Displays Server Rules"))
-			.permission("rrr.admin.rules.modify")
+			.permission("rrr.admin.announcements.modify")
 			.arguments(GenericArguments.onlyOne(GenericArguments.integer(Text.of("ID"))),GenericArguments.remainingJoinedStrings(Text.of("Announcement")))
 			.executor(this)
 			.build();

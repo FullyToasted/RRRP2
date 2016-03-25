@@ -136,6 +136,7 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new PlayerLeftEvent());
 		getGame().getEventManager().registerListeners(this, new DamageListener());
 		getGame().getEventManager().registerListeners(this, new DeathListener());
+		getGame().getEventManager().registerListeners(this, new CommandListener());
 	}
 	
 	/**

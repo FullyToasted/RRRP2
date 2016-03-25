@@ -71,7 +71,9 @@ public class HealCommand extends CommandExecutorBase
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
-		return CommandSpec.builder().description(Text.of("Heal Command")).permission("rrrp2.cheat.heal.self")
+		return CommandSpec.builder()
+				.description(Text.of("Heal Command"))
+				.permission("rrr.cheat.heal.self")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 				.executor(this).build();
 	}

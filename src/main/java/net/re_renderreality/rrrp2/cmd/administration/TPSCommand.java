@@ -49,7 +49,7 @@ public class TPSCommand extends AsyncCommandExecutorBase
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Displays the server TPS and other useful information"))
-			.permission("rrrp2.admin.tps")
+			.permission("rrr.admin.tps")
 			.executor(this)
 			.build();
 	}

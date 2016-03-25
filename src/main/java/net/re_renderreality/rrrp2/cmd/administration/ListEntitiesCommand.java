@@ -47,7 +47,7 @@ public class ListEntitiesCommand extends CommandExecutorBase{
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Lists all Entities on the Server"))
-			.permission("rrrp2.listEntities")
+			.permission("rrr.admin.listentities")
 			.executor(this)
 			.build();
 	}

@@ -35,7 +35,7 @@ public class PlayerCountCommand extends CommandExecutorBase {
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Lists the Amount of Unique Players on the Server"))
-			.permission("rrrp2.general.playercount")
+			.permission("rrr.general.playercount")
 			.executor(this)
 			.build();
 	}

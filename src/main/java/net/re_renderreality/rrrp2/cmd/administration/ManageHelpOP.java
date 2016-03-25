@@ -112,7 +112,7 @@ public class ManageHelpOP extends CommandExecutorBase{
 		map.put("getall", 5);
 		return CommandSpec.builder()
 				.description(Text.of("Request help from Staff"))
-				.permission("rrr.general.helpop.recieve") //remove<ID>/resolve<ID>/get<ID>/getall
+				.permission("rrr.admin.helpop.recieve") //remove<ID>/resolve<ID>/get<ID>/getall
 				.arguments(GenericArguments.choices(Text.of("Choice"), map),(GenericArguments.optional(GenericArguments.string(Text.of("ID")))))
 				.executor(this).build();
 	}

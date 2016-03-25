@@ -86,7 +86,9 @@ public class HelpCommand extends CommandExecutorBase {
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
-		return CommandSpec.builder().description(Text.of("Displays a list of commands for the user")).permission("rrrp2.general.help")
+		return CommandSpec.builder()
+				.description(Text.of("Displays a list of commands for the user"))
+				.permission("rrr.general.help")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("SubDirectory")))))
 				.executor(this).build();
 	}

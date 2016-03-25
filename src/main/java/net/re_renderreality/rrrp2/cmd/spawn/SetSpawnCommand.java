@@ -47,7 +47,7 @@ public class SetSpawnCommand extends CommandExecutorBase {
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Sets the Server Spawn"))
-			.permission("rrrp2.admin.setspawn")
+			.permission("rrr.admin.setspawn")
 			.executor(this)
 			.build();
 	}

@@ -43,8 +43,8 @@ public class SuicideCommand extends CommandExecutorBase {
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("AFK Command"))
-			.permission("essentialcmds.afk.use")
+			.description(Text.of("Give up and commit suicide"))
+			.permission("rrr.cheat.suicide")
 			.executor(this)
 			.build();
 	}

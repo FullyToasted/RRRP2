@@ -95,7 +95,7 @@ public class SpawnCommand extends CommandExecutorBase {
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Brings Player to the set spawnpoint"))
-			.permission("rrrp2.general.spawn")
+			.permission("rrr.general.spawn")
 			.executor(this)
 			.build();
 	}

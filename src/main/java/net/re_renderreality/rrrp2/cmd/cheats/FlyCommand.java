@@ -27,7 +27,7 @@ public class FlyCommand extends CommandExecutorBase {
 	{
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		
-		if(!targetPlayer.isPresent() && src.hasPermission("rrrp2.fly.self")) {
+		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.fly.self")) {
 			if( src instanceof Player) {
 				Player player = (Player) src;
 				int id = Database.getID(player.getUniqueId().toString());
@@ -53,7 +53,7 @@ public class FlyCommand extends CommandExecutorBase {
 			{
 				src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /fly!"));
 			}
-		} else if (src.hasPermission("fly.others")) {
+		} else if (src.hasPermission("rrr.cheat.fly.others")) {
 			Player player = targetPlayer.get();
 			int id = Database.getID(player.getUniqueId().toString());
 			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
@@ -97,7 +97,7 @@ public class FlyCommand extends CommandExecutorBase {
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Fly Command"))
-			.permission("rrrp2.fly.self")
+			.permission("rrrp2.cheat.fly.self")
 			.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 			.executor(this)
 			.build();

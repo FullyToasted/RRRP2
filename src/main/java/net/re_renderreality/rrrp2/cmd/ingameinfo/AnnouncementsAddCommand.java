@@ -42,7 +42,7 @@ public class AnnouncementsAddCommand extends CommandExecutorBase{
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Displays Server Rules"))
-			.permission("rrr.admin.rules.modify")
+			.permission("rrr.admin.announcements.add")
 			.arguments(GenericArguments.remainingJoinedStrings(Text.of("Announcement")))
 			.executor(this)
 			.build();

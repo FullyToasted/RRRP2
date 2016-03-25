@@ -55,7 +55,9 @@ public class ClearEntitiesCommand extends CommandExecutorBase {
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
-		return CommandSpec.builder().description(Text.of("Clears all the entities of the specified type")).permission("rrrp2.admin.clearentities")
+		return CommandSpec.builder()
+				.description(Text.of("Clears all the entities of the specified type"))
+				.permission("rrr.admin.clearentities")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("Entity")))))
 				.executor(this).build();
 	}

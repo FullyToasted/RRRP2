@@ -121,7 +121,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
 				.description(Text.of("Gives detailed information about the requested player"))
-				.permission("rrrp2.cheat.tree")
+				.permission("rrr.cheat.tree")
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Tree Type"))), 
 						   GenericArguments.onlyOne(GenericArguments.integer(Text.of("X"))),
 				           GenericArguments.onlyOne(GenericArguments.integer(Text.of("Y"))),

@@ -48,7 +48,7 @@ public class AnnouncementsRemoveCommand extends CommandExecutorBase{
 	{
 		return CommandSpec.builder()
 			.description(Text.of("Displays Server Rules"))
-			.permission("rrr.admin.rules.modify")
+			.permission("rrr.admin.announcements.remove")
 			.arguments(GenericArguments.onlyOne(GenericArguments.integer(Text.of("Announcement Number"))))
 			.executor(this)
 			.build();
