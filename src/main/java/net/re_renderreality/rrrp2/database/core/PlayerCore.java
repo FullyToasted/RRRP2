@@ -84,8 +84,6 @@ public class PlayerCore {
 		String command = "INSERT INTO players VALUES (" + ID + ", '" + uuid + "', '" + name + "', '" + nick + "', '" + channel + "', " + money + ", " + Utilities.boolToInt(god) + ", " 
 												 + Utilities.boolToInt(fly) + ", " + Utilities.boolToInt(tptoggle) + ", " + Utilities.boolToInt(invisible) + ", " + onlinetime 
 												 + ", '" + lastlocation + "', '" + lastdeath + "', '" + firstseen + "', '" + lastseen + "')";
-		Logger l = RRRP2.getRRRP2().getLogger();
-		l.info(command);
 		Database.execute(command);
 		Players.addPlayer(ID, this);
 		Database.addUUID(uuid, ID);

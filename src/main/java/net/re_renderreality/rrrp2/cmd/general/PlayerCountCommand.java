@@ -18,7 +18,7 @@ public class PlayerCountCommand extends CommandExecutorBase {
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		int id = Database.findNextID() - 1;
+		int id = Database.findNextID("players") - 1;
 		src.sendMessage(Text.of("There have been " + id + " unique players on this server"));
 		return CommandResult.success();
 	}

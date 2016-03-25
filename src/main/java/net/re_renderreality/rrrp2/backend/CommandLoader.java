@@ -47,6 +47,7 @@ public final class CommandLoader {
                 new HelpCommand(),
                 new HelpOPCommand(),
                 new ListEntitiesCommand(),
+                new ManageHelpOP(),
                 new MOTDCommand(),
                 new NickCommand(),
                 new PlayerCountCommand(),
@@ -60,7 +61,6 @@ public final class CommandLoader {
                 new TPSCommand(),
                 new TreeCommand(),
                 new WhoisCommand()
-
         );
     }
 

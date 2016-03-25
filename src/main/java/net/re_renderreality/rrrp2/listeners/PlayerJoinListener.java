@@ -37,7 +37,7 @@ public class PlayerJoinListener
 		Calendar cal = Calendar.getInstance();
 		String todaysDate = dateFormat.format(cal.getTime());
 		if ( id == 0) {
-			id = Database.findNextID();
+			id = Database.findNextID("players");
 			
 			firstjoin = true;
 			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(),"", "default", 5.0, false, false, false, false, 0.0, null, null, null, null );

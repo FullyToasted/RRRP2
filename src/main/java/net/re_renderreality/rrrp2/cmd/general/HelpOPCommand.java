@@ -15,7 +15,9 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
+import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class HelpOPCommand extends CommandExecutorBase{
 	
@@ -25,13 +27,17 @@ public class HelpOPCommand extends CommandExecutorBase{
 		if(src instanceof Player) {
 			if(themsg.isPresent()) {
 				String msg = themsg.get();
+				int id = Database.findNextID("helpop");
 				for (Player p:Registry.getServer().getOnlinePlayers()) {
 					if (p.hasPermission("rrr.general.helpop.recieve")) {
-						p.sendMessage(Text.of("Player, " + src.getName() + ", requests help: " + msg)); //sends them the message
+						p.sendMessage(Text.of("Player, " + src.getName() + ", requests help. Ticket# " + id + ": " + msg)); //sends them the message
 						src.sendMessage(Text.of(TextColors.GREEN, "Message has been sent successfully!"));
-						return CommandResult.success();
 					}
 				}
+				Player player = (Player) src;
+				String command = "INSERT INTO helpop VALUES (" + id + ", '" + player.getName() + "', '" + msg + "', " + Utilities.boolToInt(false) + ")";
+				Database.execute(command);
+				return CommandResult.success();
 			}
 		} else {
 			src.sendMessage(Text.of(TextColors.RED, "Error! Only a Player can Execute this command."));

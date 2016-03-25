@@ -4,8 +4,11 @@ package net.re_renderreality.rrrp2.database;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.service.sql.SqlService;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.RRRP2;
+import net.re_renderreality.rrrp2.utils.Utilities;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
 import net.re_renderreality.rrrp2.database.core.*;
 
@@ -74,6 +77,10 @@ public class Database {
 
 			if(!tables.contains("bans")) {
 				execute("CREATE TABLE bans (ID INT, uuid VARCHAR, sender VARCHAR, reason TEXT, time DOUBLE, duration DOUBLE)");
+			}
+			
+			if(!tables.contains("helpop")) {
+				execute("CREATE TABLE helpop (ID INT, submitter TEXT, message TEXT, resolved Bool)");
 			}
 			
 			if(!tables.contains("homes")) {
@@ -167,12 +174,12 @@ public class Database {
 	 * @param execute string MySQL command to execute
 	 * @return int to use
 	 */
-	public static int findNextID() {	
+	public static int findNextID(String table) {	
 		int x = 0;
 		try {
 			Connection connection = datasource.getConnection();
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT ID FROM players ORDER BY id DESC LIMIT 1;");
+			ResultSet rs = statement.executeQuery("SELECT ID FROM " + table + " ORDER BY id DESC LIMIT 1;");
 			if(rs.next()) {
 				x = rs.getInt("ID");
 			}
@@ -311,6 +318,77 @@ public class Database {
 			e.printStackTrace();
 		}
 		return id;
+	}
+	
+	public static ArrayList<Text> getHelpOp(int ID) {
+		ArrayList<Text> completedString = new ArrayList<Text>();
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("Select * from helpop WHERE ID = " + ID + ";");
+			while(rs.next()) {
+				completedString.add(Text.of(TextColors.GOLD, "TicketID: ", TextColors.GRAY, rs.getInt("ID")));
+				completedString.add(Text.of(TextColors.GOLD, "Submitter: ", TextColors.GRAY, rs.getString("submitter")));
+				completedString.add(Text.of(TextColors.GOLD, "Resolved: ", TextColors.GRAY, Utilities.boolToString(rs.getBoolean("resolved"))));
+				completedString.add(Text.of(TextColors.GOLD, "Message: ", TextColors.GRAY, rs.getString("message")));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return completedString;
+	}
+	
+	public static ArrayList<Text> getAllOpenTickets(String resolved ) {
+		ArrayList<Text> completedString = new ArrayList<Text>();
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs;
+			if(resolved.equals("Resolved") || resolved.equals("resolved")) {
+				rs = statement.executeQuery("Select * from helpop WHERE resolved = 1;");
+			}else if(resolved.equals("all") || resolved.equals("All")) {
+				rs = statement.executeQuery("Select * from helpop;");
+			}else {
+				rs = statement.executeQuery("Select * from helpop WHERE resolved = 0;");
+			}
+			while(rs.next()) {
+				completedString.add(Text.of(TextColors.GOLD, "ID: ", TextColors.GRAY, rs.getInt("ID"), TextColors.GOLD, " Submitter: ", TextColors.GRAY, rs.getString("submitter"),
+											" Resolved: ", TextColors.GRAY, Utilities.boolToString(rs.getBoolean("resolved")), TextColors.GOLD, " Message: ", TextColors.GRAY, 
+											rs.getString("message"), TextColors.GOLD));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return completedString;
+	}
+	
+	public static ArrayList<Text> getAllOpenTickets() {
+		ArrayList<Text> completedString = new ArrayList<Text>();
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("Select * from helpop WHERE resolved = 0;");
+			while(rs.next()) {
+				completedString.add(Text.of(TextColors.GOLD, "ID: ", TextColors.GRAY, rs.getInt("ID"), TextColors.GOLD, " Submitter: ", TextColors.GRAY, rs.getString("submitter"), TextColors.GOLD,
+											" Resolved: ", TextColors.GRAY, Utilities.boolToString(rs.getBoolean("resolved")), TextColors.GOLD, " Message: ", TextColors.GRAY, 
+											rs.getString("message"), TextColors.GOLD));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return completedString;
 	}
 }
 
