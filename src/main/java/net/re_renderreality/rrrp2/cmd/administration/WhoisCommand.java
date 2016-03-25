@@ -69,9 +69,15 @@ public class WhoisCommand extends CommandExecutorBase{
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Username: ", TextColors.GREEN, offlinePlayer.getName()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's ID Number: ", TextColors.GRAY, offlinePlayer.getID()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's UUID: ", TextColors.GRAY, offlinePlayer.getUUID()));
+		src.sendMessage(Text.of(TextColors.GOLD, "Player's IP: ", TextColors.GRAY, offlinePlayer.getIP()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Nickname: ", TextColors.GRAY, offlinePlayer.getNick()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Chat Channel : ", TextColors.GRAY, offlinePlayer.getChannel()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Money: ", TextColors.GRAY, offlinePlayer.getMoney()));
+		if(offlinePlayer.getBanned()) {
+			src.sendMessage(Text.of(TextColors.GOLD, "Banned: ", TextColors.GREEN, offlinePlayer.getBanned()));
+		} else {
+			src.sendMessage(Text.of(TextColors.GOLD, "Banned: ", TextColors.RED, offlinePlayer.getBanned()));
+		}
 		if(offlinePlayer.getGod()) {
 			src.sendMessage(Text.of(TextColors.GOLD, "Godmode: ", TextColors.GREEN, offlinePlayer.getGod()));
 		} else {

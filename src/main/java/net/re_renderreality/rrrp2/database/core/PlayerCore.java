@@ -11,9 +11,11 @@ public class PlayerCore {
 	private int ID;
 	private String uuid;
 	private String name;
+	private String ip;
 	private String nick;
 	private String channel;
 	private double money;
+	private boolean banned;
 	private boolean god;
 	private boolean fly;
 	private boolean tptoggle;
@@ -43,9 +45,11 @@ public class PlayerCore {
 	public PlayerCore(int ID,
 					  String uuid, 
 					  String name, 
+					  String ip,
 					  String nick, 
 					  String channel,
 					  double money, 
+					  boolean banned,
 					  boolean god, 
 					  boolean fly, 
 					  boolean tptoggle, 
@@ -59,8 +63,10 @@ public class PlayerCore {
 		this.ID = ID;
 		this.uuid = uuid;
 		this.name = name;
+		this.ip = ip;
 		this.nick = nick;
 		this.channel = channel;
+		this.banned = banned;
 		this.money = money;
 		this.god = god;
 		this.fly = fly;
@@ -81,9 +87,9 @@ public class PlayerCore {
 	 * inserts original player into the database
 	 */
 	public void insert() {
-		String command = "INSERT INTO players VALUES (" + ID + ", '" + uuid + "', '" + name + "', '" + nick + "', '" + channel + "', " + money + ", " + Utilities.boolToInt(god) + ", " 
-												 + Utilities.boolToInt(fly) + ", " + Utilities.boolToInt(tptoggle) + ", " + Utilities.boolToInt(invisible) + ", " + onlinetime 
-												 + ", '" + lastlocation + "', '" + lastdeath + "', '" + firstseen + "', '" + lastseen + "')";
+		String command = "INSERT INTO players VALUES (" + ID + ", '" + uuid + "', '" + name + "', '" + ip + "', '" + nick + "', '" + channel + "', " + money + ", " + Utilities.boolToInt(banned) + ", " 
+														+ Utilities.boolToInt(god) + ", " + Utilities.boolToInt(fly) + ", " + Utilities.boolToInt(tptoggle) + ", " 
+														+ Utilities.boolToInt(invisible) + ", " + onlinetime + ", '" + lastlocation + "', '" + lastdeath + "', '" + firstseen + "', '" + lastseen + "')";
 		Database.execute(command);
 		Players.addPlayer(ID, this);
 		Database.addUUID(uuid, ID);
@@ -95,8 +101,8 @@ public class PlayerCore {
 	 */
 	public void update() {
 		Logger l = RRRP2.getRRRP2().getLogger();
-		String command = "UPDATE players SET ID = " + ID + ", uuid = '" + uuid + "', name = '" + name + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money 
-													+ ", god = " + Utilities.boolToInt(god) + ", fly = " + Utilities.boolToInt(fly) + ", tptoggle = " + Utilities.boolToInt(tptoggle) 
+		String command = "UPDATE players SET ID = " + ID + ", uuid = '" + uuid + "', name = '" + name + "', IP = '" + ip + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money 
+													+ ", banned = " + Utilities.boolToInt(banned) + ", god = " + Utilities.boolToInt(god) + ", fly = " + Utilities.boolToInt(fly) + ", tptoggle = " + Utilities.boolToInt(tptoggle) 
 													+ ", invisible = " + Utilities.boolToInt(invisible) + ", onlinetime = " + onlinetime + ", lastlocation = '" + lastlocation 
 													+ "', lastdeath = '" + lastdeath + "', firstseen = '" + firstseen + "', lastseen = '" + lastseen + "' WHERE ID = " + ID + ";";
 		l.info(command);
@@ -113,6 +119,9 @@ public class PlayerCore {
 		Database.removeUUID(uuid);
 	}
 	
+	/**
+	 * @param ID set ID of user
+	 */
 	public void setIDUpdate(int ID) {
 		this.ID = ID; 
 		String command = "UPDATE players SET ID = " + this.ID + " WHERE ID = "+ this.ID + ";";
@@ -134,6 +143,15 @@ public class PlayerCore {
 	public void setNameUpdate(String name) { 
 		this.name = name; 
 		String command = "UPDATE players SET name = '" + this.name + "' WHERE ID = "+ this.ID + ";";
+		Database.execute(command);
+	}
+	
+	/** 
+	 * @param name set IP of Player
+	 */
+	public void setIPUpdate(String ip) { 
+		this.ip = ip; 
+		String command = "UPDATE players SET name = '" + this.ip + "' WHERE ID = "+ this.ID + ";";
 		Database.execute(command);
 	}
 	
@@ -161,6 +179,15 @@ public class PlayerCore {
 	public void setMoneyUpdate(double money) { 
 		this.money = money; 
 		String command = "UPDATE players SET money = " + this.money + " WHERE ID = "+ this.ID + ";";
+		Database.execute(command);
+	}
+	
+	/**
+	 * @param god set the player in god mode
+	 */
+	public void setBannedUpdate(boolean banned) { 
+		this.banned = banned;
+		String command = "UPDATE players SET god = " + Utilities.boolToInt(this.banned) + " WHERE ID = "+ this.ID + ";";
 		Database.execute(command);
 	}
 	
@@ -267,6 +294,13 @@ public class PlayerCore {
 		this.name = name; 
 	}
 	
+	/** 
+	 * @param ip set ip of Player
+	 */
+	public void setIP(String ip) { 
+		this.ip = ip; 
+	}
+	
 	/**
 	 * @param nick set nickname of player
 	 */
@@ -286,6 +320,13 @@ public class PlayerCore {
 	 */
 	public void setMoney(double money) { 
 		this.money = money; 
+	}
+	
+	/**
+	 * @param god set the player in god mode
+	 */
+	public void setBanned(boolean banned) { 
+		this.banned = banned;
 	}
 	
 	/**
@@ -374,6 +415,12 @@ public class PlayerCore {
 	}
 	
 	/**
+	 * @return ip of player
+	 */
+	public String getIP() {
+		return ip;
+	}
+	/**
 	 * @return get nickname of player
 	 */
 	public String getNick() { 
@@ -396,6 +443,12 @@ public class PlayerCore {
 		return Math.round(money * 100) / 100; 
 	}
 	
+	/**
+	 * @return returns Ban status
+	 */
+	public boolean getBanned() {
+		return banned;
+	}
 	/**
 	 * @return is the player god status
 	 */
@@ -480,9 +533,11 @@ public class PlayerCore {
 		player = player + "ID: " + getID() + "\n";
 		player = player + "UUID: " + getUUID() + "\n";
 		player = player + "NAME: " + getName() + "\n";
+		player = player + "IP: " + getIP() + "\n";
 		player = player + "NICK: " + getNick() + "\n";
 		player = player + "CHANNEL: " + getChannel() + "\n";
 		player = player + "MONEY: " + getMoney() + "\n";
+		player = player + "Banned: " + getBanned() + "\n";
 		player = player + "GOD: " + getGod() + "\n";
 		player = player + "FLY: " + getFly() + "\n";
 		player = player + "TPTOGGLE: " + getTPToggle() + "\n";
