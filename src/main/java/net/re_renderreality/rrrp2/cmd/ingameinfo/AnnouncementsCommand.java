@@ -29,7 +29,7 @@ public class AnnouncementsCommand extends CommandExecutorBase{
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "Announcements", "announcements",};
+		return new String[] { "Announcements", "announcements"};
 	}
 	
 	@Nonnull

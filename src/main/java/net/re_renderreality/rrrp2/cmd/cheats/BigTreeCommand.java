@@ -120,7 +120,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Gives detailed information about the requested player"))
+				.description(Text.of("Spawns a tree at the given coords"))
 				.permission("rrr.cheat.tree")
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Tree Type"))), 
 						   GenericArguments.onlyOne(GenericArguments.integer(Text.of("X"))),

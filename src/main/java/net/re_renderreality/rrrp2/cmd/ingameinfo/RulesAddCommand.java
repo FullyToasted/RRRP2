@@ -41,7 +41,7 @@ public class RulesAddCommand extends CommandExecutorBase{
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Displays Server Rules"))
+			.description(Text.of("Adds Server Rules"))
 			.permission("rrr.admin.rules.add")
 			.arguments(GenericArguments.remainingJoinedStrings(Text.of("Rule")))
 			.executor(this)

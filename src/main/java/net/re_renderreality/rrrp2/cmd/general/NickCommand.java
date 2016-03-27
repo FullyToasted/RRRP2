@@ -68,7 +68,7 @@ public class NickCommand  extends CommandExecutorBase
 	{
 		return CommandSpec
 			.builder()
-			.description(Text.of("Nick Command"))
+			.description(Text.of("Nickname a player"))
 			.permission("rrr.general.nick")
 			.arguments(
 				GenericArguments.seq(

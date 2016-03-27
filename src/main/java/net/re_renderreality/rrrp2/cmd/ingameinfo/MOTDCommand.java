@@ -37,7 +37,7 @@ public class MOTDCommand extends CommandExecutorBase
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Depth Command"))
+			.description(Text.of("Displays the Message of the Day"))
 			.permission("rrr.general.motd")
 			.executor(this)
 			.build();

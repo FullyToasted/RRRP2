@@ -83,7 +83,7 @@ public class BackCommand extends CommandExecutorBase
 	@Override
 	public String[] getAliases()
 	{
-		return new String[] { "back" };
+		return new String[] { "back", "Back" };
 	}
 
 	@Nonnull
@@ -91,7 +91,7 @@ public class BackCommand extends CommandExecutorBase
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-				.description(Text.of("Back Command"))
+				.description(Text.of("Returns Player to last Death or Teleport Location"))
 				.permission("rrr.general.back")
 				.executor(this).build();
 	}

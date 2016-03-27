@@ -41,7 +41,7 @@ public class GetDimCommand extends CommandExecutorBase
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Depth Command"))
+			.description(Text.of("Gets the Dimmension of the player"))
 			.permission("rrr.general.getdim")
 			.executor(this)
 			.build();

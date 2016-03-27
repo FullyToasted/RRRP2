@@ -45,7 +45,7 @@ public class SeenCommand extends CommandExecutorBase{
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Gives detailed information about the requested player"))
+				.description(Text.of("Gives information about the requested player's last date online"))
 				.permission("rrr.admin.seen")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("player")))))
 				.executor(this).build();

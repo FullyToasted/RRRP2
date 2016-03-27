@@ -44,7 +44,7 @@ public class DepthCommand extends CommandExecutorBase
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Depth Command"))
+			.description(Text.of("Tells position relative to y=64"))
 			.permission("rrr.general.depth")
 			.executor(this)
 			.build();

@@ -65,7 +65,7 @@ public class HealCommand extends CommandExecutorBase
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "heal", "MotherSaveMe"};
+		return new String[] { "heal", "MotherSaveMe", "Heal"};
 	}
 
 	@Nonnull

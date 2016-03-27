@@ -87,6 +87,11 @@ public class Database {
 				execute("CREATE TABLE homes (ID INT, uuid VARCHAR, name TEXT, world INT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE)");
 			}
 			
+			//Database Layout <RecepientID> <RecepientName> <MailID> <senderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
+			if(!tables.contains("mail")) {
+				execute("CREATE TABLE mail (RecepientID INT, RecepientUsername VARCHAR(16), MailID INT, SenderID INT, SenderName VARCHAR(16), Message TEXT, Sent Text, Read BOOL)");
+			}
+			
 			if(!tables.contains("mutes")) {
 				execute("CREATE TABLE mutes (ID INT, uuid VARCHAR, duration DOUBLE, reason TEXT)");
 			}

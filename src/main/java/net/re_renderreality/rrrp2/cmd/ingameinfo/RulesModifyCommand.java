@@ -44,7 +44,7 @@ public class RulesModifyCommand extends CommandExecutorBase{
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Displays Server Rules"))
+			.description(Text.of("Modifies Server Rules"))
 			.permission("rrr.admin.rules.modify")
 			.arguments(GenericArguments.onlyOne(GenericArguments.integer(Text.of("ID"))),GenericArguments.remainingJoinedStrings(Text.of("Rule")))
 			.executor(this)

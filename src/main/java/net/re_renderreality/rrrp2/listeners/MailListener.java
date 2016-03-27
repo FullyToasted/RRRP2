@@ -19,7 +19,7 @@ public class MailListener
 	 * @notes adds mail to database
 	 * @TODO add way for players to recieve their mail, get the ID of the recipient
 	 */
-	@Listener
+	@Listener 
 	public void onMailSend(MailSendEvent event)
 	{
 		String recipientName = event.getRecipient();
