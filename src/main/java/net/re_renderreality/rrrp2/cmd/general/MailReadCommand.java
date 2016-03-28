@@ -1,9 +1,6 @@
 package net.re_renderreality.rrrp2.cmd.general;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -18,12 +15,14 @@ import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.MailCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
+import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class MailReadCommand extends CommandExecutorBase
 {
@@ -34,37 +33,74 @@ public class MailReadCommand extends CommandExecutorBase
 	{
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> OID = ctx.<Integer> getOne("mailID");
+		Player player = (Player) src;
+		int pid = Database.getID(player.getUniqueId().toString());
+		PlayerCore players = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(pid);
 		
 		if(src instanceof Player) {
 			if(OID.isPresent() && oCommand.isPresent()) {
 				int command = oCommand.get();
 				int id = OID.get();
-				Player player = (Player) src;
-				int pid = Database.getIDFromDatabase(player.getUniqueId().toString());
-				PlayerCore players = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(pid);
 				
 				if(command == 1 || command == 2) {
-					MailCore mail;
-					//getmailcore by MailID
+					MailCore mail = Database.getOneMail(id);
 					if(command == 1) {
-						m.getMessage();
+						if(players.getID() == mail.getRecepientID()) {
+							src.sendMessage(Text.of(TextColors.GOLD, "Sender: ", TextColors.GRAY, mail.getSenderName(), TextColors.GOLD, " Sent: ", TextColors.GRAY, mail.getSentTime(), TextColors.GOLD, " Message: ", TextColors.GRAY, mail.getMessage()));
+							mail.setReadUpdate(true);
+							CommandResult.success();
+						} else {
+							src.sendMessage(Text.of(TextColors.RED, "Cannot Delete another Player's Mail!"));
+							return CommandResult.empty();
+						}
 					} else if (command == 2) {
-						//delete
+						if(!mail.delete(players)) {
+							src.sendMessage(Text.of(TextColors.RED, "Cannot Delete another Player's Mail!"));
+							return CommandResult.empty();
+						}
+						src.sendMessage(Text.of(TextColors.GOLD, "Message deleted sucessfully!"));
+						CommandResult.success();
 					}
 				} else {
 					ArrayList<MailCore> mail = new ArrayList<MailCore>();
 					mail = Database.getMail(players.getID());
-					//Get All The MailCores with RecepientID of the src.
-					
-					src.sendMessage(Text.of());
+					ArrayList<Text> text = new ArrayList<Text>();
+					for(MailCore m : mail) {
+						text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GRAY, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
+					}
+					Iterable<Text> completedText = text;
+					sendPagination(completedText, src);
+					CommandResult.success();
 				}
-				
-				
+			} else if(!oCommand.isPresent()){
+				ArrayList<MailCore> mail = new ArrayList<MailCore>();
+				mail = Database.getMail(players.getID());
+				ArrayList<Text> text = new ArrayList<Text>();
+				for(MailCore m : mail) {
+					text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GRAY, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
+				}
+				Iterable<Text> completedText = text;
+				sendPagination(completedText, src); 
+				return CommandResult.success();
+			} else {
+				src.sendMessage(Text.of(TextColors.RED, "Error! Correct Useage /ReadMail <Command> <MailID"));
+				return CommandResult.empty();
 			}
+		} else {
+			src.sendMessage(Text.of(TextColors.RED, "Error! Must be a Player to issue this command"));
+			return CommandResult.empty();
 		}
-
+		return CommandResult.empty();
 	}
 
+	private void sendPagination(Iterable<Text> mail, CommandSource src) {
+		Utilities.getPaginationService().builder()
+	    	.title(Text.of(TextColors.GOLD, "MailBox"))
+	    	.contents(mail)
+	    	.footer(Text.of("To Read a mail type /readmail read <MailID>"))
+	    	.sendTo(src);
+	}
+	
 	@Nonnull
 	@Override
 	public String[] getAliases() {
@@ -81,8 +117,8 @@ public class MailReadCommand extends CommandExecutorBase
 		return CommandSpec.builder()
 			.description(Text.of("Read Mail that has been received"))
 			.permission("rrr.general.mail.receive")
-			.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("Command")))),
-						GenericArguments.integer(Text.of("mailID")))
+			.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("Command"), map)),
+						GenericArguments.optional(GenericArguments.integer(Text.of("mailID"))))
 			.executor(this)
 			.build();
 	}

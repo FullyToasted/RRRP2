@@ -89,7 +89,7 @@ public class Database {
 			
 			//Database Layout <RecepientID> <RecepientName> <MailID> <senderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
 			if(!tables.contains("mail")) {
-				execute("CREATE TABLE mail (RecepientID INT, RecepientUsername VARCHAR(16), MailID INT, SenderID INT, SenderName VARCHAR(16), Message TEXT, Sent Text, Read BOOL)");
+				execute("CREATE TABLE mail (RecepientID INT, RecepientName VARCHAR(16), MailID INT, SenderID INT, SenderName VARCHAR(16), Message TEXT, Sent Text, Read BOOL)");
 			}
 			
 			if(!tables.contains("mutes")) {
@@ -187,6 +187,29 @@ public class Database {
 			ResultSet rs = statement.executeQuery("SELECT ID FROM " + table + " ORDER BY id DESC LIMIT 1;");
 			if(rs.next()) {
 				x = rs.getInt("ID");
+			}
+			statement.close();
+			connection.close();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return x + 1;
+	}
+	
+	/**
+	 * 
+	 * @param execute string MySQL command to execute
+	 * @return int to use
+	 */
+	public static int findNextMailID() {	
+		int x = 0;
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT MailID FROM mail ORDER BY MailID DESC LIMIT 1;");
+			if(rs.next()) {
+				x = rs.getInt("MailID");
 			}
 			statement.close();
 			connection.close();
@@ -416,6 +439,70 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "";
+		}
+	}
+	
+	public static MailCore getOneMail(int id) {
+		
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * from mail WHERE MailID = " + id + ";");
+			MailCore mail = new MailCore();
+			
+			//Database Layout <RecepientID> <RecepientName> <MailID> <SenderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
+			while(rs.next()) {
+				mail.setRecepientID(rs.getInt("RecepientID"));
+				mail.setRecepientName(rs.getString("RecepientName"));
+				mail.setMailID(rs.getInt("MailID"));
+				mail.setSenderID(rs.getInt("SenderID"));
+				mail.setSenderName(rs.getString("SenderName"));
+				mail.setMessage(rs.getString("Message"));
+				mail.setSentTime(rs.getString("Sent"));
+				mail.setRead(rs.getBoolean("Read"));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return mail;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static ArrayList<MailCore> getMail(int id) {
+	
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * from mail WHERE RecepientID = " + id + ";");
+			ArrayList<MailCore> m = new ArrayList<MailCore>();
+			
+			//Database Layout <RecepientID> <RecepientName> <MailID> <SenderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
+			while(rs.next()) {
+				MailCore mail = new MailCore();
+				mail.setRecepientID(rs.getInt("RecepientID"));
+				mail.setRecepientName(rs.getString("RecepientName"));
+				mail.setMailID(rs.getInt("MailID"));
+				mail.setSenderID(rs.getInt("SenderID"));
+				mail.setSenderName(rs.getString("SenderName"));
+				mail.setMessage(rs.getString("Message"));
+				mail.setSentTime(rs.getString("Sent"));
+				mail.setRead(rs.getBoolean("Read"));
+				m.add(mail);
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return m;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

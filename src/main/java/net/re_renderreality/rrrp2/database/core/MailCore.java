@@ -28,8 +28,18 @@ public class MailCore {
 		this.read = read;
 	}
 	
+	public MailCore() {
+		;
+	}
+	
+	public void setReadUpdate(boolean read) { 
+		this.read = read;
+		String command = "UPDATE mail SET Read = " + Utilities.boolToInt(this.read) + " WHERE MailID = "+ this.mailID + ";";
+		Database.execute(command);
+	}
+	
 	public void insert() {
-		String command = "INSERT INTO mail VALUES (" + recepientID + ", '" + recepientName + "', " + mailID + ", " + senderID + ", '" + senderName + "', '" + sentTime + "', '" + message + "', " + Utilities.boolToInt(read) + ";";
+		String command = "INSERT INTO mail VALUES (" + recepientID + ", '" + recepientName + "', " + mailID + ", " + senderID + ", '" + senderName + "', '" + message + "', '" + sentTime + "', " + Utilities.boolToInt(read) + ");";
 		Database.execute(command);
 
 	}
@@ -40,7 +50,7 @@ public class MailCore {
 	 */
 	public void update() {
 		Logger l = RRRP2.getRRRP2().getLogger();
-		String command = "UPDATE players SET recepientID = " + recepientID + ", recepientName = '" + recepientName + "', mailID = " + mailID 
+		String command = "UPDATE mail SET recepientID = " + recepientID + ", recepientName = '" + recepientName + "', mailID = " + mailID 
 															 + ", senderID = " + senderID + ", senderName = '" + senderName + "', sentTime = '" 
 															 + sentTime + "', message = '" + message + "', read = " + Utilities.boolToInt(read) + ";";
 		l.info(command);
@@ -51,8 +61,14 @@ public class MailCore {
 	/**
 	 * delete player from database
 	 */
-	public void delete() {
-		Database.queue("DELETE FROM players WHERE MailID = '" + mailID + "'");
+	public boolean delete(PlayerCore players) {
+		int id = players.getID();
+		if( id == this.recepientID) {
+			Database.execute("UPDATE mail SET recepientID = 0 WHERE MailID = " + this.mailID + ";");
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	//Setter

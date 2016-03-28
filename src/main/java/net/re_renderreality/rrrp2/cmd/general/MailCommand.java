@@ -46,7 +46,7 @@ public class MailCommand extends CommandExecutorBase
 					Player p = (Player) src;
 					int cPlayerID = Database.getIDFromDatabase(p.getUniqueId().toString());
 					PlayerCore cPlayer = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(cPlayerID);
-					MailCore mail = new MailCore(target.getID(), target.getName(), Database.findNextID("mail"), cPlayer.getID(), cPlayer.getName(), todaysDate, message.get(), false);
+					MailCore mail = new MailCore(target.getID(), target.getName(), Database.findNextMailID(), cPlayer.getID(), cPlayer.getName(), todaysDate, message.get(), false);
 					mail.insert();
 					
 					src.sendMessage(Text.of(TextColors.GOLD, "Message successfully sent to: ", TextColors.GRAY, target.getName()));
@@ -96,6 +96,7 @@ public class MailCommand extends CommandExecutorBase
 	@Override
 	public CommandSpec getSpec()
 	{
+		
 		return CommandSpec.builder()
 			.description(Text.of("Send Mail to another player"))
 			.permission("rrr.general.mail.send")
