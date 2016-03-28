@@ -48,7 +48,7 @@ public final class CommandLoader {
                 new HelpOPCommand(),
                 new ListEntitiesCommand(),
                 new MailCommand(),
-                new MailReadCommand(),
+                new GetMail(),
                 new ManageHelpOP(),
                 new MOTDCommand(),
                 new NickCommand(),

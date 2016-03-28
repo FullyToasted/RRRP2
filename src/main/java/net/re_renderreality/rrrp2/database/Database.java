@@ -478,7 +478,7 @@ public class Database {
 		try {
 			Connection connection = datasource.getConnection();
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT * from mail WHERE RecepientID = " + id + ";");
+			ResultSet rs = statement.executeQuery("SELECT * from mail WHERE RecepientID = " + id + " ORDER BY MailID DESC;");
 			ArrayList<MailCore> m = new ArrayList<MailCore>();
 			
 			//Database Layout <RecepientID> <RecepientName> <MailID> <SenderID> <SenderName> <Sent Date/Time> <Msg> <Read> 

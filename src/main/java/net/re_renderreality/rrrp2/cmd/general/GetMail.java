@@ -24,7 +24,7 @@ import net.re_renderreality.rrrp2.database.core.MailCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class MailReadCommand extends CommandExecutorBase
+public class GetMail extends CommandExecutorBase
 {
 	/**
 	 * Explanation of what command does and if complicated how to do it
@@ -50,7 +50,7 @@ public class MailReadCommand extends CommandExecutorBase
 							mail.setReadUpdate(true);
 							CommandResult.success();
 						} else {
-							src.sendMessage(Text.of(TextColors.RED, "Cannot Delete another Player's Mail!"));
+							src.sendMessage(Text.of(TextColors.RED, "Cannot Read another Player's Mail!"));
 							return CommandResult.empty();
 						}
 					} else if (command == 2) {
@@ -66,7 +66,11 @@ public class MailReadCommand extends CommandExecutorBase
 					mail = Database.getMail(players.getID());
 					ArrayList<Text> text = new ArrayList<Text>();
 					for(MailCore m : mail) {
-						text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GRAY, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
+						if(m.getRead()) {
+							text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GRAY, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
+						} else {
+							text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GREEN, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GREEN, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GREEN, m.getSentTime()));
+						}
 					}
 					Iterable<Text> completedText = text;
 					sendPagination(completedText, src);
@@ -77,7 +81,11 @@ public class MailReadCommand extends CommandExecutorBase
 				mail = Database.getMail(players.getID());
 				ArrayList<Text> text = new ArrayList<Text>();
 				for(MailCore m : mail) {
-					text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GRAY, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
+					if(m.getRead()) {
+						text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GRAY, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
+					} else {
+						text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GREEN, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GREEN, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GREEN, m.getSentTime()));
+					}
 				}
 				Iterable<Text> completedText = text;
 				sendPagination(completedText, src); 
@@ -97,14 +105,14 @@ public class MailReadCommand extends CommandExecutorBase
 		Utilities.getPaginationService().builder()
 	    	.title(Text.of(TextColors.GOLD, "MailBox"))
 	    	.contents(mail)
-	    	.footer(Text.of("To Read a mail type /readmail read <MailID>"))
+	    	.footer(Text.of(TextColors.GREEN, "To Read a mail type /getmail read <MailID>"))
 	    	.sendTo(src);
 	}
 	
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "ReadMail", "Readmail", "readmail", "MailRead", "mailRead", "Mailread"};
+		return new String[] { "GetMail", "getMail", "Getmail", "getmail"};
 	}
 	
 	@Nonnull

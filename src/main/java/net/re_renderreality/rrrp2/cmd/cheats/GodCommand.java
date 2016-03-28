@@ -24,7 +24,6 @@ public class GodCommand extends CommandExecutorBase{
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
-		
 		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.god.self") && src instanceof Player) {
 			Player player = (Player) src;
 			int id = Database.getID(player.getUniqueId().toString());

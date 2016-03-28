@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -27,22 +28,38 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 public class MailCommand extends CommandExecutorBase
 {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * TODO: Create /mailManage, Send message that mail has been received if player is online
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		Optional<String> player = ctx.<String> getOne("Player");
+		Logger l = RRRP2.getRRRP2().getLogger();
+		Optional<String> player = ctx.<String> getOne("player name");
+		Optional<Player> pPlayer = ctx.<Player> getOne("player");
 		Optional<String> message = ctx.<String> getOne("Message");
 		//Database Layout 
 		if(src instanceof Player) {
-			if(player.isPresent() && message.isPresent()) {
-				int targetID = Database.getPlayerIDfromUsername(player.get());
+			int targetID;
+			PlayerCore target;
+			if((player.isPresent() || pPlayer.isPresent()) && message.isPresent()) {
+				l.info(player.isPresent() + " " + pPlayer.isPresent() + " " + message.isPresent());
+				if(player.isPresent()) {
+					targetID = Database.getPlayerIDfromUsername(player.get());
+					l.info(player.get() + " " + Database.getPlayerIDfromUsername(player.get()));
+					target = Database.getPlayerCore(targetID);
+				} else if (pPlayer.isPresent()) {
+					targetID = Database.getPlayerIDfromUsername(pPlayer.get().getName());
+					l.info(pPlayer.get() + " " + Database.getPlayerIDfromUsername(pPlayer.get().getName()));
+					target = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(targetID);
+				} else {
+					targetID = 0;
+					target = null;
+				}
+				
 				if(!(targetID == 0)) {
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					Calendar cal = Calendar.getInstance();
 					String todaysDate = dateFormat.format(cal.getTime());
 					
-					PlayerCore target = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(targetID);
 					Player p = (Player) src;
 					int cPlayerID = Database.getIDFromDatabase(p.getUniqueId().toString());
 					PlayerCore cPlayer = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(cPlayerID);
@@ -80,7 +97,7 @@ public class MailCommand extends CommandExecutorBase
 				return CommandResult.empty();
 			}
 		} else {
-			src.sendMessage(Text.of(TextColors.RED, "If you throw this error you are trly trying this plugin"));
+			src.sendMessage(Text.of(TextColors.RED, "If you throw this error you are truely trying this plugin"));
 			return CommandResult.empty();
 		}
 		return CommandResult.empty();
@@ -90,6 +107,7 @@ public class MailCommand extends CommandExecutorBase
 	@Override
 	public String[] getAliases() {
 		return new String[] { "Mail", "mail"};
+		
 	}
 	
 	@Nonnull
@@ -100,7 +118,8 @@ public class MailCommand extends CommandExecutorBase
 		return CommandSpec.builder()
 			.description(Text.of("Send Mail to another player"))
 			.permission("rrr.general.mail.send")
-			.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Player"))),
+			.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
+						GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))),
 						GenericArguments.remainingJoinedStrings(Text.of("Message")))
 			.executor(this)
 			.build();
