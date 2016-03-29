@@ -3,7 +3,6 @@ package net.re_renderreality.rrrp2.backend;
 import com.google.common.collect.Sets;
 
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_renderreality.rrrp2.cmd.*;
 import net.re_renderreality.rrrp2.cmd.administration.*;
 import net.re_renderreality.rrrp2.cmd.cheats.*;
 import net.re_renderreality.rrrp2.cmd.general.*;
@@ -40,6 +39,7 @@ public final class CommandLoader {
                 new DepthCommand(),
                 new FlyCommand(),
                 new GetDimCommand(),
+                new GetMailCommand(),
                 new GetPosCommand(),
                 new GetWorldCommand(),
                 new GodCommand(),
@@ -48,8 +48,8 @@ public final class CommandLoader {
                 new HelpOPCommand(),
                 new ListEntitiesCommand(),
                 new MailCommand(),
-                new GetMail(),
                 new ManageHelpOP(),
+                new ManageMailCommand(),
                 new MOTDCommand(),
                 new NickCommand(),
                 new PlayerCountCommand(),

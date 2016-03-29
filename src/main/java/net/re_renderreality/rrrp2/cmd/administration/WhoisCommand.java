@@ -28,35 +28,38 @@ public class WhoisCommand extends CommandExecutorBase{
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		Optional<String> p = ctx.<String> getOne("player");
+		Optional<String> player = ctx.<String> getOne("player name");
+		Optional<Player> pPlayer = ctx.<Player> getOne("player");
+		int id = 0;
+		PlayerCore playercore = null;
+		if(player.isPresent()) {
+			id = Database.getPlayerIDfromUsername(player.get());
+			playercore = Database.getPlayerCore(id);
+		} else if(pPlayer.isPresent()) {
+			id = Database.getPlayerIDfromUsername(pPlayer.get().getName());
+			playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+		}
+		if( id == 0 ) {
+			src.sendMessage(Text.of(TextColors.RED, "Player does not Exsist!"));
+			return CommandResult.empty();
+		}
 		
 		if(src instanceof Player) {
-			Player player = (Player) src;
-			int idoffline = 0;
-			if(player.hasPermission("rrr.admin.whois.others") && p.isPresent()) {
-				if(!(Database.getPlayerIDfromUsername(p.get()) == 0)) {
-					idoffline = Database.getPlayerIDfromUsername(p.get());
-					PlayerCore offlinePlayer = Database.getPlayerCore(idoffline);
-					sendWhois(src, offlinePlayer);
+			Player playerSRC = (Player) src;
+			if(playerSRC.hasPermission("rrr.admin.whois.others") && (player.isPresent() || pPlayer.isPresent())) {
+					sendWhois(src, playercore);
 					return CommandResult.success();
-				}
-			} else if(!p.isPresent()) {
+			} else if(!player.isPresent() && !pPlayer.isPresent()) {
 				String uuid = ((Player) src).getUniqueId().toString();
-				int id = Database.getID(uuid);
-				PlayerCore self = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+				int ids = Database.getID(uuid);
+				PlayerCore self = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(ids);
 				sendWhois(src, self);
 				return CommandResult.success();
 			}
 			
-		} else if(p.isPresent() && src instanceof ConsoleSource) {
-			int idoffline = 0;
-			
-			if(!(Database.getPlayerIDfromUsername(p.get()) == 0)) {
-				idoffline = Database.getPlayerIDfromUsername(p.get());
-				PlayerCore offlinePlayer = Database.getPlayerCore(idoffline);
-				sendWhois(src, offlinePlayer);
+		} else if((player.isPresent() || pPlayer.isPresent()) && src instanceof ConsoleSource) {
+				sendWhois(src, playercore);
 				return CommandResult.success();
-			}
 		} else {
 			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "You do not have permission to check Whois"));
 			return CommandResult.empty();
@@ -65,7 +68,7 @@ public class WhoisCommand extends CommandExecutorBase{
 	}
 	
 	private void sendWhois(CommandSource src, PlayerCore offlinePlayer) {
-		src.sendMessage(Text.of(TextColors.GREEN, "--------------------------------------------------------------------------"));
+		src.sendMessage(Text.of(TextColors.GREEN, "------------------------------------------------------"));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Username: ", TextColors.GREEN, offlinePlayer.getName()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's ID Number: ", TextColors.GRAY, offlinePlayer.getID()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's UUID: ", TextColors.GRAY, offlinePlayer.getUUID()));
@@ -103,7 +106,7 @@ public class WhoisCommand extends CommandExecutorBase{
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Last Death: ", TextColors.GRAY, offlinePlayer.getLastdeath()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Join Date: ", TextColors.GRAY, offlinePlayer.getFirstseen()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player Was Last Seen: ", TextColors.GRAY, offlinePlayer.getLastseen()));
-		src.sendMessage(Text.of(TextColors.GREEN, "-------------------------------------------------------------------------"));
+		src.sendMessage(Text.of(TextColors.GREEN, "------------------------------------------------------"));
 	}
 	
 	@Nonnull
@@ -118,7 +121,8 @@ public class WhoisCommand extends CommandExecutorBase{
 		return CommandSpec.builder()
 				.description(Text.of("Gives detailed information about the requested player"))
 				.permission("rrr.general.whois.self")
-				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("player")))))
+				.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
+						GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))))
 				.executor(this).build();
 	}
 }

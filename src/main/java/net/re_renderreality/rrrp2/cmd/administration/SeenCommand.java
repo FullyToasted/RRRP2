@@ -10,6 +10,7 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
@@ -20,13 +21,24 @@ public class SeenCommand extends CommandExecutorBase{
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		Optional<String> p = ctx.<String> getOne("player");
+		Optional<String> player = ctx.<String> getOne("player name");
+		Optional<Player> pPlayer = ctx.<Player> getOne("player");
 		
-		if(p.isPresent()) {
-			String username = p.get();
-			int id = Database.getPlayerIDfromUsername(username);
+		if(player.isPresent() || pPlayer.isPresent()) {
+			int id = 0;
+			String username = "";
+			if(player.isPresent()) {
+				id = Database.getPlayerIDfromUsername(player.get());
+				username = player.get();
+			} else if (pPlayer.isPresent()) {
+				id = Database.getPlayerIDfromUsername(pPlayer.get().getName());
+				username = pPlayer.get().getName();
+			}
 			String lastSeen = Database.getLastSeen(id);
-			
+			if(id == 0) {
+				src.sendMessage(Text.of(TextColors.RED, "This player has never joined this server"));
+				return CommandResult.empty();
+			}
 			src.sendMessage(Text.of(TextColors.GOLD, "Player ", TextColors.GRAY, username, TextColors.GOLD, " Was last seen on: ", TextColors.GRAY, lastSeen));
 			return CommandResult.success();
 		}
@@ -47,7 +59,8 @@ public class SeenCommand extends CommandExecutorBase{
 		return CommandSpec.builder()
 				.description(Text.of("Gives information about the requested player's last date online"))
 				.permission("rrr.admin.seen")
-				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("player")))))
+				.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
+							GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))))
 				.executor(this).build();
 	}
 }

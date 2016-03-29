@@ -28,7 +28,7 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 public class MailCommand extends CommandExecutorBase
 {
 	/**
-	 * TODO: Create /mailManage, Send message that mail has been received if player is online
+	 * TODO: Create /mailManag
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
@@ -44,12 +44,13 @@ public class MailCommand extends CommandExecutorBase
 				l.info(player.isPresent() + " " + pPlayer.isPresent() + " " + message.isPresent());
 				if(player.isPresent()) {
 					targetID = Database.getPlayerIDfromUsername(player.get());
-					l.info(player.get() + " " + Database.getPlayerIDfromUsername(player.get()));
 					target = Database.getPlayerCore(targetID);
 				} else if (pPlayer.isPresent()) {
 					targetID = Database.getPlayerIDfromUsername(pPlayer.get().getName());
-					l.info(pPlayer.get() + " " + Database.getPlayerIDfromUsername(pPlayer.get().getName()));
 					target = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(targetID);
+					if(!(targetID == 0)) {
+						pPlayer.get().sendMessage(Text.of("You have received mail!"));
+					}	
 				} else {
 					targetID = 0;
 					target = null;

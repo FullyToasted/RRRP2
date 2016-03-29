@@ -119,6 +119,7 @@ public class RRRP2{
 		Teleport.getConfig().setup();
 		Rules.getConfig().setup();
 		Announcements.getConfig().setup();
+		Chat.getConfig().setup();
 		
 		HelpGenerator.getHelp().populate();
 		getLogger().info(container.getName() + ": Config Initiallation Finished");
@@ -137,6 +138,7 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new DamageListener());
 		getGame().getEventManager().registerListeners(this, new DeathListener());
 		getGame().getEventManager().registerListeners(this, new CommandListener());
+		getGame().getEventManager().registerListeners(this, new ChatListener());
 	}
 	
 	/**

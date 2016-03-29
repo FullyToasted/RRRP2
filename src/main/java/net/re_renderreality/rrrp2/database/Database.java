@@ -505,5 +505,38 @@ public class Database {
 			return null;
 		}
 	}
+	
+	public static ArrayList<MailCore> getMail() {
+		
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * from mail ORDER BY MailID DESC;");
+			ArrayList<MailCore> m = new ArrayList<MailCore>();
+			
+			//Database Layout <RecepientID> <RecepientName> <MailID> <SenderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
+			while(rs.next()) {
+				MailCore mail = new MailCore();
+				mail.setRecepientID(rs.getInt("RecepientID"));
+				mail.setRecepientName(rs.getString("RecepientName"));
+				mail.setMailID(rs.getInt("MailID"));
+				mail.setSenderID(rs.getInt("SenderID"));
+				mail.setSenderName(rs.getString("SenderName"));
+				mail.setMessage(rs.getString("Message"));
+				mail.setSentTime(rs.getString("Sent"));
+				mail.setRead(rs.getBoolean("Read"));
+				m.add(mail);
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return m;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
 

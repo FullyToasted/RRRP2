@@ -71,6 +71,13 @@ public class MailCore {
 		}
 	}
 	
+	/**
+	 * delete player from database
+	 */
+	public void delete() {
+		Database.execute("UPDATE mail SET recepientID = 0 WHERE MailID = " + this.mailID + ";");
+	}
+	
 	//Setter
 	public void setRecepientID(int ID) {
 		this.recepientID = ID;
