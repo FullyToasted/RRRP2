@@ -3,6 +3,7 @@ package net.re_renderreality.rrrp2;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Set;
 
 import net.re_renderreality.rrrp2.backend.CommandLoader;
@@ -12,6 +13,7 @@ import net.re_renderreality.rrrp2.database.OnlinePlayers;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.listeners.*;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
+import net.re_renderreality.rrrp2.utils.SurroundedPlayer;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -49,6 +51,7 @@ public class RRRP2{
 	private Path configDir;
 	
 	public static RRRP2 plugin;
+	public static HashMap<Integer, SurroundedPlayer> surrounded = new HashMap<Integer, SurroundedPlayer>();
 	private Server server;
 	private OnlinePlayers onlinePlayer = new OnlinePlayers();
 	public static Set<Integer> teleportingPlayers = Sets.newHashSet();

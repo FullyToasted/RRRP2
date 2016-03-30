@@ -17,6 +17,9 @@ import org.spongepowered.api.data.property.block.PassableProperty;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.util.blockray.BlockRay;
+import org.spongepowered.api.util.blockray.BlockRayHit;
+import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.gen.PopulatorObject;
 import org.spongepowered.api.world.gen.type.BiomeTreeTypes;
@@ -32,18 +35,43 @@ public class TreeCommand extends CommandExecutorBase {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<String> treeType = ctx.<String> getOne("Tree Type");
-		Optional<Integer> X = ctx.<Integer> getOne("X");
-		Optional<Integer> Y = ctx.<Integer> getOne("Y");
-		Optional<Integer> Z = ctx.<Integer> getOne("Z");
+		
 		if(src instanceof Player) {
-			if(treeType.isPresent() && X.isPresent() && Y.isPresent() && Z.isPresent()) {
+			if(treeType.isPresent()) {
 				random = new Random();
 				
 				Player player = (Player) src;
 				World world = player.getWorld();
-				int x = X.get();
-		        int y = Y.get();
-		        int z = Z.get();
+
+				BlockRay<World> playerBlockRay = BlockRay.from(player).blockLimit(350).build();
+				BlockRayHit<World> finalHitRay = null;
+
+				while (playerBlockRay.hasNext())
+				{
+					BlockRayHit<World> currentHitRay = playerBlockRay.next();
+
+					if (!world.getBlockType(currentHitRay.getBlockPosition()).equals(BlockTypes.AIR))
+					{
+						finalHitRay = currentHitRay;
+						break;
+					} 
+				}
+
+				Location<World> treeLocation = null;
+
+				if (finalHitRay == null)
+				{
+					treeLocation = player.getLocation();
+				}
+				else
+				{
+					treeLocation = finalHitRay.getLocation();
+				}
+				
+				int x = treeLocation.getBlockX();
+		        int y = treeLocation.getBlockY();
+		        int z = treeLocation.getBlockZ();
+		     
 		        String tree = treeType.get();
 		        
 		        if(tree.equals("Birch")) {
@@ -132,11 +160,8 @@ public class TreeCommand extends CommandExecutorBase {
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
 				.description(Text.of("Spawns a tree at the given coords"))
-				.permission("rrr.cheat.bigtree")
-				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Tree Type"))), 
-						   GenericArguments.onlyOne(GenericArguments.integer(Text.of("X"))),
-				           GenericArguments.onlyOne(GenericArguments.integer(Text.of("Y"))),
-				           GenericArguments.onlyOne(GenericArguments.integer(Text.of("Z"))))
+				.permission("rrr.cheat.tree")
+				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Tree Type"))))
 				.executor(this).build();
 	}
 

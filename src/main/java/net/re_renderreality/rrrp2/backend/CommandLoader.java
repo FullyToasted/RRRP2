@@ -37,6 +37,7 @@ public final class CommandLoader {
                 new BigTreeCommand(),
                 new ClearEntitiesCommand(),
                 new DepthCommand(),
+                new FreeCommand(),
                 new FlyCommand(),
                 new GetDimCommand(),
                 new GetMailCommand(),
@@ -59,8 +60,10 @@ public final class CommandLoader {
                 new RulesRemoveCommand(),
                 new SeenCommand(),
                 new SetSpawnCommand(),
+                new SmiteCommand(),
                 new SpawnCommand(),
                 new SuicideCommand(),
+                new SurroundCommand(),
                 new TPSCommand(),
                 new TreeCommand(),
                 new WhoisCommand()
