@@ -50,10 +50,13 @@ public class ChatListener {
 	
 		original = original.replace(original.indexOf(player.getName()) + player.getName().length(), original.indexOf(player.getName()) + player.getName().length() + 1, suffix + ">");
 		String suffixInOriginal = original.substring(original.indexOf(player.getName()) + player.getName().length(), original.indexOf(restOfOriginal));
-	
-		String nick = playercore.getNick();
-		original = original.replace(original.indexOf(player.getName()) - 1, original.indexOf(player.getName()) + player.getName().length(), nick);
-		String playerName = original.substring(prefixInOriginal.length() - 1, original.indexOf(nick) + nick.length());
+		
+		String playerName = playercore.getName();
+		if(!(playercore.getNick().equals(""))) {
+			String nick = playercore.getNick();
+			original = original.replace(original.indexOf(player.getName()) - 1, original.indexOf(player.getName()) + player.getName().length(), nick);
+			playerName = original.substring(prefixInOriginal.length() - 1, original.indexOf(nick) + nick.length());
+		}
 	
 		prefixInOriginal = prefixInOriginal.replaceFirst("<", ReadConfigChat.getFirstCharactar());
 	

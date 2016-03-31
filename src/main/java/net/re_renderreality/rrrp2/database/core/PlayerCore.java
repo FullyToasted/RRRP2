@@ -187,7 +187,7 @@ public class PlayerCore {
 	 */
 	public void setBannedUpdate(boolean banned) { 
 		this.banned = banned;
-		String command = "UPDATE players SET god = " + Utilities.boolToInt(this.banned) + " WHERE ID = "+ this.ID + ";";
+		String command = "UPDATE players SET banned = " + Utilities.boolToInt(this.banned) + " WHERE ID = "+ this.ID + ";";
 		Database.execute(command);
 	}
 	

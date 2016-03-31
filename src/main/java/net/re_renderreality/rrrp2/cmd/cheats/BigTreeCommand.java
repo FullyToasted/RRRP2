@@ -1,5 +1,7 @@
 package net.re_renderreality.rrrp2.cmd.cheats;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -34,7 +36,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 	private Random random;
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		Optional<String> treeType = ctx.<String> getOne("Tree Type");
+		Optional<Integer> treeType = ctx.<Integer> getOne("Tree Type");
 		
 		if(src instanceof Player) {
 			if(treeType.isPresent()) {
@@ -71,21 +73,21 @@ public class BigTreeCommand extends CommandExecutorBase {
 				int x = treeLocation.getBlockX();
 		        int y = treeLocation.getBlockY();
 		        int z = treeLocation.getBlockZ();
-		        String tree = treeType.get();
+		        int tree = treeType.get();
 		        
-		        if(tree.equals("Birch")) {
+		        if(tree == 1) {
 		        	populate = BiomeTreeTypes.BIRCH.getLargePopulatorObject().get();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Large Birch Tree"));
-		        }else if (tree.equals("Spruce")) {
+		        }else if (tree == 2) {
 		        	populate = BiomeTreeTypes.POINTY_TAIGA.getLargePopulatorObject().get();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Large Taiga Tree"));
-		        }else if (tree.equals("Jungle")) {
+		        }else if (tree == 3) {
 		        	populate = BiomeTreeTypes.JUNGLE.getLargePopulatorObject().get();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Large Jungle Tree"));
-		        }else if (tree.equals("Oak")) {
+		        }else if (tree == 4) {
 		        	populate = BiomeTreeTypes.OAK.getLargePopulatorObject().get();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Large Oak Tree"));
-		        }else if (tree.equals("Tall_Taiga")) {
+		        }else if (tree == 5) {
 		        	populate = BiomeTreeTypes.TALL_TAIGA.getLargePopulatorObject().get();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Large Taiga Tree"));
 		        }
@@ -146,10 +148,17 @@ public class BigTreeCommand extends CommandExecutorBase {
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("Birch", 1);
+		map.put("Spruce", 2);
+		map.put("Jungle", 3);
+		map.put("Oak", 4);
+		map.put("Taiga", 5);
+		
 		return CommandSpec.builder()
 				.description(Text.of("Spawns a tree at the given coords"))
 				.permission("rrr.cheat.tree")
-				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Tree Type"))))
+				.arguments(GenericArguments.onlyOne(GenericArguments.choices(Text.of("Tree Type"), map)))
 				.executor(this).build();
 	}
 

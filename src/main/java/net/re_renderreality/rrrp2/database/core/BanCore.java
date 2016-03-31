@@ -1,15 +1,15 @@
 package net.re_renderreality.rrrp2.database.core;
 
-import net.re_renderreality.rrrp2.database.Bans;
 import net.re_renderreality.rrrp2.database.Database;
 
 public class BanCore {
-	private int ID;
+	private int id;
+	private String bannedName;
 	private String uuid;
 	private String sender;
 	private String reason;
-	private double time;
-	private double duration;
+	private String time;
+	private String duration;
 	
 	/**
 	 * @param ID ID of the player that got banned
@@ -19,8 +19,9 @@ public class BanCore {
 	 * @param time time they were banned 
 	 * @param duration how long they were banned for
 	 */
-	public BanCore(int ID, String uuid, String sender, String reason, double time, double duration) {
-		this.ID = ID;
+	public BanCore(int id, String bannedName, String uuid, String sender, String reason, String time, String duration) {
+		this.id = id;
+		this.bannedName = bannedName;
 		this.sender = sender;
 		this.reason = reason;
 		this.time = time;
@@ -31,10 +32,13 @@ public class BanCore {
 	/**
 	 * @param ID playerID of the player who was banned
 	 */
-	public void setID(int ID) { 
-		this.ID = ID; 
+	public void setID(int id) { 
+		this.id = id; 
 	}
 	
+	public void setBannedName(String name) {
+		this.bannedName = name;
+	}
 	/**
 	 * @param ID playerID of the player who was banned
 	 */
@@ -59,14 +63,14 @@ public class BanCore {
 	/**
 	 * @param ID playerID of the player who was banned
 	 */
-	public void setTime(double time) { 
+	public void setTime(String time) { 
 		this.time = time; 
 	}
 	
 	/**
 	 * @param ID playerID of the player who was banned
 	 */
-	public void setDuration(double duration) { 
+	public void setDuration(String duration) { 
 		this.duration = duration; 
 	}
 	
@@ -76,9 +80,12 @@ public class BanCore {
 	 * @return the ID number of the player that got banned
 	 */
 	public int getID() { 
-		return ID; 
+		return id; 
 	}
 	
+	public String getbannedName() {
+		return bannedName;
+	}
 	/**
 	 * @return the uuid of the player that got banned
 	 */
@@ -103,14 +110,14 @@ public class BanCore {
 	/**
 	 * @return the Time of the player that got banned
 	 */
-	public double getTime() { 
+	public String getTime() { 
 		return time; 
 	}
 	
 	/**
 	 * @return the Duration of the ban
 	 */
-	public double getDuration() { 
+	public String getDuration() { 
 		return duration; 
 	}
 	
@@ -119,23 +126,21 @@ public class BanCore {
 	 * inserts ban into the database
 	 */
 	public void insert() {
-		Bans.addBan(ID, this);
+		String command = "INSERT INTO bans VALUES (" + id + ", '" + bannedName + "', '" + uuid + "', '" + sender + "', '" + reason + "', '" + time + "', '" + duration + "');";
+		Database.execute(command);
 	}
 	
 	/**
 	 * updates the ban in the database
 	 */
 	public void update() {
-		Database.queue("UPDATE bans SET sender = '" + sender + "', reason = '" + reason + "', time = " + time + ", duration = " + duration + " WHERE uuid = '" + uuid + "'");
-		Bans.removeBan(ID);
-		Bans.addBan(ID, this);
+		Database.execute("UPDATE bans SET ID = " + id + ", bannedname = '" + bannedName + "', uuid = '" + uuid + "', sender = '" + sender + "', reason = '" + reason + "', time = " + time + ", duration = '" + duration + "' WHERE ID = '" + id + "'");
 	}
 	
 	/**
 	 * unbans the player
 	 */
 	public void delete() {
-		Database.queue("DELETE FROM bans WHERE ID = '" + ID + "'");
-		Bans.removeBan(ID);
+		Database.execute("DELETE FROM bans WHERE ID = " + id + ";");
 	}
 }

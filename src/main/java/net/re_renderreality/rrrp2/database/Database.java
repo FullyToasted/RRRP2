@@ -76,11 +76,11 @@ public class Database {
 			}
 
 			if(!tables.contains("bans")) {
-				execute("CREATE TABLE bans (ID INT, uuid VARCHAR, sender VARCHAR, reason TEXT, time DOUBLE, duration DOUBLE)");
+				execute("CREATE TABLE bans (ID INT, bannedname VARCHAR(16), uuid VARCHAR(60), sender VARCHAR(16), reason TEXT, time TEXT, duration Text)");
 			}
 			
 			if(!tables.contains("helpop")) {
-				execute("CREATE TABLE helpop (ID INT, submitter TEXT, message TEXT, resolved Bool)");
+				execute("CREATE TABLE helpop (ID INT, submitter VARCHAR(16), message TEXT, resolved Bool)");
 			}
 			
 			if(!tables.contains("homes")) {
@@ -93,11 +93,11 @@ public class Database {
 			}
 			
 			if(!tables.contains("mutes")) {
-				execute("CREATE TABLE mutes (ID INT, uuid VARCHAR, duration DOUBLE, reason TEXT)");
+				execute("CREATE TABLE mutes (ID INT, uuid VARCHAR(36), duration DOUBLE, reason TEXT)");
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (ID INT, uuid VARCHAR(36), name TEXT, IP VARCHAR(45), nick TEXT, channel TEXT, money DOUBLE, banned BOOL, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen TEXT, lastseen TEXT)");
+				execute("CREATE TABLE players (ID INT, uuid VARCHAR(60), name TEXT, IP VARCHAR(45), nick TEXT, channel TEXT, money DOUBLE, banned BOOL, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen TEXT, lastseen TEXT)");
 				execute("INSERT INTO players VALUES (0, '" + "uuid" + "', '" + "name" + "', '" + "192.168.1.1" + "', '" + "nick" + "', '" + "channel" + "', 123.0, 0,  1, 0, 1, 0, 123.0, '" + "LastLocation" + "', '" + "LastDeath" + "', '" + "FirstSeen" + "', '" + "LastSeen" + "');");
 			}
 				
@@ -106,22 +106,7 @@ public class Database {
 		
 	}
 	//REPLACE EVERYTHING FROM HERE
-	public static void load(Game game) {
-		//Imports the entire BanList into HashMap
-		try {
-			Connection c = datasource.getConnection();
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM bans");
-			while(rs.next()) {
-				BanCore ban = new BanCore(rs.getInt("ID"),rs.getString("uuid"), rs.getString("sender"), rs.getString("reason"), rs.getDouble("time"), rs.getDouble("duration"));
-				Bans.addBan(ban.getID(), ban);
-			}
-			s.close();
-			c.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+	public static void load(Game game) {		
 		//Imports the entire MuteList into HashMap
 		try {
 			Connection c = datasource.getConnection();
@@ -310,6 +295,7 @@ public class Database {
 				player.setNick(rs.getString("nick"));
 				player.setChannel(rs.getString("channel"));
 				player.setMoney(rs.getDouble("money"));
+				player.setBanned(rs.getBoolean("banned"));
 				player.setGod(rs.getBoolean("god"));
 				player.setFly(rs.getBoolean("fly"));
 				player.setTPToggle(rs.getBoolean("tptoggle"));

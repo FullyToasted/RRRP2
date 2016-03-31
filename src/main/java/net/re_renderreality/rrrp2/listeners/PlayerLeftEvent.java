@@ -43,11 +43,12 @@ public class PlayerLeftEvent
 			event.setMessage(newMessage);
 		}
 		PlayerCore playa = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
-		playa.setLastlocation(lastloc);
-		playa.setLastseen(todaysDate);
-		playa.setFly(false);
-		playa.update();
-		RRRP2.getRRRP2().getOnlinePlayer().removePlayer(playa);
+		if(!(playa == null) && !(playa.getBanned())) {
+			playa.setLastlocationUpdate(lastloc);
+			playa.setLastseenUpdate(todaysDate);
+			playa.setFlyUpdate(false);
+			RRRP2.getRRRP2().getOnlinePlayer().removePlayer(playa);
+		}
 		//Utils.savePlayerInventory(player, player.getWorld().getUniqueId());
 	}
 }

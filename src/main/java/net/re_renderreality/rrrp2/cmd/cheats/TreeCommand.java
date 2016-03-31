@@ -1,5 +1,7 @@
 package net.re_renderreality.rrrp2.cmd.cheats;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -34,7 +36,7 @@ public class TreeCommand extends CommandExecutorBase {
 	private Random random;
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		Optional<String> treeType = ctx.<String> getOne("Tree Type");
+		Optional<Integer> treeType = ctx.<Integer> getOne("Tree Type");
 		
 		if(src instanceof Player) {
 			if(treeType.isPresent()) {
@@ -72,33 +74,33 @@ public class TreeCommand extends CommandExecutorBase {
 		        int y = treeLocation.getBlockY();
 		        int z = treeLocation.getBlockZ();
 		     
-		        String tree = treeType.get();
+		        int tree = treeType.get();
 		        
-		        if(tree.equals("Birch")) {
+		        if(tree == 1) {
 		        	populate = BiomeTreeTypes.BIRCH.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Birch Tree"));
-		        }else if (tree.equals("Spruce")) {
+		        }else if (tree == 2) {
 		        	populate = BiomeTreeTypes.POINTY_TAIGA.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Taiga Tree"));
-		        }else if (tree.equals("Dark_Oak")) {
+		        }else if (tree == 3) {
 		        	populate = BiomeTreeTypes.CANOPY.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Dark Oak Tree"));
-		        }else if (tree.equals("Jungle")) {
+		        }else if (tree == 4) {
 		        	populate = BiomeTreeTypes.JUNGLE.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Jungle Tree"));
-		        }else if (tree.equals("Jungle_Bush")) {
+		        }else if (tree == 5) {
 		        	populate = BiomeTreeTypes.JUNGLE_BUSH.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Jungle Bush Tree"));
-		        }else if (tree.equals("Oak")) {
+		        }else if (tree == 6) {
 		        	populate = BiomeTreeTypes.OAK.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Oak Tree"));
-		        }else if (tree.equals("Savanna")) {
+		        }else if (tree == 7) {
 		        	populate = BiomeTreeTypes.SAVANNA.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Savanna Tree"));
-		        }else if (tree.equals("Swamp")) {
+		        }else if (tree == 8) {
 		        	populate = BiomeTreeTypes.SWAMP.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Swamp Tree"));
-		        }else if (tree.equals("Tall_Taiga")) {
+		        }else if (tree == 9) {
 		        	populate = BiomeTreeTypes.TALL_TAIGA.getPopulatorObject();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Taiga Tree"));
 		        }
@@ -158,11 +160,21 @@ public class TreeCommand extends CommandExecutorBase {
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("Birch", 1);
+		map.put("Spruce", 2);
+		map.put("Canopy", 3);
+		map.put("Jungle", 4);
+		map.put("Jungle_Bush", 5);
+		map.put("Oak", 6);
+		map.put("Savanna", 7);
+		map.put("Swamp", 8);
+		map.put("Tall_Taiga", 9);
+		
 		return CommandSpec.builder()
 				.description(Text.of("Spawns a tree at the given coords"))
 				.permission("rrr.cheat.tree")
-				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Tree Type"))))
+				.arguments(GenericArguments.onlyOne(GenericArguments.choices(Text.of("Tree Type"), map)))
 				.executor(this).build();
 	}
-
 }

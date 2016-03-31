@@ -40,7 +40,7 @@ public class PlayerJoinListener
 			id = Database.findNextID("players");
 			
 			firstjoin = true;
-			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(), player.getConnection().getAddress().getHostName(), "", "default", 5.0, false, false, false, false, false, 0.0, null, null, null, null );
+			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(), player.getConnection().getAddress().getHostString(), "", "default", 5.0, false, false, false, false, false, 0.0, null, null, null, null );
 			Database.addUUID(uuid, id);
 			thePlayer.insert();
 
@@ -74,8 +74,15 @@ public class PlayerJoinListener
 		if (firstjoin) {
 			players.setFirstseenUpdate(todaysDate);
 		}
+		players.setIPUpdate(player.getConnection().getAddress().getHostString());
 		players.setLastseenUpdate(todaysDate);
 		Database.commit();
 		OP.addPlayer(players);
+		
+		//if tempban runs out player is still in the mySQL banned list
+		if(players.getBanned()) {
+			Database.execute("DELETE FROM bans WHERE ID = " + id + ";");
+			players.setBannedUpdate(false);
+		}
 	}
 }

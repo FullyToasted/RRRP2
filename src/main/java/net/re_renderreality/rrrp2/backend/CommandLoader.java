@@ -34,6 +34,7 @@ public final class CommandLoader {
                 new AnnouncementsModifyCommand(),
                 new AnnouncementsRemoveCommand(),
         		new BackCommand(),
+        		new BanCommand(),
                 new BigTreeCommand(),
                 new ClearEntitiesCommand(),
                 new DepthCommand(),
@@ -53,6 +54,7 @@ public final class CommandLoader {
                 new ManageMailCommand(),
                 new MOTDCommand(),
                 new NickCommand(),
+                new PardonCommand(),
                 new PlayerCountCommand(),
                 new RulesAddCommand(),
                 new RulesCommand(),
@@ -64,6 +66,7 @@ public final class CommandLoader {
                 new SpawnCommand(),
                 new SuicideCommand(),
                 new SurroundCommand(),
+                new TempBanCommand(),
                 new TPSCommand(),
                 new TreeCommand(),
                 new WhoisCommand()
