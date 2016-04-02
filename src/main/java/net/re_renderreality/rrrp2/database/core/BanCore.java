@@ -22,10 +22,15 @@ public class BanCore {
 	public BanCore(int id, String bannedName, String uuid, String sender, String reason, String time, String duration) {
 		this.id = id;
 		this.bannedName = bannedName;
+		this.uuid = uuid;
 		this.sender = sender;
 		this.reason = reason;
 		this.time = time;
 		this.duration = duration;
+	}
+	
+	public BanCore() {
+		;
 	}
 	
 	//Setters

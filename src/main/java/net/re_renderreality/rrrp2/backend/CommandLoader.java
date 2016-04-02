@@ -35,6 +35,7 @@ public final class CommandLoader {
                 new AnnouncementsRemoveCommand(),
         		new BackCommand(),
         		new BanCommand(),
+        		new BanManagerCommand(),
                 new BigTreeCommand(),
                 new ClearEntitiesCommand(),
                 new DepthCommand(),

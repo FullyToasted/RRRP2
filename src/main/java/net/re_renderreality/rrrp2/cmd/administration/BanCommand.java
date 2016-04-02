@@ -59,6 +59,10 @@ public class BanCommand extends CommandExecutorBase
 			id = Database.getPlayerIDfromUsername(sPlayer.get());
 			playercore = Database.getPlayerCore(id);
 			UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
+			if(playercore.getUUID().equals("uuid")) {
+				src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
+				return CommandResult.empty();
+			}
 			Optional<User> ogp = uss.get(UUID.fromString(playercore.getUUID()));
 			if (ogp.isPresent())
 			{
@@ -75,19 +79,19 @@ public class BanCommand extends CommandExecutorBase
 			return CommandResult.empty();
 		}
 		srv.addBan(Ban.builder().type(BanTypes.PROFILE).source(src).profile(players.getProfile()).reason(TextSerializers.formattingCode('&').deserialize(reason)).build());
-		BanCore ban = new BanCore(id, playercore.getName(), playercore.getUUID(), src.getName(), reason, todaysDate, "Permanent");
+		BanCore ban = new BanCore(id, playercore.getName(), players.getUniqueId().toString() , src.getName(), reason, todaysDate, "Permanent");
 		ban.insert();
 		playercore.setBannedUpdate(true);
-		
-		if (player.get().isOnline())
-		{
-			player.get().getPlayer().get().kick(Text.builder()
-				.append(Text.of(TextColors.DARK_RED, "You have been banned!\n ", TextColors.RED, "Reason: "))
-				.append(TextSerializers.formattingCode('&').deserialize(reason))
-				.build());
+		if (player.isPresent()) {
+			if (player.get().isOnline()) {
+				player.get().getPlayer().get().kick(Text.builder()
+					.append(Text.of(TextColors.DARK_RED, "You have been banned!\n ", TextColors.RED, "Reason: "))
+					.append(TextSerializers.formattingCode('&').deserialize(reason))
+					.build());
+			}
 		}
 
-		src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, player.get().getName() + " has been banned."));
+		src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, playercore.getName() + " has been banned."));
 		return CommandResult.success();
 	}
 

@@ -61,6 +61,10 @@ public class TempBanCommand extends CommandExecutorBase {
 			id = Database.getPlayerIDfromUsername(sPlayer.get());
 			playercore = Database.getPlayerCore(id);
 			UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
+			if(playercore.getUUID().equals("uuid")) {
+				src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
+				return CommandResult.empty();
+			}
 			Optional<User> ogp = uss.get(UUID.fromString(playercore.getUUID()));
 			if (ogp.isPresent())
 			{
@@ -83,20 +87,21 @@ public class TempBanCommand extends CommandExecutorBase {
 			.expirationDate(getInstantFromString(time))
 			.reason(TextSerializers.formattingCode('&').deserialize(reason))
 			.build());
-		BanCore ban = new BanCore(id, playercore.getName(), playercore.getUUID(), src.getName(), reason, todaysDate, getFormattedString(time));
+		BanCore ban = new BanCore(id, playercore.getName(), players.getUniqueId().toString(), src.getName(), reason, todaysDate, getFormattedString(time));
 		ban.insert();
 		playercore.setBannedUpdate(true);
 
-		if (players.isOnline())
-		{
-			players.getPlayer().get().kick(Text.builder()
-				.append(Text.of(TextColors.DARK_RED, "You have been tempbanned!\n", TextColors.RED, "Reason: "))
-				.append(TextSerializers.formattingCode('&').deserialize(reason), Text.of("\n"))
-				.append(Text.of(TextColors.GOLD, "Time: ", TextColors.GRAY, getFormattedString(time)))
-				.build());
+		if (player.isPresent()) {
+			if (players.isOnline()) {
+				players.getPlayer().get().kick(Text.builder()
+					.append(Text.of(TextColors.DARK_RED, "You have been tempbanned!\n", TextColors.RED, "Reason: "))
+					.append(TextSerializers.formattingCode('&').deserialize(reason), Text.of("\n"))
+					.append(Text.of(TextColors.GOLD, "Time: ", TextColors.GRAY, getFormattedString(time)))
+					.build());
+			}
 		}
 
-		src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, players.getName() + " has been banned."));
+		src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, playercore.getName() + " has been banned."));
 		return CommandResult.success();
 	}
 

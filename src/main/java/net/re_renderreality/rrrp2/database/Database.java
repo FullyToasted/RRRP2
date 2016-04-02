@@ -524,5 +524,67 @@ public class Database {
 			return null;
 		}
 	}
+	
+	public static BanCore getOneBan(int id) {
+		
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * from bans WHERE ID = " + id + ";");
+			BanCore ban = new BanCore();
+			
+			//Database Layout <RecepientID> <RecepientName> <MailID> <SenderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
+			while(rs.next()) {
+				ban.setID(rs.getInt("ID"));
+				ban.setBannedName(rs.getString("bannedname"));
+				ban.setUUID(rs.getString("uuid"));
+				ban.setSender(rs.getString("sender"));
+				ban.setReason(rs.getString("reason"));
+				ban.setTime(rs.getString("time"));
+				ban.setDuration(rs.getString("duration"));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return ban;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<BanCore> getBans() {
+		
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * from bans");
+			ArrayList<BanCore> b = new ArrayList<BanCore>();
+			
+			//Database Layout <RecepientID> <RecepientName> <MailID> <SenderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
+			while(rs.next()) {
+				BanCore ban = new BanCore();
+				ban.setID(rs.getInt("ID"));
+				ban.setBannedName(rs.getString("bannedname"));
+				ban.setUUID(rs.getString("uuid"));
+				ban.setSender(rs.getString("sender"));
+				ban.setReason(rs.getString("reason"));
+				ban.setTime(rs.getString("time"));
+				ban.setDuration(rs.getString("duration"));
+				b.add(ban);
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return b;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
 

@@ -151,7 +151,7 @@ public class PlayerCore {
 	 */
 	public void setIPUpdate(String ip) { 
 		this.ip = ip; 
-		String command = "UPDATE players SET name = '" + this.ip + "' WHERE ID = "+ this.ID + ";";
+		String command = "UPDATE players SET IP = '" + this.ip + "' WHERE ID = "+ this.ID + ";";
 		Database.execute(command);
 	}
 	
