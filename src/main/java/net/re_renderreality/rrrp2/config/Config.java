@@ -93,6 +93,11 @@ public class Config implements Configurable
 		get().getNode("mysql", "database").setValue("Minecraft").setComment("Name of MySQL Database.");
 		get().getNode("mysql", "username").setValue("root").setComment("Username for MySQL Database.");
 		get().getNode("mysql", "password").setValue("pass").setComment("Password for MySQL Database.");
+		
+		get().getNode("Messages", "showbanned").setValue(true).setComment("When Someone is banned everyone see it");
+		
+		get().getNode("Teleport", "cooldown", "enabled").setValue(true).setComment("Sets if TP cooldown is enabled");
+		get().getNode("Teleport", "cooldown", "timer").setValue(10).setComment("Sets cooldown timer length");
 	}
 
 	@Override

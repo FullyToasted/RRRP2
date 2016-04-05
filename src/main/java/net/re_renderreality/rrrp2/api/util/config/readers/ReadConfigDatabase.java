@@ -120,4 +120,44 @@ public class ReadConfigDatabase {
 		Configs.setValue(mainConfig, new Object[] { "mysql", "use" }, value);
 	}
 	//End MYSQL	
+	
+	public static boolean getShowBanned() {
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Messages", "showbanned");
+		if (configManager.getBoolean(node).isPresent())
+			return node.getBoolean();
+		setShowBanned(true);
+		return true;
+	}
+	
+	public static void setShowBanned(boolean value) {
+		Configs.setValue(mainConfig, new Object[] {"Messages", "showbanned"}, value);
+	}
+	
+	public static boolean getTeleportCooldownEnabled() {
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Teleport", "cooldown", "enabled");
+		if (configManager.getBoolean(node).isPresent())
+			return node.getBoolean();
+		setTeleportCooldownEnabled(true);
+		return true;
+	}
+	
+	public static void setTeleportCooldownEnabled(boolean value) {
+		Configs.setValue(mainConfig, new Object[] {"Teleport", "cooldown", "enabled"}, value);
+	}
+	
+	public static long getTeleportCooldown()
+	{
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Teleport", "cooldown", "timer");
+		if (configManager.getLong(node).isPresent())
+			return node.getLong();
+		setTeleportCooldown(10);
+		return 10l;
+	}
+	
+	public static void setTeleportCooldown(long value)
+	{
+		Configs.setValue(mainConfig, new Object[] { "Teleport", "cooldown", "timer" }, value);
+	}
+
+
 }

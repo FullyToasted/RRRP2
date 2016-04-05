@@ -8,6 +8,8 @@ import net.re_renderreality.rrrp2.cmd.cheats.*;
 import net.re_renderreality.rrrp2.cmd.general.*;
 import net.re_renderreality.rrrp2.cmd.ingameinfo.*;
 import net.re_renderreality.rrrp2.cmd.spawn.*;
+import net.re_renderreality.rrrp2.cmd.teleport.*;
+import net.re_renderreality.rrrp2.cmd.teleport.admintp.*;
 
 import org.spongepowered.api.Sponge;
 
@@ -40,6 +42,7 @@ public final class CommandLoader {
                 new ClearEntitiesCommand(),
                 new DepthCommand(),
                 new FreeCommand(),
+                new FreezeCommand(),
                 new FlyCommand(),
                 new GetDimCommand(),
                 new GetMailCommand(),
@@ -49,6 +52,7 @@ public final class CommandLoader {
                 new HealCommand(),
                 new HelpCommand(),
                 new HelpOPCommand(),
+                new KickCommand(),
                 new ListEntitiesCommand(),
                 new MailCommand(),
                 new ManageHelpOP(),
@@ -67,7 +71,14 @@ public final class CommandLoader {
                 new SpawnCommand(),
                 new SuicideCommand(),
                 new SurroundCommand(),
+                new TeleportCommand(),
+                new TeleportHereCommand(),
+                new TeleportPositionCommand(),
                 new TempBanCommand(),
+                new TPAcceptCommand(),
+                new TPCommand(),
+                new TPDenyCommand(),
+                new TPHereCommand(),
                 new TPSCommand(),
                 new TreeCommand(),
                 new WhoisCommand()

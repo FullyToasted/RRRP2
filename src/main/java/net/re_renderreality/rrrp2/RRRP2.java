@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import net.re_renderreality.rrrp2.backend.CommandLoader;
@@ -14,6 +15,7 @@ import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.listeners.*;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
 import net.re_renderreality.rrrp2.utils.SurroundedPlayer;
+import net.re_renderreality.rrrp2.utils.TPInvitation;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -27,6 +29,7 @@ import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
@@ -55,6 +58,8 @@ public class RRRP2{
 	private Server server;
 	private OnlinePlayers onlinePlayer = new OnlinePlayers();
 	public static Set<Integer> teleportingPlayers = Sets.newHashSet();
+	public static List<TPInvitation> pendingInvites = Lists.newArrayList();
+	public static Set<Integer> frozenPlayers = Sets.newHashSet();
 	
 	public static RRRP2 getRRRP2() {
 		return plugin;
@@ -142,6 +147,7 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new DeathListener());
 		getGame().getEventManager().registerListeners(this, new CommandListener());
 		getGame().getEventManager().registerListeners(this, new ChatListener());
+		getGame().getEventManager().registerListeners(this, new TPListener());
 	}
 	
 	/**
