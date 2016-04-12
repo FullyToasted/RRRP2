@@ -23,7 +23,7 @@ public class SetSpawnCommand extends CommandExecutorBase {
 		if (src instanceof Player)
 		{
 			Player player = (Player) src;
-			ReadConfigSpawn.setSpawn(player.getTransform(), player.getWorld().getName());
+			ReadConfigSpawn.setSpawn(player.getWorld().getName(), player.getTransform(), player.getWorld().getName());
 			player.getWorld().getProperties().setSpawnPosition(player.getLocation().getBlockPosition());
 			src.sendMessage(Text.of(TextColors.GREEN, "Success: ", TextColors.YELLOW, "Spawn set."));
 		}

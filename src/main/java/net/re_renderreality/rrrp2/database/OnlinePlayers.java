@@ -45,15 +45,29 @@ public class OnlinePlayers {
 	}
 	
 	/**
-	 * @param name Name of player to get UUID for.
-	 * @return UUID for player with name of parameter.
+	 * @param name Name of player to get ID for.
+	 * @return ID for player with name of parameter.
 	 */
 	public int getIDfromUsername(String username) {
 		for (int n:players.keySet()) {
-			if (getPlayer(n).getName() == username)
+			if(getPlayer(n).getName().equals(username)) {
 				return n;
+			}
 		}
 		return -1;
+	}
+	
+	/**
+	 * @param name Name of player to get playercore for.
+	 * @return playercore for player with name of parameter.
+	 */
+	public PlayerCore getPlayerCorefromUsername(String username) {
+		for (int n:players.keySet()) {
+			if(getPlayer(n).getName().equals(username)) {
+				return getPlayer(n);
+			}
+		}
+		return null;
 	}
 	
 	/**

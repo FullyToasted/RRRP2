@@ -14,7 +14,10 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
+import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.core.PlayerCore;
+import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class TeleportHereCommand extends CommandExecutorBase {
 	
@@ -29,6 +32,8 @@ public class TeleportHereCommand extends CommandExecutorBase {
 			else {
 				player.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.WHITE, recipient.getName() + " has been teleported to your location!"));
 				recipient.sendMessage(Text.of(TextColors.GREEN, player.getName(), TextColors.WHITE, " has teleported you to their location!"));
+				PlayerCore r = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(recipient.getName());
+				r.setLastlocationUpdate(Utilities.convertLocation(recipient));
 				recipient.setLocation(player.getLocation());
 			}
 

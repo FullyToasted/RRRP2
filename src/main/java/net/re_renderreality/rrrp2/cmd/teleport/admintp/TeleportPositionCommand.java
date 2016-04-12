@@ -26,12 +26,21 @@ public class TeleportPositionCommand extends CommandExecutorBase
 {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
+		Player source = (Player) src;
 		Optional<Player> p = ctx.<Player> getOne("player");
 		Optional<String> optionalWorld = ctx.<String> getOne("world");
 		int x = ctx.<Integer> getOne("x").get();
 		int y = ctx.<Integer> getOne("y").get();
 		int z = ctx.<Integer> getOne("z").get();
-		World world = Sponge.getServer().getWorld(optionalWorld.get()).orElse(null);
+		World world = null;
+		if(optionalWorld.isPresent()) {
+			world = Sponge.getServer().getWorld(optionalWorld.get()).orElse(null);
+			if(world == null) {
+				world = source.getWorld();
+			}
+		} else {
+			world = source.getWorld();
+		}
 
 		if (p.isPresent()) {
 			if (src.hasPermission("teleport.pos.others")) {
@@ -53,7 +62,7 @@ public class TeleportPositionCommand extends CommandExecutorBase
 				Player player = (Player) src;
 				int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(player.getName());
 				PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
-				playercore.setLastlocationUpdate(Utilities.convertLocation(p.get()));
+				playercore.setLastlocationUpdate(Utilities.convertLocation(player));
 
 				if(world != null)
 					player.setLocation(new Location<>(world, x, y, z));

@@ -29,8 +29,9 @@ public class TeleportCommand extends CommandExecutorBase {
 
 		if (optionalPlayer.isPresent())	{
 			Player player = optionalPlayer.get();
-			int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(player.getName());
-			PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+			PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(player.getName());
+			Player s = (Player) src;
+			PlayerCore source = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(s.getName());
 
 			if (optionalTarget.isPresent())	{
 				if (src.hasPermission("rrr.admin.tpo.others")) {
@@ -46,6 +47,7 @@ public class TeleportCommand extends CommandExecutorBase {
 			else {
 				if (src instanceof Player) {
 					Player targ = (Player) src;
+					source.setLastlocationUpdate(Utilities.convertLocation(s));
 					targ.setLocation(player.getLocation());
 					targ.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleported to player " + player.getName()));
 				}
@@ -63,8 +65,7 @@ public class TeleportCommand extends CommandExecutorBase {
 
 			if (optionalTarget.isPresent() && src.hasPermission("rrr.admin.tpo.others")) {
 				target = optionalTarget.get();
-			}
-			else if (optionalTarget.isPresent()) {
+			} else if (optionalTarget.isPresent()) {
 				src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "You do not have permission to teleport other players."));
 				return CommandResult.success();
 			}
@@ -80,6 +81,8 @@ public class TeleportCommand extends CommandExecutorBase {
 
 			if (!optionalWorld.isPresent()) {
 				Location<World> location = new Location<>(target.getWorld(), x, y, z);
+				PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(target.getName());
+				playerTarget.setLastlocationUpdate(Utilities.convertLocation(target));
 				target.setLocation(location);
 				target.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleported to location!"));
 			}
@@ -90,9 +93,13 @@ public class TeleportCommand extends CommandExecutorBase {
 					Location<World> location = new Location<>(world.get(), x, y, z);
 
 					if (!target.getWorld().getUniqueId().equals(world.get().getUniqueId())) {
+						PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(target.getName());
+						playerTarget.setLastlocationUpdate(Utilities.convertLocation(target));
 						target.transferToWorld(world.get().getUniqueId(), location.getPosition());
 					}
 					else {
+						PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(target.getName());
+						playerTarget.setLastlocationUpdate(Utilities.convertLocation(target));
 						target.setLocation(location);
 					}
 
