@@ -44,7 +44,7 @@ public class TPListener {
 			if (RRRP2.pendingInvites.contains(invite)) {
 				RRRP2.pendingInvites.remove(invite);
 			}
-		}).delay(10, TimeUnit.SECONDS).name("EssentialCmds - Remove Pending Invite").submit(game.getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
+		}).delay(10, TimeUnit.SECONDS).name("RRRP2 - Remove Pending Invite").submit(game.getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
 	}
 
 	@Listener

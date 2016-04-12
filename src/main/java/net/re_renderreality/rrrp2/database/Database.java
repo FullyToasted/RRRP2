@@ -3,6 +3,7 @@ package net.re_renderreality.rrrp2.database;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.service.sql.SqlService;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -84,7 +85,7 @@ public class Database {
 			}
 			
 			if(!tables.contains("homes")) {
-				execute("CREATE TABLE homes (ID INT, uuid VARCHAR, name TEXT, world INT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE)");
+				execute("CREATE TABLE homes (ID INT, uuid VARCHAR(60), username VARCHAR(16), homename TEXT,  world TEXT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE, roll DOUBLE)");
 			}
 			
 			//Database Layout <RecepientID> <RecepientName> <MailID> <senderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
@@ -93,7 +94,7 @@ public class Database {
 			}
 			
 			if(!tables.contains("mutes")) {
-				execute("CREATE TABLE mutes (ID INT, uuid VARCHAR(36), duration DOUBLE, reason TEXT)");
+				execute("CREATE TABLE mutes (ID INT, uuid VARCHAR(60), duration DOUBLE, reason TEXT)");
 			}
 			
 			if(!tables.contains("players")) {
@@ -121,25 +122,9 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
 		//Imports the entire PlayerList into hashmap
 		
-		
-		//Imports the entire HomeList into HashMap
-		try {
-			Connection c = datasource.getConnection();
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT * FROM homes");
-			while(rs.next()) {
-				HomeCore home = new HomeCore(rs.getInt("ID"), rs.getString("uuid"), rs.getString("name"), rs.getInt("world"), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getDouble("yaw"), rs.getDouble("pitch"));
-				Homes.addHome(home.getID(), home);
-			}
-			s.close();
-			c.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	//TO HERE
 	
 	/**
 	 * @param execute string MySQL command to execute
@@ -581,6 +566,173 @@ public class Database {
 			connection.close();
 			
 			return b;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static int getPlayerHomeCount(String playerName) {
+		
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT ID FROM homes WHERE username = '" + playerName + "' ORDER BY ID ASC ");
+			int count = 0;
+			while(rs.next()) {
+				count++;
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return count;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	public static HomeCore getHome(Player p, String homeName) {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM homes WHERE username = '" + p.getName() + "' AND homename = '" + homeName + "';");
+			HomeCore home = new HomeCore();
+			while(rs.next()) {
+				home.setID(rs.getInt("ID"));
+				home.setUUID(rs.getString("uuid"));
+				home.setUsername(rs.getString("username"));
+				home.setHomeName(rs.getString("homename"));
+				home.setWorld(rs.getString("world"));
+				home.setX(rs.getDouble("x"));
+				home.setY(rs.getDouble("y"));
+				home.setZ(rs.getDouble("z"));
+				home.setYaw(rs.getDouble("yaw"));
+				home.setPitch(rs.getDouble("pitch"));
+				home.setRoll(rs.getDouble("roll"));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return home;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static boolean getHomeExist(Player p, String homeName) {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM homes WHERE username = '" + p.getName() + "' AND homename = '" + homeName + "';");
+			if(!rs.next()) {
+				rs.close();
+				statement.close();
+				connection.close();
+				return false;
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static ArrayList<HomeCore> getHomesByPlayer(Player player) {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM homes WHERE username = '" + player.getName() + "';");
+			ArrayList<HomeCore> homes = new ArrayList<HomeCore>();
+			while(rs.next()) {
+				HomeCore home = new HomeCore();
+				home.setID(rs.getInt("ID"));
+				home.setUUID(rs.getString("uuid"));
+				home.setUsername(rs.getString("username"));
+				home.setHomeName(rs.getString("homename"));
+				home.setWorld(rs.getString("world"));
+				home.setX(rs.getDouble("x"));
+				home.setY(rs.getDouble("y"));
+				home.setZ(rs.getDouble("z"));
+				home.setYaw(rs.getDouble("yaw"));
+				home.setPitch(rs.getDouble("pitch"));
+				home.setRoll(rs.getDouble("roll"));
+				homes.add(home);
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+			return homes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<HomeCore> getHomes() {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM homes;");
+			ArrayList<HomeCore> homes = new ArrayList<HomeCore>();
+			while(rs.next()) {
+				HomeCore home = new HomeCore();
+				home.setID(rs.getInt("ID"));
+				home.setUUID(rs.getString("uuid"));
+				home.setUsername(rs.getString("username"));
+				home.setHomeName(rs.getString("homename"));
+				home.setWorld(rs.getString("world"));
+				home.setX(rs.getDouble("x"));
+				home.setY(rs.getDouble("y"));
+				home.setZ(rs.getDouble("z"));
+				home.setYaw(rs.getDouble("yaw"));
+				home.setPitch(rs.getDouble("pitch"));
+				home.setRoll(rs.getDouble("roll"));
+				homes.add(home);
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+			return homes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static HomeCore getHomeByID(int id) {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM homes WHERE ID = " + id + ";");
+			HomeCore home = new HomeCore();
+			while(rs.next()) {
+				home.setID(rs.getInt("ID"));
+				home.setUUID(rs.getString("uuid"));
+				home.setUsername(rs.getString("username"));
+				home.setHomeName(rs.getString("homename"));
+				home.setWorld(rs.getString("world"));
+				home.setX(rs.getDouble("x"));
+				home.setY(rs.getDouble("y"));
+				home.setZ(rs.getDouble("z"));
+				home.setYaw(rs.getDouble("yaw"));
+				home.setPitch(rs.getDouble("pitch"));
+				home.setRoll(rs.getDouble("roll"));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return home;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

@@ -6,6 +6,7 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.cmd.administration.*;
 import net.re_renderreality.rrrp2.cmd.cheats.*;
 import net.re_renderreality.rrrp2.cmd.general.*;
+import net.re_renderreality.rrrp2.cmd.home.*;
 import net.re_renderreality.rrrp2.cmd.ingameinfo.*;
 import net.re_renderreality.rrrp2.cmd.spawn.*;
 import net.re_renderreality.rrrp2.cmd.teleport.*;
@@ -40,6 +41,7 @@ public final class CommandLoader {
         		new BanManagerCommand(),
                 new BigTreeCommand(),
                 new ClearEntitiesCommand(),
+                new DeleteHomeCommand(),
                 new DepthCommand(),
                 new FreeCommand(),
                 new FreezeCommand(),
@@ -52,10 +54,13 @@ public final class CommandLoader {
                 new HealCommand(),
                 new HelpCommand(),
                 new HelpOPCommand(),
+                new HomeCommand(),
                 new KickCommand(),
                 new ListEntitiesCommand(),
+                new ListHomesCommand(),
                 new MailCommand(),
                 new ManageHelpOP(),
+                new ManageHomesCommand(),
                 new ManageMailCommand(),
                 new MOTDCommand(),
                 new NickCommand(),
@@ -66,6 +71,7 @@ public final class CommandLoader {
                 new RulesModifyCommand(),
                 new RulesRemoveCommand(),
                 new SeenCommand(),
+                new SetHomeCommand(),
                 new SetSpawnCommand(),
                 new SmiteCommand(),
                 new SpawnCommand(),

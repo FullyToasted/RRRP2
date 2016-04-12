@@ -25,7 +25,7 @@ public class Chat implements Configurable
 		return chat;
 	}
 
-	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir() + "/Chat.conf");
+	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir() + "/chat.conf");
 	private ConfigurationLoader<CommentedConfigurationNode> configLoader = HoconConfigurationLoader.builder().setPath(configFile).build();
 	private CommentedConfigurationNode configNode;
 
