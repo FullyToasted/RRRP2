@@ -8,7 +8,7 @@ import net.re_renderreality.rrrp2.config.Config;
 
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 
-public class ReadConfigDatabase {
+public class ReadConfig {
 	private static Configurable mainConfig = Config.getConfig();
 	private static ConfigManager configManager = new ConfigManager();
 	
@@ -157,6 +157,58 @@ public class ReadConfigDatabase {
 	public static void setTeleportCooldown(long value)
 	{
 		Configs.setValue(mainConfig, new Object[] { "Teleport", "cooldown", "timer" }, value);
+	}
+	
+	public static boolean getAFKKickEnabled() {
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "kick", "enable");
+		if (configManager.getBoolean(node).isPresent())
+			return node.getBoolean();
+		setTeleportCooldownEnabled(true);
+		return true;
+	}
+	
+	public static void setAFKKickEnabled(boolean value) {
+		Configs.setValue(mainConfig, new Object[] {"AFK", "kick", "enable"}, value);
+	}
+	
+	public static boolean getAFKTimerEnabled() {
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "timer", "enable");
+		if (configManager.getBoolean(node).isPresent())
+			return node.getBoolean();
+		setTeleportCooldownEnabled(true);
+		return true;
+	}
+	
+	public static void setAFKTimerEnabled(boolean value) {
+		Configs.setValue(mainConfig, new Object[] {"AFK", "timer", "enable"}, value);
+	}
+	
+	public static double getAFKKickTime()
+	{
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "kick", "time");
+		if (configManager.getLong(node).isPresent())
+			return node.getDouble();
+		setTeleportCooldown(3000000);
+		return 3000000;
+	}
+	
+	public static void setAFKKickTime(double value)
+	{
+		Configs.setValue(mainConfig, new Object[] { "Teleport", "cooldown", "timer" }, value);
+	}
+	
+	public static double getAFKTime()
+	{
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "timer", "time");
+		if (configManager.getLong(node).isPresent())
+			return node.getDouble();
+		setTeleportCooldown(300000);
+		return 300000;
+	}
+	
+	public static void setAFKTime(double value)
+	{
+		Configs.setValue(mainConfig, new Object[] {"AFK", "timer", "time"}, value);
 	}
 
 

@@ -86,7 +86,7 @@ public class Config implements Configurable
 	public void populate()
 	{
 		//Populates with General COnfig information. Anything specialized will be given dedicated .conf file
-		get().getNode("mysql").setComment("MySQL Options for EssentialCmds.");
+		get().getNode("mysql").setComment("MySQL Options for RRRP2.");
 		get().getNode("mysql", "use").setValue(false).setComment("Enables/Disables MySQL usage for EssentialCmds.");
 		get().getNode("mysql", "port").setValue("8080").setComment("Port of MySQL Database.");
 		get().getNode("mysql", "host").setValue("localhost").setComment("Address of MySQL Database.");
@@ -98,6 +98,12 @@ public class Config implements Configurable
 		
 		get().getNode("Teleport", "cooldown", "enabled").setValue(true).setComment("Sets if TP cooldown is enabled");
 		get().getNode("Teleport", "cooldown", "timer").setValue(10).setComment("Sets cooldown timer length");
+		
+		get().getNode("AFK", "kick", "enable").setValue(false);
+		get().getNode("AFK", "kick", "time").setValue(3000000);
+		get().getNode("AFK", "timer", "enable").setValue(true);
+		get().getNode("AFK", "timer", "time").setValue(300000);
+		
 	}
 
 	@Override

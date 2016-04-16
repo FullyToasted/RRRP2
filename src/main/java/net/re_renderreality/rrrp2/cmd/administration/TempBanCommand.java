@@ -29,7 +29,7 @@ import org.spongepowered.api.util.ban.Ban;
 import org.spongepowered.api.util.ban.BanTypes;
 
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.BanCore;
@@ -103,7 +103,7 @@ public class TempBanCommand extends CommandExecutorBase {
 			}
 		}
 		
-		if(ReadConfigDatabase.getShowBanned()) {
+		if(ReadConfig.getShowBanned()) {
 			Utilities.broadcastMessage(Text.of(TextColors.GRAY, ban.getbannedName(), TextColors.GOLD, " Was banned for: ", TextColors.RED, ban.getReason()));
 		}
 

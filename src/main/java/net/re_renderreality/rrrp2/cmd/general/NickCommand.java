@@ -49,6 +49,11 @@ public class NickCommand  extends CommandExecutorBase
 					return CommandResult.empty();
 				}
 			}
+			if(nick.equals("off")) {
+				players.setNickUpdate("");
+				src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Nick successfully removed!"));
+				return CommandResult.success();
+			}
 			players.setNickUpdate(nick);
 			src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Nick successfully set!"));
 			String name = players.getNick();

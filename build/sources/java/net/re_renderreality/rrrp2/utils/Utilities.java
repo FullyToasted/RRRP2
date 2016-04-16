@@ -1,19 +1,29 @@
 package net.re_renderreality.rrrp2.utils;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
+import org.spongepowered.api.Game;
 import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.command.source.CommandBlockSource;
 import org.spongepowered.api.command.source.ConsoleSource;
+import org.spongepowered.api.data.manipulator.mutable.entity.FoodData;
+import org.spongepowered.api.data.value.mutable.Value;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.scheduler.Scheduler;
+import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.service.pagination.PaginationService;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.channel.MessageChannel;
+import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
+import net.re_renderreality.rrrp2.PluginInfo;
 import net.re_renderreality.rrrp2.RRRP2;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.database.Registry;
+import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class Utilities {
 	
@@ -172,5 +182,54 @@ public class Utilities {
 		
 		return loc;
 		
+	}
+	
+	public static void startAFKService()
+	{
+		Game game = RRRP2.getRRRP2().getGame();
+		Scheduler scheduler = game.getScheduler();
+		Task.Builder taskBuilder = scheduler.createTaskBuilder();
+
+		taskBuilder.execute(() -> {
+			for (Player player : game.getServer().getOnlinePlayers()) {
+				PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
+				if (RRRP2.afkList.containsKey(playercore.getID())) {
+					AFK afk = RRRP2.afkList.get(playercore.getID());
+
+					if (((System.currentTimeMillis() - afk.lastMovementTime) > ReadConfig.getAFKTime()) && !afk.getMessaged()) {
+						for (Player p : game.getServer().getOnlinePlayers()) {
+							p.sendMessage(Text.of(TextColors.BLUE, playercore.getName(), TextColors.GOLD, " is now AFK."));
+							Optional<FoodData> data = p.get(FoodData.class);
+
+							if (data.isPresent()) {
+								FoodData food = data.get();
+								afk.setFood(food.foodLevel().get());
+							}
+						}
+						afk.setMessaged(true);
+						afk.setAFK(true);
+					}
+					
+					if (afk.getAFK()) {
+						Optional<FoodData> data = player.get(FoodData.class);
+
+						if (data.isPresent()) {
+							FoodData food = data.get();
+
+							if (food.foodLevel().get() < afk.getFood()) {
+								Value<Integer> foodLevel = food.foodLevel().set(afk.getFood());
+								food.set(foodLevel);
+								player.offer(food);
+							}
+						}
+
+						if (!(player.hasPermission("rrr.general.afk.nokick")) && ReadConfig.getAFKKickEnabled() && afk.getLastMovementTime() >= ReadConfig.getAFKKickTime()) {
+							player.kick(Text.of(TextColors.GOLD, "Kicked for being AFK too long."));
+							RRRP2.afkList.remove(playercore.getID());
+						}
+					}
+				}
+			}
+		}).interval(1, TimeUnit.SECONDS).name("RRRP2 - AFK").submit(game.getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
 	}
 }

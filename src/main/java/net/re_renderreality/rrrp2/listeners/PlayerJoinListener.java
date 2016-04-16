@@ -14,6 +14,7 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigMesseges;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
+import net.re_renderreality.rrrp2.utils.AFK;
 import net.re_renderreality.rrrp2.utils.Utilities;
 import net.re_renderreality.rrrp2.database.OnlinePlayers;
 
@@ -69,6 +70,8 @@ public class PlayerJoinListener
 			}
 		}
 		
+		RRRP2.recentlyJoined.add(event.getTargetEntity());
+		
 		OnlinePlayers OP = RRRP2.getRRRP2().getOnlinePlayer();
 		PlayerCore players = Database.getPlayerCore(id);
 		if (firstjoin) {
@@ -78,6 +81,13 @@ public class PlayerJoinListener
 		players.setLastseenUpdate(todaysDate);
 		Database.commit();
 		OP.addPlayer(players);
+		
+		if (RRRP2.afkList.containsKey(players.getID())) {
+			RRRP2.afkList.remove(players.getID());
+		}
+		
+		
+		RRRP2.afkList.put(players.getID(), new AFK(System.currentTimeMillis()));
 		
 		//if tempban runs out player is still in the mySQL banned list
 		if(players.getBanned()) {

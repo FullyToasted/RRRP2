@@ -13,14 +13,17 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.OnlinePlayers;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.listeners.*;
+import net.re_renderreality.rrrp2.utils.AFK;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
 import net.re_renderreality.rrrp2.utils.SurroundedPlayer;
 import net.re_renderreality.rrrp2.utils.TPInvitation;
+import net.re_renderreality.rrrp2.utils.Utilities;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
@@ -55,11 +58,13 @@ public class RRRP2{
 	
 	public static RRRP2 plugin;
 	public static HashMap<Integer, SurroundedPlayer> surrounded = new HashMap<Integer, SurroundedPlayer>();
-	private Server server;
-	private OnlinePlayers onlinePlayer = new OnlinePlayers();
+	public static HashMap<Integer, AFK> afkList = new HashMap<>();
+	public static List<Player> recentlyJoined = Lists.newArrayList();
 	public static Set<Integer> teleportingPlayers = Sets.newHashSet();
 	public static List<TPInvitation> pendingInvites = Lists.newArrayList();
 	public static Set<Integer> frozenPlayers = Sets.newHashSet();
+	private Server server;
+	private OnlinePlayers onlinePlayer = new OnlinePlayers();
 	
 	public static RRRP2 getRRRP2() {
 		return plugin;
@@ -135,11 +140,19 @@ public class RRRP2{
 	
 	/**
 	 * @param event Listener for GameInitializationEvent.
-	 * @note Initialization of Listeners.
+	 * @note Initialization of Listeners, Plugin, registry.
 	 */
 	@Listener
 	public void onServerInit(GameInitializationEvent event)
 	{
+		Utilities.startAFKService();
+		
+		server = game.getServer();
+		Registry.setGame(getGame());
+		Registry.setLogger(getLogger());
+		Registry.setOnlinePlayers(getOnlinePlayer());
+		CommandLoader.registerCommands();
+		
 		getGame().getEventManager().registerListeners(this, new PlayerJoinListener());
 		getGame().getEventManager().registerListeners(this, new MailListener());
 		getGame().getEventManager().registerListeners(this, new PlayerLeftEvent());
@@ -148,18 +161,16 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new CommandListener());
 		getGame().getEventManager().registerListeners(this, new ChatListener());
 		getGame().getEventManager().registerListeners(this, new TPListener());
+		getGame().getEventManager().registerListeners(this, new PlayerMoveListener());
+		getGame().getEventManager().registerListeners(this, new PlayerDisplacementListener());
 	}
 	
 	/**
 	 * @param event Listener for GameStartingServerEvent.
-	 * @note Initialization of Plugin, registry, and Database.
+	 * @note Initialization of  Database.
 	 */
 	@Listener 
 	public void gameStarting(GameStartingServerEvent event) {
-		server = game.getServer();
-		Registry.setGame(getGame());
-		Registry.setLogger(getLogger());
-		CommandLoader.registerCommands();
 	
 		Database.setup(game);
     	Database.load(game);

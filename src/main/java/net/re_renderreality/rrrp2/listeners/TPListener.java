@@ -13,7 +13,7 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.PluginInfo;
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.events.TPAcceptEvent;
@@ -54,9 +54,9 @@ public class TPListener {
 		int id = Database.getID(p.getUniqueId().toString());
 		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
 		
-		if (ReadConfigDatabase.getTeleportCooldownEnabled() && !event.getRecipient().hasPermission("rrr.general.teleport.cooldownoverride")) {
+		if (ReadConfig.getTeleportCooldownEnabled() && !event.getRecipient().hasPermission("rrr.general.teleport.cooldownoverride")) {
 			RRRP2.teleportingPlayers.add(player.getID());
-			event.getRecipient().sendMessage(Text.of(TextColors.GREEN, senderName, TextColors.WHITE, " accepted your TPA Request. Please wait " + ReadConfigDatabase.getTeleportCooldown() + " seconds."));
+			event.getRecipient().sendMessage(Text.of(TextColors.GREEN, senderName, TextColors.WHITE, " accepted your TPA Request. Please wait " + ReadConfig.getTeleportCooldown() + " seconds."));
 			
 			Sponge.getScheduler().createTaskBuilder().execute(() -> {
 				if (RRRP2.teleportingPlayers.contains(event.getRecipient().getUniqueId())) {
@@ -64,7 +64,7 @@ public class TPListener {
 					event.getRecipient().setLocation(event.getSender().getLocation());
 					RRRP2.teleportingPlayers.remove(event.getRecipient().getUniqueId());
 				}
-			}).delay(ReadConfigDatabase.getTeleportCooldown(), TimeUnit.SECONDS).name("EssentialCmds - TPA Timer").submit(game.getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
+			}).delay(ReadConfig.getTeleportCooldown(), TimeUnit.SECONDS).name("EssentialCmds - TPA Timer").submit(game.getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
 		}
 		else {
 			event.getRecipient().sendMessage(Text.of(TextColors.GREEN, senderName, TextColors.WHITE, " accepted your TPA Request."));
@@ -81,9 +81,9 @@ public class TPListener {
 		int id = Database.getID(p.getUniqueId().toString());
 		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
 
-		if (ReadConfigDatabase.getTeleportCooldownEnabled() && !event.getSender().hasPermission("rrr.general.teleport.cooldownoverride")) {
+		if (ReadConfig.getTeleportCooldownEnabled() && !event.getSender().hasPermission("rrr.general.teleport.cooldownoverride")) {
 			RRRP2.teleportingPlayers.add(player.getID());
-			event.getSender().sendMessage(Text.of(TextColors.GREEN, recipientName, TextColors.WHITE, " accepted your TPA Here Request. Please wait " + ReadConfigDatabase.getTeleportCooldown() + " seconds."));
+			event.getSender().sendMessage(Text.of(TextColors.GREEN, recipientName, TextColors.WHITE, " accepted your TPA Here Request. Please wait " + ReadConfig.getTeleportCooldown() + " seconds."));
 			
 			Sponge.getScheduler().createTaskBuilder().execute(() -> {
 				if (RRRP2.teleportingPlayers.contains(event.getSender().getUniqueId())) {
@@ -91,7 +91,7 @@ public class TPListener {
 					event.getSender().setLocation(event.getRecipient().getLocation());
 					RRRP2.teleportingPlayers.remove(event.getSender().getUniqueId());
 				}
-			}).delay(ReadConfigDatabase.getTeleportCooldown(), TimeUnit.SECONDS).name("EssentialCmds - TPA Timer").submit(game.getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
+			}).delay(ReadConfig.getTeleportCooldown(), TimeUnit.SECONDS).name("EssentialCmds - TPA Timer").submit(game.getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
 		}
 		else {
 			event.getSender().sendMessage(Text.of(TextColors.GREEN, recipientName, TextColors.WHITE, " accepted your TPA Here Request."));

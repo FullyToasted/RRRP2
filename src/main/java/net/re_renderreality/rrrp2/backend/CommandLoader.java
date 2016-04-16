@@ -32,6 +32,7 @@ public final class CommandLoader {
      */
     private static Set<? extends CommandExecutorBase> getCommands() {
         return Sets.newHashSet(
+        		new AFKCommand(),
                 new AnnouncementsCommand(),
                 new AnnouncementsAddCommand(),
                 new AnnouncementsModifyCommand(),
@@ -56,6 +57,7 @@ public final class CommandLoader {
                 new HelpOPCommand(),
                 new HomeCommand(),
                 new KickCommand(),
+                new ListCommand(),
                 new ListEntitiesCommand(),
                 new ListHomesCommand(),
                 new MailCommand(),

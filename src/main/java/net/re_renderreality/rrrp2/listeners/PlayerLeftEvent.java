@@ -49,6 +49,11 @@ public class PlayerLeftEvent
 			playa.setFlyUpdate(false);
 			RRRP2.getRRRP2().getOnlinePlayer().removePlayer(playa);
 		}
+		
+		if (RRRP2.afkList.containsKey(playa.getID()))
+		{
+			RRRP2.afkList.remove(playa.getID());
+		}
 		//Utils.savePlayerInventory(player, player.getWorld().getUniqueId());
 	}
 }

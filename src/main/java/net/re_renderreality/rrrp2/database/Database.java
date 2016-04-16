@@ -10,7 +10,7 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.utils.Utilities;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigDatabase;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.database.core.*;
 
 import java.io.File;
@@ -40,7 +40,7 @@ public class Database {
 			sql = game.getServiceManager().provide(SqlService.class).get();
 			
 			//creates a .db file if MySQL file is not provieded
-			if(!ReadConfigDatabase.useMySQL()) {
+			if(!ReadConfig.useMySQL()) {
 				
 		    	File folder = new File("config/rrr.commands/data");
 		    	if(!folder.exists()) 
@@ -57,11 +57,11 @@ public class Database {
 			}
 			else {
 				//Gets MySQL data from the congig file
-				String host = ReadConfigDatabase.getMySQLHost();
-				String port = String.valueOf(ReadConfigDatabase.getMySQLPort());
-				String username = ReadConfigDatabase.getMySQLUsername();
-				String password = ReadConfigDatabase.getMySQLPassword();
-				String database = ReadConfigDatabase.getMySQLDatabase();
+				String host = ReadConfig.getMySQLHost();
+				String port = String.valueOf(ReadConfig.getMySQLPort());
+				String username = ReadConfig.getMySQLUsername();
+				String password = ReadConfig.getMySQLPassword();
+				String database = ReadConfig.getMySQLDatabase();
 				
 				datasource = sql.getDataSource("jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + username + "&password=" + password);
 				
