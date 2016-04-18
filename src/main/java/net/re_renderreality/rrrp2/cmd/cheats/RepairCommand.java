@@ -1,0 +1,65 @@
+package net.re_renderreality.rrrp2.cmd.cheats;
+
+import org.spongepowered.api.Game;
+import org.spongepowered.api.command.CommandException;
+import org.spongepowered.api.command.CommandResult;
+import org.spongepowered.api.command.CommandSource;
+import org.spongepowered.api.command.args.CommandContext;
+import org.spongepowered.api.command.source.CommandBlockSource;
+import org.spongepowered.api.command.source.ConsoleSource;
+import org.spongepowered.api.command.spec.CommandSpec;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.item.ItemType;
+import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
+
+import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
+
+import javax.annotation.Nonnull;
+
+public class RepairCommand extends CommandExecutorBase
+{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
+	{
+		Game game = Registry.getGame();
+		ItemStack.Builder itemStackBuilder = game.getRegistry().createBuilder(ItemStack.Builder.class);
+
+		if (src instanceof Player) {
+			Player player = (Player) src;
+
+			if (player.getItemInHand().isPresent()) {
+				ItemStack itemInHand = player.getItemInHand().get();
+				ItemType itemType = itemInHand.getItem();
+				int quantity = itemInHand.getQuantity();
+				ItemStack newItemStack = itemStackBuilder.quantity(quantity).itemType(itemType).build();
+				player.setItemInHand(null);
+				player.setItemInHand(newItemStack);
+				player.sendMessage(Text.of(TextColors.GOLD, "Repaired item(s) in your hand."));
+			} else {
+				src.sendMessage(Text.of(TextColors.RED, "ERROR! You must be holding something to repair!"));
+			}
+		} else if (src instanceof ConsoleSource || src instanceof CommandBlockSource) {
+			src.sendMessage(Text.of(TextColors.RED, "ERROR! Must be an in-game player to use /repair!"));
+		}
+
+		return CommandResult.success();
+	}
+
+	@Nonnull
+	@Override
+	public String[] getAliases() {
+		return new String[] { "repair", "Repair" };
+	}
+
+	@Nonnull
+	@Override
+	public CommandSpec getSpec() {
+		return CommandSpec.builder()
+				.description(Text.of("Repair Item in Player's Hand"))
+				.permission("rrr.cheat.repair")
+				.executor(this)
+				.build();
+	}
+}

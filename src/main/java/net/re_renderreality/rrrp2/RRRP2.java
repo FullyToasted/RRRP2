@@ -60,6 +60,8 @@ public class RRRP2{
 	public static HashMap<Integer, SurroundedPlayer> surrounded = new HashMap<Integer, SurroundedPlayer>();
 	public static HashMap<Integer, AFK> afkList = new HashMap<>();
 	public static List<Player> recentlyJoined = Lists.newArrayList();
+	public static List<Player> onePunch = Lists.newArrayList();
+	public static List<Player> jockey = Lists.newArrayList();
 	public static Set<Integer> teleportingPlayers = Sets.newHashSet();
 	public static List<TPInvitation> pendingInvites = Lists.newArrayList();
 	public static Set<Integer> frozenPlayers = Sets.newHashSet();
@@ -163,6 +165,9 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new TPListener());
 		getGame().getEventManager().registerListeners(this, new PlayerMoveListener());
 		getGame().getEventManager().registerListeners(this, new PlayerDisplacementListener());
+		getGame().getEventManager().registerListeners(this, new LeftClickEntityListener());
+		getGame().getEventManager().registerListeners(this, new RightClickEntityListener());
+		getGame().getEventManager().registerListeners(this, new WeatherListener());
 	}
 	
 	/**

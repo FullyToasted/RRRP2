@@ -104,6 +104,10 @@ public class Config implements Configurable
 		get().getNode("AFK", "timer", "enable").setValue(true);
 		get().getNode("AFK", "timer", "time").setValue(300000);
 		
+		get().getNode("Enchantments", "Allow Unsafe Enchantments").setValue(true);
+		
+		get().getNode("world", "weather", "locked").setValue(null);
+		
 	}
 
 	@Override

@@ -22,8 +22,6 @@ public class HealCommand extends CommandExecutorBase
 {
 	/**
 	 * Heals other players or self.
-	 * 
-	 * TODO: Set up a permission to heal self
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

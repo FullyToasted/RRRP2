@@ -1,5 +1,11 @@
 package net.re_renderreality.rrrp2.api.util.config.readers;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+import com.google.common.collect.Lists;
+
 import net.re_renderreality.rrrp2.api.util.config.ConfigManager;
 import net.re_renderreality.rrrp2.api.util.config.Configs;
 import net.re_renderreality.rrrp2.api.util.config.Configurable;
@@ -211,5 +217,48 @@ public class ReadConfig {
 		Configs.setValue(mainConfig, new Object[] {"AFK", "timer", "time"}, value);
 	}
 
+	public static boolean getUnsafeEnchantmentStatus() {
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Enchantments", "Allow Unsafe Enchantments");
+		if (configManager.getBoolean(node).isPresent())
+			return node.getBoolean();
+		setTeleportCooldownEnabled(true);
+		return true;
+	}
+	
+	public static void setUnsafeEnchantmentStatus(boolean value) {
+		Configs.setValue(mainConfig, new Object[] {"Enchantments", "Allow Unsafe Enchantments"}, value);
+	}
+	
+	public static List<String> getLockedWeatherWorlds() {
+		CommentedConfigurationNode valueNode = Configs.getConfig(mainConfig).getNode("world", "weather", "locked");
 
+		if (valueNode.getValue() != null) {
+			List<String> worlds = Arrays.asList(valueNode.getString().split("\\s*,\\s*"));
+			return worlds;
+		} else {
+			return Lists.newArrayList();
+		}
+	}
+
+	public static void addLockedWeatherWorld(UUID worldUuid) {
+		CommentedConfigurationNode valueNode = Configs.getConfig(mainConfig).getNode("world", "weather", "locked");
+
+		if (valueNode.getValue() != null) {
+			Configs.setValue(mainConfig, valueNode.getPath(), valueNode.getString() + ", " + worldUuid.toString());
+		} else {
+			Configs.setValue(mainConfig, valueNode.getPath(), worldUuid.toString());
+		}
+	}
+
+	public static void removeLockedWeatherWorld(UUID worldUuid) {
+		CommentedConfigurationNode valueNode = Configs.getConfig(mainConfig).getNode("world", "weather", "locked");
+
+		if (valueNode.getValue() != null) {
+			if (valueNode.getString().contains(worldUuid.toString() + ", ")) {
+				Configs.setValue(mainConfig, valueNode.getPath(), valueNode.getString().replace(worldUuid.toString() + ", ", ""));
+			} else {
+				Configs.setValue(mainConfig, valueNode.getPath(), valueNode.getString().replace(worldUuid.toString(), ""));
+			}
+		}
+	}
 }

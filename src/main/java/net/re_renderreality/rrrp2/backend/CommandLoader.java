@@ -41,9 +41,16 @@ public final class CommandLoader {
         		new BanCommand(),
         		new BanManagerCommand(),
                 new BigTreeCommand(),
+                new BlockDBCommand(),
+                new BroadcastCommand(),
+                new CompassCommand(),
+                new ConsoleCommand(),
                 new ClearEntitiesCommand(),
                 new DeleteHomeCommand(),
                 new DepthCommand(),
+                new EnchantCommand(),
+                new EntityDBCommand(),
+                new FeedCommand(),
                 new FreeCommand(),
                 new FreezeCommand(),
                 new FlyCommand(),
@@ -52,10 +59,13 @@ public final class CommandLoader {
                 new GetPosCommand(),
                 new GetWorldCommand(),
                 new GodCommand(),
+                new HatCommand(),
                 new HealCommand(),
                 new HelpCommand(),
                 new HelpOPCommand(),
                 new HomeCommand(),
+                new ItemDBCommand(),
+                new JockeyCommand(),
                 new KickCommand(),
                 new ListCommand(),
                 new ListEntitiesCommand(),
@@ -66,17 +76,23 @@ public final class CommandLoader {
                 new ManageMailCommand(),
                 new MOTDCommand(),
                 new NickCommand(),
+                new OnePunchCommand(),
                 new PardonCommand(),
                 new PlayerCountCommand(),
+                new RepairCommand(),
                 new RulesAddCommand(),
                 new RulesCommand(),
                 new RulesModifyCommand(),
                 new RulesRemoveCommand(),
                 new SeenCommand(),
+                new ServerStopCommand(),
                 new SetHomeCommand(),
                 new SetSpawnCommand(),
+                new SkullCommand(),
                 new SmiteCommand(),
                 new SpawnCommand(),
+                new SpeedCommand(),
+                new SudoCommand(),
                 new SuicideCommand(),
                 new SurroundCommand(),
                 new TeleportCommand(),
@@ -91,7 +107,9 @@ public final class CommandLoader {
                 new TPHereCommand(),
                 new TPSCommand(),
                 new TreeCommand(),
-                new WhoisCommand()
+                new WhoisCommand(),
+                new WeatherCommand(),
+                new WeatherLockCommand()
         );
     }
 
@@ -99,9 +117,6 @@ public final class CommandLoader {
      * Registers the RRRP2 commands.
      */
     public static void registerCommands() {
-        // TODO: Put module checks here in a stream.
-        // getCommands().stream().filter(c -> c.getAssociatedModules().length == 0 && checkModules).forEach(CommandLoader::registerCommand);
         getCommands().forEach(cmd -> Sponge.getCommandManager().register(RRRP2.getRRRP2(), cmd.getSpec(), cmd.getAliases()));   		
-    }
-    
+    }    
 }
