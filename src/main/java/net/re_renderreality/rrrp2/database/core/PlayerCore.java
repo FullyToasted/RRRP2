@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.database.Database;
-import net.re_renderreality.rrrp2.database.Players;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class PlayerCore {
@@ -91,7 +90,6 @@ public class PlayerCore {
 														+ Utilities.boolToInt(god) + ", " + Utilities.boolToInt(fly) + ", " + Utilities.boolToInt(tptoggle) + ", " 
 														+ Utilities.boolToInt(invisible) + ", " + onlinetime + ", '" + lastlocation + "', '" + lastdeath + "', '" + firstseen + "', '" + lastseen + "')";
 		Database.execute(command);
-		Players.addPlayer(ID, this);
 		Database.addUUID(uuid, ID);
 	}
 	
@@ -115,7 +113,6 @@ public class PlayerCore {
 	 */
 	public void delete() {
 		Database.queue("DELETE FROM players WHERE uuid = '" + uuid + "'");
-		Players.removePlayer(ID);
 		Database.removeUUID(uuid);
 	}
 	

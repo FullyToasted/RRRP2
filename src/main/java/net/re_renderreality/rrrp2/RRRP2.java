@@ -168,6 +168,7 @@ public class RRRP2{
 		getGame().getEventManager().registerListeners(this, new LeftClickEntityListener());
 		getGame().getEventManager().registerListeners(this, new RightClickEntityListener());
 		getGame().getEventManager().registerListeners(this, new WeatherListener());
+		getGame().getEventManager().registerListeners(this, new BlockBreakListener());
 	}
 	
 	/**

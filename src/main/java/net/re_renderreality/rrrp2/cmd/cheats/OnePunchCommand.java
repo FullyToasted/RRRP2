@@ -27,7 +27,7 @@ public class OnePunchCommand extends CommandExecutorBase
 				src.sendMessage(Text.of(TextColors.GOLD, "One Punch Mode Disabled!"));
 				RRRP2.onePunch.remove(source);
 			} else {
-				src.sendMessage(Text.of(TextColors.GOLD, "One Punch Mode Enabled!"));
+				src.sendMessage(Text.of(TextColors.GOLD, "One Punch Mode Enabled! (Note: need to rapid double punch)"));
 				RRRP2.onePunch.add(source);
 			}
 		}

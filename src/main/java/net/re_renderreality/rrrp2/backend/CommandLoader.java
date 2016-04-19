@@ -11,6 +11,7 @@ import net.re_renderreality.rrrp2.cmd.ingameinfo.*;
 import net.re_renderreality.rrrp2.cmd.spawn.*;
 import net.re_renderreality.rrrp2.cmd.teleport.*;
 import net.re_renderreality.rrrp2.cmd.teleport.admintp.*;
+import net.re_renderreality.rrrp2.cmd.teleport.special.*;
 
 import org.spongepowered.api.Sponge;
 
@@ -74,6 +75,7 @@ public final class CommandLoader {
                 new ManageHelpOP(),
                 new ManageHomesCommand(),
                 new ManageMailCommand(),
+                new MoreCommand(),
                 new MOTDCommand(),
                 new NickCommand(),
                 new OnePunchCommand(),
@@ -101,6 +103,7 @@ public final class CommandLoader {
                 new TeleportPositionCommand(),
                 new TeleportWorldCommand(),
                 new TempBanCommand(),
+                new TopCommand(),
                 new TPAcceptCommand(),
                 new TPCommand(),
                 new TPDenyCommand(),
