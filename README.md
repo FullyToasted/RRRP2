@@ -55,6 +55,23 @@ Right click the project you just imported. Goto (Gradle (STS) -> Refresh All) Cl
 
 8.) Try to keep things organized :)
 
+##Important Links
+RRRP2 Github
+https://github.com/ReRenderReality/
+
+Sponge Written Tutorial
+https://docs.spongepowered.org/master/en/index.html
+
+Sponge Video Tutorial (not as comprehensive as written)
+https://www.youtube.com/watch?v=9QHs88th4Wc
+
+Learn Java:
+https://www.codecademy.com/learn/learn-java
+http://www.learnjavaonline.org/
+http://www.sololearn.com/Course/Java/
+
+
+
 #Make sure to have fun developing!
 
 
