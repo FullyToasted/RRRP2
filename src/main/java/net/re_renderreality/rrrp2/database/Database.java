@@ -88,6 +88,10 @@ public class Database {
 				execute("CREATE TABLE homes (ID INT, uuid VARCHAR(60), username VARCHAR(16), homename TEXT,  world TEXT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE, roll DOUBLE)");
 			}
 			
+			if(!tables.contains("warps")) {
+				execute("CREATE TABLE warps (ID INT, warpname TEXT, creator VARCHAR(16), timecreated TEXT,  world TEXT, x DOUBLE, y DOUBLE, z DOUBLE, yaw DOUBLE, pitch DOUBLE, roll DOUBLE)");
+			}
+			
 			//Database Layout <RecepientID> <RecepientName> <MailID> <senderID> <SenderName> <Sent Date/Time> <Msg> <Read> 
 			if(!tables.contains("mail")) {
 				execute("CREATE TABLE mail (RecepientID INT, RecepientName VARCHAR(16), MailID INT, SenderID INT, SenderName VARCHAR(16), Message TEXT, Sent Text, Read BOOL)");
@@ -733,6 +737,120 @@ public class Database {
 			connection.close();
 			
 			return home;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static WarpCore getWarp(String warpName) {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM warps WHERE warpname = '" + warpName + "';");
+			WarpCore home = new WarpCore();
+			while(rs.next()) {
+				home.setID(rs.getInt("ID"));
+				home.setWarpName(rs.getString("warpname"));
+				home.setCreator(rs.getString("creator"));
+				home.setTimeCreated(rs.getString("timecreated"));
+				home.setWorld(rs.getString("world"));
+				home.setX(rs.getDouble("x"));
+				home.setY(rs.getDouble("y"));
+				home.setZ(rs.getDouble("z"));
+				home.setYaw(rs.getDouble("yaw"));
+				home.setPitch(rs.getDouble("pitch"));
+				home.setRoll(rs.getDouble("roll"));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return home;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static boolean getWarpExist(String warpName) {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM warps WHERE warpname = '" + warpName + "';");
+			if(!rs.next()) {
+				rs.close();
+				statement.close();
+				connection.close();
+				return false;
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static ArrayList<WarpCore> getWarps() {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM warps;");
+			ArrayList<WarpCore> warps = new ArrayList<WarpCore>();
+			while(rs.next()) {
+				WarpCore warp = new WarpCore();
+				warp.setID(rs.getInt("ID"));
+				warp.setWarpName(rs.getString("warpname"));
+				warp.setCreator(rs.getString("creator"));
+				warp.setTimeCreated(rs.getString("timecreated"));
+				warp.setWorld(rs.getString("world"));
+				warp.setX(rs.getDouble("x"));
+				warp.setY(rs.getDouble("y"));
+				warp.setZ(rs.getDouble("z"));
+				warp.setYaw(rs.getDouble("yaw"));
+				warp.setPitch(rs.getDouble("pitch"));
+				warp.setRoll(rs.getDouble("roll"));
+				warps.add(warp);
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+			return warps;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static WarpCore getWarpByID(int id) {
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM warps WHERE ID = " + id + ";");
+			WarpCore warp = new WarpCore();
+			while(rs.next()) {
+				warp.setID(rs.getInt("ID"));
+				warp.setWarpName(rs.getString("warpname"));
+				warp.setCreator(rs.getString("creator"));
+				warp.setTimeCreated(rs.getString("timecreated"));
+				warp.setWorld(rs.getString("world"));
+				warp.setX(rs.getDouble("x"));
+				warp.setY(rs.getDouble("y"));
+				warp.setZ(rs.getDouble("z"));
+				warp.setYaw(rs.getDouble("yaw"));
+				warp.setPitch(rs.getDouble("pitch"));
+				warp.setRoll(rs.getDouble("roll"));
+			}
+			rs.close();
+			
+			statement.close();
+			connection.close();
+			
+			return warp;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
