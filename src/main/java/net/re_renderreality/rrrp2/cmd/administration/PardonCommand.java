@@ -44,6 +44,7 @@ public class PardonCommand extends CommandExecutorBase {
 			playercore = Database.getPlayerCore(id);
 			l.info(playercore.getName() + " " + UUID.fromString(playercore.getUUID()).toString());
 			
+			//loads the user service 
 			UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
 			if(playercore.getUUID().equals("uuid")) {
 				src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
@@ -54,13 +55,15 @@ public class PardonCommand extends CommandExecutorBase {
 			{
 				players = ogp.get();
 			}
-		
+			
+			//loads ban service
 			BanService srv = game.getServiceManager().provide(BanService.class).get();
 			if (!playercore.getBanned()) {
 				src.sendMessage(Text.of(TextColors.RED, "That player is not currently banned."));
 				return CommandResult.empty();
 			}
 			
+			//removes the ban service and deletes bancore
 			srv.removeBan(srv.getBanFor(players.getProfile()).get());
 			ban.delete();
 			playercore.setBannedUpdate(false);

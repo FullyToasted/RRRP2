@@ -146,7 +146,7 @@ public class ReadConfigMesseges {
 	}
 	
 	/**
-	 * @return the unique player join message
+	 * @return the unique player join message.
 	 * @note must replace %players with number. Color codes may be used.
 	 */
 	public static String getUniqueMsg() {

@@ -20,6 +20,7 @@ public class ConsoleCommand extends CommandExecutorBase
 	{
 		Game game = Registry.getGame();
 		String command = ctx.<String> getOne("command").get();
+		//sends command to be executed as console
 		game.getCommandManager().process(game.getServer().getConsole().getCommandSource().get(), command);
 		return CommandResult.success();
 	}

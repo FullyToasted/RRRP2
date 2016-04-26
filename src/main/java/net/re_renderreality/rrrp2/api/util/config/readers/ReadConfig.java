@@ -127,6 +127,9 @@ public class ReadConfig {
 	}
 	//End MYSQL	
 	
+	 /**
+	  * @return If ban is broadcasted 
+	  */
 	public static boolean getShowBanned() {
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Messages", "showbanned");
 		if (configManager.getBoolean(node).isPresent())
@@ -135,10 +138,16 @@ public class ReadConfig {
 		return true;
 	}
 	
+	/**
+	 * @param value set if bans are broadcasted 
+	 */
 	public static void setShowBanned(boolean value) {
 		Configs.setValue(mainConfig, new Object[] {"Messages", "showbanned"}, value);
 	}
 	
+	/**
+	 * @return if teleport cooldown is enabled
+	 */
 	public static boolean getTeleportCooldownEnabled() {
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Teleport", "cooldown", "enabled");
 		if (configManager.getBoolean(node).isPresent())
@@ -147,10 +156,16 @@ public class ReadConfig {
 		return true;
 	}
 	
+	/**
+	 * @param value sets if TP cooldown is enabled
+	 */
 	public static void setTeleportCooldownEnabled(boolean value) {
 		Configs.setValue(mainConfig, new Object[] {"Teleport", "cooldown", "enabled"}, value);
 	}
 	
+	/**
+	 * @return gets teleport cooldown
+	 */
 	public static long getTeleportCooldown()
 	{
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Teleport", "cooldown", "timer");
@@ -160,11 +175,17 @@ public class ReadConfig {
 		return 10l;
 	}
 	
+	/**
+	 * @param value set teleport cooldown
+	 */
 	public static void setTeleportCooldown(long value)
 	{
 		Configs.setValue(mainConfig, new Object[] { "Teleport", "cooldown", "timer" }, value);
 	}
 	
+	/**
+	 * @return returns if AFK kick is enabled
+	 */
 	public static boolean getAFKKickEnabled() {
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "kick", "enable");
 		if (configManager.getBoolean(node).isPresent())
@@ -173,10 +194,16 @@ public class ReadConfig {
 		return true;
 	}
 	
+	/**
+	 * @param value set if AFK kick is enabled
+	 */
 	public static void setAFKKickEnabled(boolean value) {
 		Configs.setValue(mainConfig, new Object[] {"AFK", "kick", "enable"}, value);
 	}
 	
+	/**
+	 * @return get AFK timer is enabled
+	 */
 	public static boolean getAFKTimerEnabled() {
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "timer", "enable");
 		if (configManager.getBoolean(node).isPresent())
@@ -185,10 +212,16 @@ public class ReadConfig {
 		return true;
 	}
 	
+	/**
+	 * @param value set if AFK timer is enabled
+	 */
 	public static void setAFKTimerEnabled(boolean value) {
 		Configs.setValue(mainConfig, new Object[] {"AFK", "timer", "enable"}, value);
 	}
 	
+	/**
+	 * @return get AFK kick timer
+	 */
 	public static double getAFKKickTime()
 	{
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "kick", "time");
@@ -198,11 +231,17 @@ public class ReadConfig {
 		return 3000000;
 	}
 	
+	/**
+	 * @param value set afk kick time
+	 */
 	public static void setAFKKickTime(double value)
 	{
 		Configs.setValue(mainConfig, new Object[] { "Teleport", "cooldown", "timer" }, value);
 	}
 	
+	/**
+	 * @return get AFK time
+	 */
 	public static double getAFKTime()
 	{
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("AFK", "timer", "time");
@@ -212,11 +251,17 @@ public class ReadConfig {
 		return 300000;
 	}
 	
+	/**
+	 * @param value set AFK time
+	 */
 	public static void setAFKTime(double value)
 	{
 		Configs.setValue(mainConfig, new Object[] {"AFK", "timer", "time"}, value);
 	}
 
+	/**
+	 * @return unsafe enchantment enabled
+	 */
 	public static boolean getUnsafeEnchantmentStatus() {
 		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Enchantments", "Allow Unsafe Enchantments");
 		if (configManager.getBoolean(node).isPresent())
@@ -225,10 +270,16 @@ public class ReadConfig {
 		return true;
 	}
 	
+	/**
+	 * @param value set unsafe enchantment enabled
+	 */
 	public static void setUnsafeEnchantmentStatus(boolean value) {
 		Configs.setValue(mainConfig, new Object[] {"Enchantments", "Allow Unsafe Enchantments"}, value);
 	}
 	
+	/** 
+	 * @return get worlds where the weather is locked
+	 */
 	public static List<String> getLockedWeatherWorlds() {
 		CommentedConfigurationNode valueNode = Configs.getConfig(mainConfig).getNode("world", "weather", "locked");
 
@@ -240,6 +291,9 @@ public class ReadConfig {
 		}
 	}
 
+	/**
+	 * @param worldUuid add a world to locked list
+	 */
 	public static void addLockedWeatherWorld(UUID worldUuid) {
 		CommentedConfigurationNode valueNode = Configs.getConfig(mainConfig).getNode("world", "weather", "locked");
 
@@ -250,6 +304,9 @@ public class ReadConfig {
 		}
 	}
 
+	/**
+	 * @param worldUuid remove a world from locked list
+	 */
 	public static void removeLockedWeatherWorld(UUID worldUuid) {
 		CommentedConfigurationNode valueNode = Configs.getConfig(mainConfig).getNode("world", "weather", "locked");
 

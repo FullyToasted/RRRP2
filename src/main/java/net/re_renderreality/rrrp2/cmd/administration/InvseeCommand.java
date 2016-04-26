@@ -19,7 +19,9 @@ import org.spongepowered.api.text.Text;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
 public class InvseeCommand extends CommandExecutorBase {
-	
+	/**
+	 * @NOTE does not work
+	 */
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<Player> player = ctx.<Player> getOne("Player");

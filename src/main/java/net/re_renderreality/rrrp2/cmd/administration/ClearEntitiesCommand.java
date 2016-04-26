@@ -18,9 +18,9 @@ import org.spongepowered.api.world.World;
 public class ClearEntitiesCommand extends CommandExecutorBase {
 	
 	/**
-	 * arg = entity to be removed by the command
+	 * arg = entity to be removed by the command.
 	 * 
-	 * Removes only one entity at a time
+	 * Removes only one entity at a time.
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{	

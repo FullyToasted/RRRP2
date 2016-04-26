@@ -1,4 +1,4 @@
-package net.re_renderreality.rrrp2.cmd.warp;
+package net.re_renderreality.rrrp2.cmd.teleport.warp;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -12,6 +12,7 @@ import net.re_renderreality.rrrp2.cmd.spawn.*;
 import net.re_renderreality.rrrp2.cmd.teleport.*;
 import net.re_renderreality.rrrp2.cmd.teleport.admintp.*;
 import net.re_renderreality.rrrp2.cmd.teleport.special.*;
+import net.re_renderreality.rrrp2.cmd.teleport.warp.*;
 
 import org.spongepowered.api.Sponge;
 
@@ -48,6 +49,7 @@ public final class CommandLoader {
                 new ConsoleCommand(),
                 new ClearEntitiesCommand(),
                 new DeleteHomeCommand(),
+                new DeleteWarpCommand(),
                 new DepthCommand(),
                 new EnchantCommand(),
                 new EntityDBCommand(),
@@ -71,10 +73,12 @@ public final class CommandLoader {
                 new ListCommand(),
                 new ListEntitiesCommand(),
                 new ListHomesCommand(),
+                new ListWarpsCommand(),
                 new MailCommand(),
                 new ManageHelpOP(),
                 new ManageHomesCommand(),
                 new ManageMailCommand(),
+                new ManageWarpsCommand(),
                 new MoreCommand(),
                 new MOTDCommand(),
                 new NickCommand(),
@@ -90,6 +94,7 @@ public final class CommandLoader {
                 new ServerStopCommand(),
                 new SetHomeCommand(),
                 new SetSpawnCommand(),
+                new SetWarpCommand(),
                 new SkullCommand(),
                 new SmiteCommand(),
                 new SpawnCommand(),
@@ -110,6 +115,7 @@ public final class CommandLoader {
                 new TPHereCommand(),
                 new TPSCommand(),
                 new TreeCommand(),
+                new WarpCommand(),
                 new WhoisCommand(),
                 new WeatherCommand(),
                 new WeatherLockCommand()

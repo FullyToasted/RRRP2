@@ -17,9 +17,9 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.MailCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
@@ -35,53 +35,32 @@ public class ManageMailCommand extends CommandExecutorBase
 		Optional<Integer> OID = ctx.<Integer> getOne("mailID");
 		
 		if(src instanceof Player) {
-			Player player = (Player) src;
-			int pid = Database.getID(player.getUniqueId().toString());
-			PlayerCore players = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(pid);
+			Player player = (Player) src; 
+			PlayerCore players = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			if(OID.isPresent() && oCommand.isPresent()) {
 				int command = oCommand.get();
 				int id = OID.get();
 				if(command == 1 || command == 2) {
 					MailCore mail = Database.getOneMail(id);
-					if(command == 1) {
+					if(command == 1) { //read
 						src.sendMessage(Text.of(TextColors.GOLD, "Sender: ", TextColors.GRAY, mail.getSenderName(), TextColors.GOLD, " Sent: ", TextColors.GRAY, mail.getSentTime(), TextColors.GOLD, " Message: ", TextColors.GRAY, mail.getMessage()));
 						CommandResult.success();
-					} else if (command == 2) {
+					} else if (command == 2) { //delete
 						mail.delete(players);
 						src.sendMessage(Text.of(TextColors.GOLD, "Message deleted sucessfully!"));
 						CommandResult.success();
 					}
 				} else {
-					ArrayList<MailCore> mail = new ArrayList<MailCore>();
-					mail = Database.getMail();
-					ArrayList<Text> text = new ArrayList<Text>();
-					for(MailCore m : mail) {
-						if(m.getRead()) {
-							text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Receiver: ", TextColors.GRAY, m.getRecepientName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
-						} else {
-							text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GREEN, m.getMailID(), TextColors.GOLD, " Receiver: ", TextColors.GREEN, m.getRecepientName(), TextColors.GOLD, " On: ", TextColors.GREEN, m.getSentTime()));
-						}
-					}
-					Iterable<Text> completedText = text;
-					sendPagination(completedText, src);
-					CommandResult.success();
+					//lists mail in order or receiving and color codes them
+					printMail((Player) src);
+					return CommandResult.success();
 				}
-			} else if(!oCommand.isPresent()){
-				ArrayList<MailCore> mail = new ArrayList<MailCore>();
-				mail = Database.getMail();
-				ArrayList<Text> text = new ArrayList<Text>();
-				for(MailCore m : mail) {
-					if(m.getRead()) {
-						text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GRAY, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
-					} else {
-						text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GREEN, m.getMailID(), TextColors.GOLD, " Sender: ", TextColors.GREEN, m.getSenderName(), TextColors.GOLD, " On: ", TextColors.GREEN, m.getSentTime()));
-					}
-				}
-				Iterable<Text> completedText = text;
-				sendPagination(completedText, src); 
+			} else if(!oCommand.isPresent()) {
+				//lists mail in order or receiving and color codes them
+				printMail((Player) src);
 				return CommandResult.success();
 			} else {
-				src.sendMessage(Text.of(TextColors.RED, "Error! Correct Useage /ManageMail <Command> <MailID"));
+				src.sendMessage(Text.of(TextColors.RED, "Error! Correct Useage /ManageMail <Command> <MailID>"));
 				return CommandResult.empty();
 			}
 		} else {
@@ -91,6 +70,21 @@ public class ManageMailCommand extends CommandExecutorBase
 		return CommandResult.empty();
 	}
 
+	private void printMail(Player src) {
+		ArrayList<MailCore> mail = new ArrayList<MailCore>();
+		mail = Database.getMail();
+		ArrayList<Text> text = new ArrayList<Text>();
+		for(MailCore m : mail) {
+			if(m.getRead()) {
+				text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GRAY, m.getMailID(), TextColors.GOLD, " Receiver: ", TextColors.GRAY, m.getRecepientName(), TextColors.GOLD, " On: ", TextColors.GRAY, m.getSentTime()));
+			} else {
+				text.add(Text.of(TextColors.GOLD, "MailID: ", TextColors.GREEN, m.getMailID(), TextColors.GOLD, " Receiver: ", TextColors.GREEN, m.getRecepientName(), TextColors.GOLD, " On: ", TextColors.GREEN, m.getSentTime()));
+			}
+		}
+		Iterable<Text> completedText = text;
+		sendPagination(completedText, src);
+	}
+	
 	private void sendPagination(Iterable<Text> mail, CommandSource src) {
 		Utilities.getPaginationService().builder()
 	    	.title(Text.of(TextColors.GOLD, "Server MailBox"))

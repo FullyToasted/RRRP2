@@ -10,6 +10,9 @@ public class ReadConfigTeleport {
 	private static Configurable teleportConfig = Teleport.getConfig();
 	private static ConfigManager configManager = new ConfigManager();
 	
+	/**
+	 * @return checks if TP cooldown is enabled
+	 */
 	public static boolean isTeleportCooldownEnabled() {
 		CommentedConfigurationNode node = Configs.getConfig(teleportConfig).getNode("teleport", "cooldown", "enable");
 		if (configManager.getBoolean(node).isPresent())

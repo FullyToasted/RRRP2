@@ -22,7 +22,7 @@ public abstract class AsyncCommandExecutorBase extends CommandExecutorBase {
      * </p>
      *
      * @param src The {@link CommandSource}
-     * @param args The arguments.
+     * @param args The arguments. {@link CommandSource}
      * @throws CommandException 
      */
     public abstract void executeAsync(CommandSource src, CommandContext args);

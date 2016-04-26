@@ -3,7 +3,7 @@ package net.re_renderreality.rrrp2.api.util.config;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 
 /**
- * Template used for all config files 
+ * Template used for all config files.
  */
 public interface Configurable {
 

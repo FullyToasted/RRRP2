@@ -112,6 +112,10 @@ public class ConfigManager
 		return Optional.of(node.getValue());
 	}
 
+	/**
+	 * @param node node to check for null
+	 * @return true if null 
+	 */
 	private boolean checkNull(CommentedConfigurationNode node)
 	{
 		if (node.getValue() == null)

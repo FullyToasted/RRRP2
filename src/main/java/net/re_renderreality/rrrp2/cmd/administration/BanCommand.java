@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
@@ -30,7 +29,7 @@ import org.spongepowered.api.util.ban.BanTypes;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
-import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.BanCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
@@ -39,12 +38,12 @@ public class BanCommand extends CommandExecutorBase
 {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		Logger l = RRRP2.getRRRP2().getLogger();
 		Game game = RRRP2.getRRRP2().getGame();
 		Optional<Player> player = ctx.<Player> getOne("player");
 		Optional<String> sPlayer = ctx.<String> getOne("player name");
 		String reason = ctx.<String> getOne("reason").orElse("The BanHammer has spoken!");
 		
+		//get date and format it
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 		String todaysDate = dateFormat.format(cal.getTime());
@@ -54,12 +53,13 @@ public class BanCommand extends CommandExecutorBase
 		int id = 0;
 		
 		if(player.isPresent()) {
-			id = Database.getPlayerIDfromUsername(player.get().getName());
-			playercore = Database.getPlayerCore(id);
+			playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.get().getName());
+			id = playercore.getID();
 			players = player.get();
 		} else if(sPlayer.isPresent()) {
-			id = Database.getPlayerIDfromUsername(sPlayer.get());
-			playercore = Database.getPlayerCore(id);
+			playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.get().getName());
+			id = playercore.getID();
+			//import user storage service and get the user associated with the user name
 			UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
 			if(playercore.getUUID().equals("uuid")) {
 				src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
@@ -73,17 +73,23 @@ public class BanCommand extends CommandExecutorBase
 		} else {
 			src.sendMessage(Text.of(TextColors.RED, "Command Failed!"));
 		}
-		l.info("" + id);
+		//imports ban service
 		BanService srv = game.getServiceManager().provide(BanService.class).get();
 
+		//if player is already banned stop command here
 		if (playercore.getBanned())	{
 			src.sendMessage(Text.of(TextColors.RED, "That player has already been banned."));
 			return CommandResult.empty();
 		}
+		
+		//add ban to banlist
 		srv.addBan(Ban.builder().type(BanTypes.PROFILE).source(src).profile(players.getProfile()).reason(TextSerializers.formattingCode('&').deserialize(reason)).build());
+		//create the bancore for the desired player and push to database
 		BanCore ban = new BanCore(id, playercore.getName(), players.getUniqueId().toString() , src.getName(), reason, todaysDate, "Permanent");
 		ban.insert();
 		playercore.setBannedUpdate(true);
+		
+		//If player is online kick with ban message
 		if (player.isPresent()) {
 			if (player.get().isOnline()) {
 				player.get().getPlayer().get().kick(Text.builder()
@@ -92,7 +98,8 @@ public class BanCommand extends CommandExecutorBase
 					.build());
 			}
 		}
-			
+		
+		//if it is enabled broadcast ban to server
 		if(ReadConfig.getShowBanned()) {
 			Utilities.broadcastMessage(Text.of(TextColors.GRAY, ban.getbannedName(), TextColors.GOLD, " Was banned for: ", TextColors.RED, ban.getReason()));
 		}

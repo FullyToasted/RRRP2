@@ -49,7 +49,7 @@ public abstract class CommandExecutorBase implements CommandExecutor {
     /**
      * Returns the built {@link CommandSpec} for this command.
      *
-     * @return The {@link CommandSpec}
+     * @return The {@link CommandSpec}.
      */
     @Nonnull public abstract CommandSpec getSpec();
 

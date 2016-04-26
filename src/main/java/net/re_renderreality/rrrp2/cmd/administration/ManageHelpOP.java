@@ -28,7 +28,7 @@ public class ManageHelpOP extends CommandExecutorBase{
 	Optional<Integer> choice = ctx.<Integer> getOne("Choice");
 	
 	if(choice.isPresent())
-		if(choice.get() == 1) {
+		if(choice.get() == 1) { //remove helpop
 			if(ids.isPresent()) {
 				int id = Integer.parseInt(ids.get());
 				String command = "DELETE FROM helpop WHERE ID = " + id + ";";
@@ -36,7 +36,7 @@ public class ManageHelpOP extends CommandExecutorBase{
 				src.sendMessage(Text.of(TextColors.GOLD, "Ticket sucessfully deleted from database"));
 				return CommandResult.success();
 			}
-		} else if (choice.get() == 2) {
+		} else if (choice.get() == 2) { //resolves helpop
 			if(ids.isPresent()) {
 				int id = Integer.parseInt(ids.get());
 				String command = "UPDATE helpop SET Resolved = 1 WHERE ID = " + id + ";";
@@ -44,7 +44,7 @@ public class ManageHelpOP extends CommandExecutorBase{
 				src.sendMessage(Text.of(TextColors.GOLD, "Ticket sucessfully marked as resolved"));
 				return CommandResult.success();
 			}		
-		} else if (choice.get() == 3) {
+		} else if (choice.get() == 3) { //reopen helpop
 			if(ids.isPresent()) {
 				int id = Integer.parseInt(ids.get());
 				String command = "UPDATE helpop SET Resolved = 0 WHERE ID = " + id + ";";
@@ -52,7 +52,7 @@ public class ManageHelpOP extends CommandExecutorBase{
 				src.sendMessage(Text.of(TextColors.GOLD, "Ticket sucessfully marked as resolved"));
 				return CommandResult.success();
 			}	
-		} else if (choice.get() == 4) {
+		} else if (choice.get() == 4) { //get helpop info
 			if(ids.isPresent()) {
 				int id = Integer.parseInt(ids.get());
 				ArrayList<Text> array = Database.getHelpOp(id);
@@ -61,18 +61,18 @@ public class ManageHelpOP extends CommandExecutorBase{
 				}
 				return CommandResult.success();
 			}
-		}else if (choice.get() == 5) {
+		}else if (choice.get() == 5) { //shows all open helpops or all closed ones
 			if(ids.isPresent()) {
 				String choices = ids.get();
-				Iterable<Text> allOpenTickets = Database.getAllOpenTickets(choices);
-				if(choices.equals("All") || choices.equals("all")) {
+				Iterable<Text> allOpenTickets = Database.getAllOpenTickets(choices); //choice gets handled by database.java
+				if(choices.equals("All") || choices.equals("all")) { //gets all tickets
 					Utilities.getPaginationService().builder()
 				    	.title(Text.of(TextColors.BLUE, "All Support Tickets"))
 				    	.contents(allOpenTickets)
 				    	.footer(Text.of(TextColors.GREEN, "To Remove a ticket type /ManageHelpOP remove <TicketNumber>"))
 				    	.sendTo(src);
 					return CommandResult.success();
-				} else {
+				} else { //gets all closed tickets
 					Utilities.getPaginationService().builder()
 						.title(Text.of(TextColors.BLUE, "All Closed Support Tickets"))
 				    	.contents(allOpenTickets)
@@ -80,7 +80,7 @@ public class ManageHelpOP extends CommandExecutorBase{
 				    	.sendTo(src);
 					return CommandResult.success();
 				}
-			} else if(!(ids.isPresent())){
+			} else if(!(ids.isPresent())){ //gets all open tickets
 				Iterable<Text> allOpenTickets = Database.getAllOpenTickets();
 				Utilities.getPaginationService().builder()
 					.title(Text.of(TextColors.BLUE, "All Open Support Tickets"))

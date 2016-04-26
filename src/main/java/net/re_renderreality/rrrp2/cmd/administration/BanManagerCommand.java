@@ -26,6 +26,7 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.BanCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
@@ -53,26 +54,30 @@ public class BanManagerCommand extends CommandExecutorBase {
 										TextColors.GOLD, "Duration: ", TextColors.GRAY, ban.getDuration() + "\n",
 										TextColors.GOLD, "-----------------------------------------------------"));
 						CommandResult.success();
-					} else if (command == 2) {//TODO:
-						PlayerCore playercore = Database.getPlayerCore(id);
+					} else if (command == 2) {
+						PlayerCore playercore = Registry.getOnlinePlayers().getPlayer(id);
 						User players = null;
+						//import the User storage
 						UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
 						if(playercore.getUUID().equals("uuid")) {
 							src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
 							return CommandResult.empty();
 						}
 						Optional<User> ogp = uss.get(UUID.fromString(playercore.getUUID()));
-						if (ogp.isPresent())
-						{
+						if (ogp.isPresent()) {
 							players = ogp.get();
 						}
+						
+						//import the ban storage
 						BanService srv = RRRP2.getRRRP2().getGame().getServiceManager().provide(BanService.class).get();
 						
+						//if player is not banned stop command here
 						if (!playercore.getBanned()) {
 							src.sendMessage(Text.of(TextColors.RED, "That player is not currently banned."));
 							return CommandResult.empty();
 						}
 						
+						//if player is banned delete it from ban service and delete the ban core
 						srv.removeBan(srv.getBanFor(players.getProfile()).get());
 						ban.delete();
 						playercore.setBannedUpdate(false);
@@ -82,25 +87,13 @@ public class BanManagerCommand extends CommandExecutorBase {
 						
 					}
 				} else {
-					ArrayList<BanCore> bans = new ArrayList<BanCore>();
-					bans = Database.getBans();
-					ArrayList<Text> text = new ArrayList<Text>();
-					for(BanCore b : bans) {
-						text.add(Text.of(TextColors.GOLD, "Ban ID: ", TextColors.GRAY, b.getID(), TextColors.GOLD, " Player: ", TextColors.GRAY, b.getbannedName(), TextColors.GOLD, " Banner: ", TextColors.GRAY, b.getSender()));
-					}
-					Iterable<Text> completedText = text;
-					sendPagination(completedText, src);
-					CommandResult.success();
+					//If command doesn't match list bans
+					printBans((Player) src);
+					return CommandResult.success();
 				}
 			} else if(!oCommand.isPresent()){
-				ArrayList<BanCore> bans = new ArrayList<BanCore>();
-				bans = Database.getBans();
-				ArrayList<Text> text = new ArrayList<Text>();
-				for(BanCore b : bans) {
-					text.add(Text.of(TextColors.GOLD, "Ban ID: ", TextColors.GRAY, b.getID(), TextColors.GOLD, " Player: ", TextColors.GRAY, b.getbannedName(), TextColors.GOLD, " Banner: ", TextColors.GRAY, b.getSender()));
-				}
-				Iterable<Text> completedText = text;
-				sendPagination(completedText, src); 
+				//if command isn't present list bans
+				printBans((Player) src);
 				return CommandResult.success();
 			} else {
 				src.sendMessage(Text.of(TextColors.RED, "Error! Correct Useage /ManageBans <Command> <BanID>"));
@@ -113,6 +106,19 @@ public class BanManagerCommand extends CommandExecutorBase {
 		return CommandResult.empty();
 	}
 
+	//creates a list of all bans on a server
+	private void printBans(Player src) {
+		ArrayList<BanCore> bans = new ArrayList<BanCore>();
+		bans = Database.getBans();
+		ArrayList<Text> text = new ArrayList<Text>();
+		for(BanCore b : bans) {
+			text.add(Text.of(TextColors.GOLD, "Ban ID: ", TextColors.GRAY, b.getID(), TextColors.GOLD, " Player: ", TextColors.GRAY, b.getbannedName(), TextColors.GOLD, " Banner: ", TextColors.GRAY, b.getSender()));
+		}
+		Iterable<Text> completedText = text;
+		sendPagination(completedText, src);
+	}
+	
+	//sends bans to pagination service
 	private void sendPagination(Iterable<Text> bans, CommandSource src) {
 		Utilities.getPaginationService().builder()
 	    	.title(Text.of(TextColors.GOLD, "Banned Player List"))

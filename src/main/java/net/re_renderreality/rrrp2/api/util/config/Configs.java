@@ -8,7 +8,7 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 public final class Configs
 {
 	/**
-	 * Blank Constructor
+	 * Blank Constructor.
 	 */
 	private Configs()
 	{

@@ -22,18 +22,25 @@ public class KickCommand extends CommandExecutorBase
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<Player> player = ctx.<Player> getOne("player");
-		String reason = ctx.<String> getOne("reason").orElse("You have been kicked from the server!");
+		//if reason is not there use default reason
+		Optional<String> oReason = ctx.<String> getOne("reason");
 		
-		if(player.isPresent()) {
-			Player players = player.get();
-			players.getPlayer().get().kick(Text.builder()
-				.append(Text.of(TextColors.DARK_RED, "You have been tempbanned!\n", TextColors.RED, "Reason: "))
-				.append(TextSerializers.formattingCode('&').deserialize(reason), Text.of("\n"))
-				.build());
-			return CommandResult.success();
+		if(oReason.isPresent()) {
+			String reason = oReason.get();
+			if(player.isPresent()) {
+				Player players = player.get();
+				players.getPlayer().get().kick(Text.builder()
+					.append(Text.of(TextColors.DARK_RED, "You have been tempbanned!\n", TextColors.RED, "Reason: "))
+					.append(TextSerializers.formattingCode('&').deserialize(reason), Text.of("\n"))
+					.build());
+				return CommandResult.success();
+			}
+			src.sendMessage(Text.of(TextColors.RED, "Need to specify a player. Correct useage: /kick <player> <reason>"));
+			return CommandResult.empty();
+		} else {
+			src.sendMessage(Text.of(TextColors.RED, "Need to specify a Reason. Correct useage: /kick <player> <reason>"));
+			return CommandResult.empty();
 		}
-		src.sendMessage(Text.of(TextColors.RED, "Need to specify a player. Correct useage: /kick <player> (reason)"));
-		return CommandResult.empty();
 	}
 
 	@Nonnull
@@ -52,7 +59,7 @@ public class KickCommand extends CommandExecutorBase
 			.description(Text.of("Kick Command"))
 			.permission("rrr.admin.kick")
 			.arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
-						GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("reason")))))
+						GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("reason"))))
 			.executor(this).build();
 	}
 }

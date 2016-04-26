@@ -13,8 +13,8 @@ public class ReadConfigMOTD {
 	
 	//Start MOTD
 	/** 
-	 * @return The message of the day
-	 * @note Color codes may be used. Any use of %PlayerName must be swapped 
+	 * @return The message of the day.
+	 * @note Color codes may be used. Any use of %PlayerName must be swapped.
 	 */
 	public static String getMOTD() {
 		CommentedConfigurationNode node = Configs.getConfig(motdConfig).getNode("events", "join", "message");
@@ -26,7 +26,7 @@ public class ReadConfigMOTD {
 	
 	/**
 	 * @param value string to set the message of the day to.
-	 * @note escape codes, color Codes, and %PlayerName may be used
+	 * @note escape codes, color Codes, and %PlayerName may be used.
 	 */
 	public static void setMOTD(String value) {
 			Configs.setValue(motdConfig, new Object[] { "events", "join", "message" }, value);	

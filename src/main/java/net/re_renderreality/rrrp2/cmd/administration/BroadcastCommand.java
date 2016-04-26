@@ -21,13 +21,14 @@ public class BroadcastCommand extends AsyncCommandExecutorBase
 		Text msg = TextSerializers.formattingCode('&').deserialize(message);
 		Text broadcast = Text.of(TextColors.DARK_GRAY, "[", TextColors.DARK_RED, "Broadcast", TextColors.DARK_GRAY, "]", TextColors.GREEN, " ");
 		Text finalBroadcast = Text.builder().append(broadcast).append(msg).build();
+		//sends a message to everyone online
 		MessageChannel.TO_ALL.send(finalBroadcast);
 	}
 
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "broadcast", "bc" };
+		return new String[] { "broadcast", "bc", "Broadcase", "BC" };
 	}
 
 	@Nonnull

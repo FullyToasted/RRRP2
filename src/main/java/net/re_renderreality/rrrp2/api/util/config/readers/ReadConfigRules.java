@@ -18,6 +18,9 @@ public class ReadConfigRules {
 	private static Configurable rulesConfig = Rules.getConfig();
 	private static ConfigManager configManager = new ConfigManager();
 	
+	/**
+	 * @return number of rules added
+	 */
 	public static int getNumRules() {
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Rule Count");
 		if (configManager.getInt(node).isPresent())
@@ -26,10 +29,16 @@ public class ReadConfigRules {
 		return 1;
 	}
 	
+	/**
+	 * @param num set number of rules added
+	 */
 	public static void setNumRules(int num) {
 		Configs.setValue(rulesConfig, new Object[] { "Rule Count" }, num);
 	}
 	
+	/**
+	 * @return get added rules
+	 */
 	public static Iterable<Text> getRules() {
 		ArrayList<Text> array = new ArrayList<Text>();
 		int numOfRules = getNumRules();
@@ -53,6 +62,10 @@ public class ReadConfigRules {
 		return text;
 	}
 	
+	/**
+	 * @param id get rule with this id
+	 * @return the rule
+	 */
 	public static String getRule(int id) {
 		if(id <= getNumRules()) {
 			String num = "" + id;
@@ -63,6 +76,9 @@ public class ReadConfigRules {
 			return "";
 	}
 	
+	/**
+	 * @param rule adds rule to list
+	 */
 	public static void addRule(String rule) {
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Rule Count");
 		int newnumber = node.getInt() + 1;
@@ -73,6 +89,10 @@ public class ReadConfigRules {
 		rulesConfig.save();
 	}
 	
+	/**
+	 * @param ruleNum rule ID to change
+	 * @param rule new rule
+	 */
 	public static void changeRule(int ruleNum, String rule) {
 		String number = "" + ruleNum;
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Rules" , number );
@@ -81,6 +101,9 @@ public class ReadConfigRules {
 		
 	}
 	
+	/**
+	 * @param id rule ID to remove
+	 */
 	public static void removeRule(int id) {
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Rules");
 		String key = "" + id;
@@ -89,23 +112,35 @@ public class ReadConfigRules {
 		rulesConfig.save();
 	}
 	
+	/**
+	 * @return rule header
+	 */
 	public static Text getHeader() {
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Header");
 		Text header = TextSerializers.formattingCode('&').deserialize(node.getString());
 		return header;
 	}
 	
+	/**
+	 * @param header set rule header
+	 */
 	public static void setHeader(String header) {
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Header");
 		node.setValue(header);
 	}
 	
+	/**
+	 * @return footer message
+	 */
 	public static Text getFooter() {
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Footer");
 		Text header = TextSerializers.formattingCode('&').deserialize(node.getString());
 		return header;
 	}
 	
+	/**
+	 * @param footer set footer message
+	 */
 	public static void setFooter(String footer) {
 		CommentedConfigurationNode node = Configs.getConfig(rulesConfig).getNode("Header");
 		node.setValue(footer);
