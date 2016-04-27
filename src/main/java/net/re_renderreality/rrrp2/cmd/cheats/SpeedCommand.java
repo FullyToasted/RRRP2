@@ -24,6 +24,7 @@ public class SpeedCommand extends CommandExecutorBase
 		Optional<Player> optionalTarget = ctx.<Player> getOne("player");
 		int multiplier = ctx.<Integer> getOne("speed").get();
 
+		//updates flying speed key or walking speed key if on the ground
 		if (!optionalTarget.isPresent()) {
 			if (src instanceof Player) {
 				Player player = (Player) src;

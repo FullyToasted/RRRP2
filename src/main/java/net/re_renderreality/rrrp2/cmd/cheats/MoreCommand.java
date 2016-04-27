@@ -31,11 +31,9 @@ public class MoreCommand extends CommandExecutorBase
 			} else {
 				src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "You're not holding anything to stack!"));
 			}
-		} else if (src instanceof ConsoleSource) {
-			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /more!"));
-		} else if (src instanceof CommandBlockSource) {
-			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /more!"));
-		}
+		} else if (src instanceof ConsoleSource || src instanceof CommandBlockSource) {
+			src.sendMessage(Text.of(TextColors.RED, "Error! Must be an in-game player to use /more!"));
+		} 
 		return CommandResult.success();
 	}
 

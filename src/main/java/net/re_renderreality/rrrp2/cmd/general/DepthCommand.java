@@ -16,7 +16,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 public class DepthCommand extends CommandExecutorBase
 {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * Gives depth of player relitive to y=64
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

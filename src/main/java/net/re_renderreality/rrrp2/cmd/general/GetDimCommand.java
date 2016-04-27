@@ -16,7 +16,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 public class GetDimCommand extends CommandExecutorBase
 {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * shows the dimension type the world a player is in
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

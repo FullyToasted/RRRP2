@@ -48,12 +48,11 @@ public class BigTreeCommand extends CommandExecutorBase {
 				BlockRay<World> playerBlockRay = BlockRay.from(player).blockLimit(350).build();
 				BlockRayHit<World> finalHitRay = null;
 
-				while (playerBlockRay.hasNext())
-				{
+				//casts a ray until it hits a solid object
+				while (playerBlockRay.hasNext()) {
 					BlockRayHit<World> currentHitRay = playerBlockRay.next();
 
-					if (!world.getBlockType(currentHitRay.getBlockPosition()).equals(BlockTypes.AIR))
-					{
+					if (!world.getBlockType(currentHitRay.getBlockPosition()).equals(BlockTypes.AIR)) {
 						finalHitRay = currentHitRay;
 						break;
 					} 
@@ -61,12 +60,10 @@ public class BigTreeCommand extends CommandExecutorBase {
 
 				Location<World> treeLocation = null;
 
-				if (finalHitRay == null)
-				{
+				//if the ray did not hit place tree where standing
+				if (finalHitRay == null) {
 					treeLocation = player.getLocation();
-				}
-				else
-				{
+				} else {
 					treeLocation = finalHitRay.getLocation();
 				}
 				
@@ -91,7 +88,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 		        	populate = BiomeTreeTypes.TALL_TAIGA.getLargePopulatorObject().get();
 		        	src.sendMessage(Text.of(TextColors.GOLD, "Attempting to spawn Large Taiga Tree"));
 		        }
-		        
+		        //Attempts to place tree
 		        Vector3i pos = new Vector3i(x, y, z);
 		        Vector3i below = new Vector3i(x, y - 1, z);
 		        

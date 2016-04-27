@@ -21,7 +21,7 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 public class HelpCommand extends CommandExecutorBase {
 	
 	/**
-	 * Lists a Pagination Generated help page for either all commands or the specified subcategory
+	 * Lists a Pagination Generated help page for either all commands or the specified subcategory @TODO NEEDS to be completely rewritten
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<Integer> s = ctx.<Integer> getOne("SubDirectory");

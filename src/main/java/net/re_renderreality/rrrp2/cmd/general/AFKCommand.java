@@ -2,7 +2,6 @@ package net.re_renderreality.rrrp2.cmd.general;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -20,15 +19,13 @@ import net.re_renderreality.rrrp2.utils.AFK;
 
 public class AFKCommand extends CommandExecutorBase
 {
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		//Overrides and instantly causes AFK to execute
 		if (src instanceof Player) {
-			Logger l = RRRP2.getRRRP2().getLogger();
 			Player source = (Player) src;
 			PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(source.getName());
 
-			if (RRRP2.afkList.containsKey(player.getID()))
-			{
+			if (RRRP2.afkList.containsKey(player.getID())) {
 				RRRP2.afkList.remove(player.getID());
 			}
 
@@ -36,7 +33,6 @@ public class AFKCommand extends CommandExecutorBase
 			long timeToSet = System.currentTimeMillis() - timeBeforeAFK - 1000;
 			AFK afk = new AFK(timeToSet);
 			RRRP2.afkList.put(player.getID(), afk);
-			l.info("AFK SUCCESS!");
 		}
 		else
 		{

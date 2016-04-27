@@ -29,6 +29,7 @@ import org.spongepowered.api.util.ban.BanTypes;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.BanCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
@@ -41,7 +42,7 @@ public class BanCommand extends CommandExecutorBase
 		Game game = RRRP2.getRRRP2().getGame();
 		Optional<Player> player = ctx.<Player> getOne("player");
 		Optional<String> sPlayer = ctx.<String> getOne("player name");
-		String reason = ctx.<String> getOne("reason").orElse("The BanHammer has spoken!");
+		Optional<String> oReason = ctx.<String> getOne("reason");
 		
 		//get date and format it
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -52,26 +53,32 @@ public class BanCommand extends CommandExecutorBase
 		User players = null;
 		int id = 0;
 		
-		if(player.isPresent()) {
-			playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.get().getName());
-			id = playercore.getID();
-			players = player.get();
-		} else if(sPlayer.isPresent()) {
-			playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.get().getName());
-			id = playercore.getID();
-			//import user storage service and get the user associated with the user name
-			UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
-			if(playercore.getUUID().equals("uuid")) {
-				src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
-				return CommandResult.empty();
-			}
-			Optional<User> ogp = uss.get(UUID.fromString(playercore.getUUID()));
-			if (ogp.isPresent())
-			{
-				players = ogp.get();
+		String reason = null;
+		if(oReason.isPresent()) {
+			reason = oReason.get();
+			if(player.isPresent()) {
+				playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.get().getName());
+				id = playercore.getID();
+				players = player.get();
+			} else if(sPlayer.isPresent()) {
+				playercore = Database.getPlayerCore(Database.getPlayerIDfromUsername(sPlayer.get()));
+				id = playercore.getID();
+				//import user storage service and get the user associated with the user name
+				UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
+				if(playercore.getUUID().equals("uuid")) {
+					src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
+					return CommandResult.empty();
+				}
+				Optional<User> ogp = uss.get(UUID.fromString(playercore.getUUID()));
+				if (ogp.isPresent())
+				{
+					players = ogp.get();
+				}
+			} else {
+				src.sendMessage(Text.of(TextColors.RED, "Error! Need to specify a Player /ban <Player> <Reason>"));
 			}
 		} else {
-			src.sendMessage(Text.of(TextColors.RED, "Command Failed!"));
+			src.sendMessage(Text.of(TextColors.RED, "Error! Need to specify a ban Reason /ban <Player> <Reason>"));
 		}
 		//imports ban service
 		BanService srv = game.getServiceManager().provide(BanService.class).get();

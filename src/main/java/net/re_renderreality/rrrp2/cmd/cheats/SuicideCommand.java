@@ -22,6 +22,7 @@ public class SuicideCommand extends CommandExecutorBase {
 		if(src instanceof Player) {
 			Player player = (Player) src;
 			
+			//offers player 0 health and kills them
 			MutableBoundedValue<Double> health = player.getValue(Keys.HEALTH).get();
 			health.set(health.getMinValue()); 
 			player.offer(health);

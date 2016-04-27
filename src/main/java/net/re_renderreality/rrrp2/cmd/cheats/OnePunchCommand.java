@@ -17,7 +17,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 public class OnePunchCommand extends CommandExecutorBase
 {
 	/**
-	 * Heals other players or self.
+	 * Adds player to one punch user list
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

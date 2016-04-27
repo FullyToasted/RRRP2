@@ -20,10 +20,9 @@ import com.flowpowered.math.vector.Vector3i;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
-public class EntityDBCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+public class EntityDBCommand extends CommandExecutorBase {
+	//shows information about the entity being looked on
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		if (src instanceof Player) {
 			Player player = (Player) src;
 

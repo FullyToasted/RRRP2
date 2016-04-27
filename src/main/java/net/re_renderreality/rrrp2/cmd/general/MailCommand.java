@@ -28,7 +28,7 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 public class MailCommand extends CommandExecutorBase
 {
 	/**
-	 * TODO: Create /mailManag
+	 * Command to create a MailCore and send it to another player
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

@@ -16,7 +16,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 public class GetWorldCommand extends CommandExecutorBase
 {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * Get Player's current world
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

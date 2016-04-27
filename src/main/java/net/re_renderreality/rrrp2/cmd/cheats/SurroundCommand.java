@@ -33,6 +33,7 @@ public class SurroundCommand extends CommandExecutorBase {
 		Optional<Player> player = ctx.<Player> getOne("Player");
 		Optional<Integer> block = ctx.<Integer> getOne("Block");
 		
+		//surrounds the player in one of five block types
 		if(src instanceof Player || src instanceof ConsoleSource) {
 			if(player.isPresent()) {
 				Player target = player.get();

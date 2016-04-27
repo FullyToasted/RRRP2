@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 import org.spongepowered.api.command.CommandException;
@@ -30,22 +31,21 @@ public class WhoisCommand extends CommandExecutorBase{
 	{
 		Optional<String> player = ctx.<String> getOne("player name");
 		Optional<Player> pPlayer = ctx.<Player> getOne("player");
-		int id = 0;
+		
 		PlayerCore playercore = null;
 		if(player.isPresent()) {
-			id = Database.getPlayerIDfromUsername(player.get());
-			playercore = Database.getPlayerCore(id);
+			playercore = Database.getPlayerCore(Database.getPlayerIDfromUsername(player.get()));
 		} else if(pPlayer.isPresent()) {
-			id = Database.getPlayerIDfromUsername(pPlayer.get().getName());
-			playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+			playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(pPlayer.get().getName());
 		}
-		if( id == 0 ) {
+		if( playercore.getID() == 0 ) {
 			src.sendMessage(Text.of(TextColors.RED, "Player does not Exsist!"));
 			return CommandResult.empty();
 		}
 		
 		if(src instanceof Player) {
 			Player playerSRC = (Player) src;
+			//checks if player can check others' whois
 			if(playerSRC.hasPermission("rrr.admin.whois.others") && (player.isPresent() || pPlayer.isPresent())) {
 					sendWhois(src, playercore);
 					return CommandResult.success();

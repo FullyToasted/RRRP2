@@ -15,8 +15,8 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
 import javax.annotation.Nonnull;
 
-public class ItemDBCommand extends CommandExecutorBase
-{
+public class ItemDBCommand extends CommandExecutorBase {
+	//get information about the item being held
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		if (src instanceof Player) {
 			Player player = (Player) src;

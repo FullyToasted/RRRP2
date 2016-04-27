@@ -31,17 +31,14 @@ import java.util.stream.StreamSupport;
 
 import javax.annotation.Nonnull;
 
-public class ListCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+public class ListCommand extends CommandExecutorBase {
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		//Checks for plugins like PEX
 		Optional<PermissionService> optPermissionService = Sponge.getServiceManager().provide(PermissionService.class);
 
 		src.sendMessage(Text.of(TextColors.GOLD, "There are ", TextColors.RED, Sponge.getServer().getOnlinePlayers().size(), TextColors.GOLD, " out of ", TextColors.GRAY, Sponge.getServer().getMaxPlayers(), TextColors.GOLD, " players online."));
 
-		if (optPermissionService.isPresent())
-		{
+		if (optPermissionService.isPresent()) {
 			PermissionService permissionService = optPermissionService.get();
 			List<Subject> groups = Lists.newArrayList(permissionService.getGroupSubjects().getAllSubjects());
 			Collections.sort(groups, new SubjectComparator());
@@ -49,27 +46,22 @@ public class ListCommand extends CommandExecutorBase
 			List<UUID> listedPlayers = Lists.newArrayList();
 			
 			//loop through every group
-			for (Subject group : groups)
-			{
+			for (Subject group : groups) {
 				List<Subject> users = StreamSupport.stream(permissionService.getUserSubjects().getAllSubjects().spliterator(), false).filter(u -> u.isChildOf(group)).collect(Collectors.toList());
 				List<Text> onlineUsers = Lists.newArrayList();
 
-				for (Subject user : users)
-				{
+				for (Subject user : users) {
 					
 					Optional<Player> optPlayer;
 
-					try
-					{
+					try	{
 						optPlayer = Sponge.getServer().getPlayer(UUID.fromString(user.getIdentifier()));
-					}
-					catch (IllegalArgumentException e)
-					{
+					} catch (IllegalArgumentException e) {
 						optPlayer = Sponge.getServer().getPlayer(user.getIdentifier());
 					}
 
-					if (optPlayer.isPresent() && !listedPlayers.contains(optPlayer.get().getUniqueId()))
-					{
+					//Add Player to player list
+					if (optPlayer.isPresent() && !listedPlayers.contains(optPlayer.get().getUniqueId())) {
 						Player player = optPlayer.get();
 						PlayerCore playa = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(player.getName());
 						listedPlayers.add(optPlayer.get().getUniqueId());
@@ -81,8 +73,7 @@ public class ListCommand extends CommandExecutorBase
 						}
 						boolean isAFK = false;
 
-						if (RRRP2.afkList.containsKey(playa.getID()))
-						{
+						if (RRRP2.afkList.containsKey(playa.getID())) {
 							AFK afk = RRRP2.afkList.get(playa.getID());
 							isAFK = afk.getAFK();
 						}
@@ -94,25 +85,21 @@ public class ListCommand extends CommandExecutorBase
 					}
 				}
 
-				if (onlineUsers.size() > 0)
-				{
+				if (onlineUsers.size() > 0) {
 					src.sendMessage(Text.builder().append(Text.of(TextColors.GOLD, group.getIdentifier(), ": ")).append(onlineUsers).build());
 				}
 			}
 
-			if (listedPlayers.size() < Sponge.getServer().getOnlinePlayers().size())
-			{
+			if (listedPlayers.size() < Sponge.getServer().getOnlinePlayers().size()) {
 				List<Player> remainingPlayers = Sponge.getServer().getOnlinePlayers().stream().filter(p -> !listedPlayers.contains(p.getUniqueId())).collect(Collectors.toList());
 				List<Text> onlineUsers = Lists.newArrayList();
 
-				for (Player player : remainingPlayers)
-				{
+				for (Player player : remainingPlayers) {
 					PlayerCore playa = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(player.getName());
 					Text name = Text.builder().append(TextSerializers.FORMATTING_CODE.deserialize(playa.getNick())).append(Text.of(" ")).build();
 					boolean isAFK = false;
 
-					if (RRRP2.afkList.containsKey(player.getUniqueId()))
-					{
+					if (RRRP2.afkList.containsKey(player.getUniqueId())) {
 						AFK afk = RRRP2.afkList.get(player.getUniqueId());
 						isAFK = afk.getAFK();
 					}
@@ -123,14 +110,12 @@ public class ListCommand extends CommandExecutorBase
 						onlineUsers.add(name);
 				}
 
-				if (onlineUsers.size() > 0)
-				{
+				if (onlineUsers.size() > 0)	{
 					src.sendMessage(Text.builder().append(Text.of(TextColors.GOLD, "Default", ": ")).append(onlineUsers).build());
 				}
 			}
 		} //end PEX
-		else
-		{
+		else {
 			src.sendMessage(Text.of(TextColors.GRAY, Sponge.getServer().getOnlinePlayers().toString()));
 		}
 

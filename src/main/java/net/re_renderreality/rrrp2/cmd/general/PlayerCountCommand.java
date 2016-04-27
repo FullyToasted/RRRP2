@@ -14,7 +14,7 @@ import net.re_renderreality.rrrp2.database.Database;
 
 public class PlayerCountCommand extends CommandExecutorBase {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * Gives a count of how many players are currently online
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

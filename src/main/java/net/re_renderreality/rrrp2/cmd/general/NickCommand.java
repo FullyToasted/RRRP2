@@ -22,7 +22,7 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 /**
- * @author alexh
+ * Sets a player's nickname
  */
 public class NickCommand  extends CommandExecutorBase
 {

@@ -17,7 +17,7 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 public class GetPosCommand extends CommandExecutorBase
 {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * Get player coordinates
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

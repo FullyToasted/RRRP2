@@ -17,7 +17,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 public class JockeyCommand extends CommandExecutorBase
 {
 	/**
-	 * Heals other players or self.
+	 * Allows players to jockey other entities. This just adds a user to the active jockeyer list
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{

@@ -38,6 +38,7 @@ public class EnchantCommand extends CommandExecutorBase {
 			return CommandResult.success();
 		}
 
+		//checks if unsafe enchantments are enabled
 		if (!ReadConfig.getUnsafeEnchantmentStatus()) {
 			
 			if (enchantment.getMaximumLevel() < level) {
@@ -53,9 +54,10 @@ public class EnchantCommand extends CommandExecutorBase {
 				if (player.getItemInHand().isPresent())	{
 					ItemStack itemInHand = player.getItemInHand().get();
 
+					//checks if enchantment can be applied
 					if (!enchantment.canBeAppliedToStack(itemInHand)) {
 						src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Enchantment cannot be applied to this item!"));
-						return CommandResult.success();
+						return CommandResult.empty();
 					}
 
 					EnchantmentData enchantmentData = itemInHand.getOrCreate(EnchantmentData.class).get();
@@ -76,7 +78,8 @@ public class EnchantCommand extends CommandExecutorBase {
 						enchantmentData.set(enchantmentData.enchantments().remove(sameEnchantment));
 						enchantmentData.set(enchantmentData.enchantments().add(itemEnchantment));
 					}
-
+					
+					//applies enchant
 					itemInHand.offer(enchantmentData);
 					player.setItemInHand(itemInHand);
 					player.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Enchanted item(s) in your hand."));
@@ -91,8 +94,8 @@ public class EnchantCommand extends CommandExecutorBase {
 			else if (src instanceof CommandBlockSource) {
 				src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /enchant!"));
 			}
-		}
-		else if (target.isPresent() && src.hasPermission("rrr.cheat.enchantothers")) {
+		//same as above but can chant another person's held items
+		} else if (target.isPresent() && src.hasPermission("rrr.cheat.enchant.others")) {
 			Player player = target.get();
 
 			if (player.getItemInHand().isPresent()) {
@@ -138,7 +141,7 @@ public class EnchantCommand extends CommandExecutorBase {
 	@Override
 	public String[] getAliases()
 	{
-		return new String[] { "enchant", "ench" };
+		return new String[] { "enchant", "ench", "Enchant" };
 	}
 
 	@Nonnull
@@ -148,7 +151,7 @@ public class EnchantCommand extends CommandExecutorBase {
 		return CommandSpec
 			.builder()
 			.description(Text.of("Enchant Command"))
-			.permission("rrr.cheat.enchant")
+			.permission("rrr.cheat.enchant.self")
 			.arguments(GenericArguments.seq(GenericArguments.optional(GenericArguments.player(Text.of("target"))), 
 											GenericArguments.onlyOne(GenericArguments.integer(Text.of("level")))), 
 											GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("enchantment"))))

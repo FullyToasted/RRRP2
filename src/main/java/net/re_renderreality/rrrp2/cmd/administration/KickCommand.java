@@ -59,7 +59,7 @@ public class KickCommand extends CommandExecutorBase
 			.description(Text.of("Kick Command"))
 			.permission("rrr.admin.kick")
 			.arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
-						GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("reason"))))
+						GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("reason")))))
 			.executor(this).build();
 	}
 }

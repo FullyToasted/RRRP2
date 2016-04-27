@@ -25,6 +25,7 @@ public class HatCommand extends CommandExecutorBase
 			Player player = (Player) src;
 			Optional<ItemStack> itemInHand = player.getItemInHand();
 
+			//places item in hand into head slot
 			if (itemInHand.isPresent()) {
 				if (itemInHand.get().getQuantity() > 1) {
 					ItemStack stack = itemInHand.get();
@@ -50,7 +51,7 @@ public class HatCommand extends CommandExecutorBase
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "hat" };
+		return new String[] { "hat", "Hat" };
 	}
 
 	@Nonnull

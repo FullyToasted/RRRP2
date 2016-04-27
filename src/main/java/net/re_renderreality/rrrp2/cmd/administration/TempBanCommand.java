@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-//import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
@@ -32,6 +31,7 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.BanCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
@@ -40,59 +40,65 @@ public class TempBanCommand extends CommandExecutorBase {
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		//Logger l = RRRP2.getRRRP2().getLogger();
 		Game game = RRRP2.getRRRP2().getGame();
+		
 		Optional<Player> player = ctx.<Player> getOne("player");
 		Optional<String> sPlayer = ctx.<String> getOne("player name");
+		//Expected Time Format
 		String time = ctx.<String> getOne("dd:hh:mm:ss").get();
-		String reason = ctx.<String> getOne("reason").orElse("The BanHammer has spoken!");
+		Optional<String> oReason = ctx.<String> getOne("reason");
 		
+		//Date Formatter
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 		String todaysDate = dateFormat.format(cal.getTime());
 		
 		PlayerCore playercore = null;
 		User players = null;
-		int id = 0;
-		
-		if(player.isPresent()) {
-			id = Database.getPlayerIDfromUsername(player.get().getName());
-			playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
-			players = player.get();
-		} else if(sPlayer.isPresent()) {
-			id = Database.getPlayerIDfromUsername(sPlayer.get());
-			playercore = Database.getPlayerCore(id);
-			UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
-			if(playercore.getUUID().equals("uuid")) {
-				src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
-				return CommandResult.empty();
-			}
-			Optional<User> ogp = uss.get(UUID.fromString(playercore.getUUID()));
-			if (ogp.isPresent())
-			{
-				players = ogp.get();
+		String reason = null;
+		if(oReason.isPresent()) {
+			reason = oReason.get();
+			if(player.isPresent()) {
+				playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(src.getName());
+				players = player.get();
+			} else if(sPlayer.isPresent()) {
+				playercore = Database.getPlayerCore(Database.getPlayerIDfromUsername(sPlayer.get()));
+				UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();
+				if(playercore.getUUID().equals("uuid")) {
+					src.sendMessage(Text.of(TextColors.RED, "This Player has never joined the server"));
+					return CommandResult.empty();
+				}
+				Optional<User> ogp = uss.get(UUID.fromString(playercore.getUUID()));
+				if (ogp.isPresent()) {
+					players = ogp.get();
+				}
+			} else {
+				src.sendMessage(Text.of(TextColors.RED, "Error! Need to specify player name /tempban <player> <time> <reason>"));
 			}
 		} else {
-			src.sendMessage(Text.of(TextColors.RED, "Command Failed!"));
+			src.sendMessage(Text.of(TextColors.RED, "Error! Need to specify ban reason /tempban <player> <time> <reason>"));
 		}
 
+		//checks if player is already banned
 		BanService srv = game.getServiceManager().provide(BanService.class).get();
-		if (srv.isBanned(players.getProfile()))
-		{
+		if (srv.isBanned(players.getProfile())) {
 			src.sendMessage(Text.of(TextColors.RED, "That player has already been banned."));
 			return CommandResult.empty();
 		}
 
+		//builds the ban and adds it
 		srv.addBan(Ban.builder()
 			.type(BanTypes.PROFILE)
 			.source(src).profile(players.getProfile())
 			.expirationDate(getInstantFromString(time))
 			.reason(TextSerializers.formattingCode('&').deserialize(reason))
 			.build());
-		BanCore ban = new BanCore(id, playercore.getName(), players.getUniqueId().toString(), src.getName(), reason, todaysDate, getFormattedString(time));
+		//builds new BanCore, inserts it, and Updates PlayerCore ban status
+		BanCore ban = new BanCore(playercore.getID(), playercore.getName(), players.getUniqueId().toString(), src.getName(), reason, todaysDate, getFormattedString(time));
 		ban.insert();
 		playercore.setBannedUpdate(true);
 
+		//if player is online kick from server with ban message
 		if (player.isPresent()) {
 			if (players.isOnline()) {
 				players.getPlayer().get().kick(Text.builder()
@@ -103,11 +109,12 @@ public class TempBanCommand extends CommandExecutorBase {
 			}
 		}
 		
+		//broadcasts to server if enabled
 		if(ReadConfig.getShowBanned()) {
-			Utilities.broadcastMessage(Text.of(TextColors.GRAY, ban.getbannedName(), TextColors.GOLD, " Was banned for: ", TextColors.RED, ban.getReason()));
+			Utilities.broadcastMessage(Text.of(TextColors.GRAY, ban.getbannedName(), TextColors.GOLD, " Was Temporarily banned for: ", TextColors.RED, ban.getReason()));
 		}
 
-		src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, playercore.getName() + " has been banned."));
+		src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, playercore.getName() + " has been temp banned."));
 		return CommandResult.success();
 	}
 
@@ -134,10 +141,13 @@ public class TempBanCommand extends CommandExecutorBase {
 			.build();
 	}
 
-	public Instant getInstantFromString(String time)
+	/**
+	 * @param time time string to convert
+	 * @return new instant
+	 */
+	private Instant getInstantFromString(String time)
 	{
-		if (time.contains(":"))
-		{
+		if (time.contains(":")) {
 			String[] tokens = time.split(":");
 			int days = Integer.parseInt(tokens[0]);
 			int hours = Integer.parseInt(tokens[1]);
@@ -145,26 +155,25 @@ public class TempBanCommand extends CommandExecutorBase {
 			int seconds = Integer.parseInt(tokens[3]);
 			int durationInSec = 3600 * 24 * days + 3600 * hours + 60 * minutes + seconds;
 			return Instant.ofEpochSecond((System.currentTimeMillis()) / 1000L + durationInSec);
-		}
-		else
-		{
+		} else {
 			return Instant.ofEpochSecond((System.currentTimeMillis()) / 1000L + Integer.parseInt(time));
 		}
 	}
 	
-	public String getFormattedString(String time)
+	/**
+	 * @param time time string to convert
+	 * @return converted human readable time
+	 */
+	private String getFormattedString(String time)
 	{
-		if (time.contains(":"))
-		{
+		if (time.contains(":")) {
 			String[] tokens = time.split(":");
 			int days = Integer.parseInt(tokens[0]);
 			int hours = Integer.parseInt(tokens[1]);
 			int minutes = Integer.parseInt(tokens[2]);
 			int seconds = Integer.parseInt(tokens[3]);
 			return (days + " days, " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds.");
-		}
-		else
-		{
+		} else {
 			return (Integer.parseInt(time) + " seconds.");
 		}
 	}

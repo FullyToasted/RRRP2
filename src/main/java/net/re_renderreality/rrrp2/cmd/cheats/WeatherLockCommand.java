@@ -29,6 +29,7 @@ public class WeatherLockCommand extends CommandExecutorBase
 
 		Optional<World> optWorld = game.getServer().getWorld(name);
 
+		//locks a worlds weather by adding the world name to a config list. Listener handles rest.
 		if (optWorld.isPresent()) {
 			World world = optWorld.get();
 

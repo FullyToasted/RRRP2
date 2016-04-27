@@ -21,12 +21,13 @@ public class TPSCommand extends AsyncCommandExecutorBase
 	 */
 	public void executeAsync(CommandSource src, CommandContext ctx)
 	{
+		//gets server tps
 		double tps = Sponge.getServer().getTicksPerSecond();
 		src.sendMessage(Text.of(TextColors.GOLD, "Current TPS: ", TextColors.GRAY, tps));
 		src.sendMessage(Text.of(TextColors.GOLD, "World Info:"));
 
-		for (World world : Sponge.getServer().getWorlds())
-		{
+		//gets world stats
+		for (World world : Sponge.getServer().getWorlds()) {
 			int numOfEntities = world.getEntities().size();
 			int loadedChunks = Iterables.size(world.getLoadedChunks());
 			src.sendMessage(Text.of());

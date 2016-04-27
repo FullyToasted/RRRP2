@@ -29,6 +29,7 @@ public class RepairCommand extends CommandExecutorBase
 		if (src instanceof Player) {
 			Player player = (Player) src;
 
+			//repairs by creating a new item with same specifications
 			if (player.getItemInHand().isPresent()) {
 				ItemStack itemInHand = player.getItemInHand().get();
 				ItemType itemType = itemInHand.getItem();

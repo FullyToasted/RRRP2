@@ -15,19 +15,20 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class GodCommand extends CommandExecutorBase{
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
+		//This command just toggles a player core boolean actual functionality is in the damage listener
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.god.self") && src instanceof Player) {
 			Player player = (Player) src;
 			int id = Database.getID(player.getUniqueId().toString());
-			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+			PlayerCore playerz = Registry.getOnlinePlayers().getPlayer(id);
 			if(playerz.getGod()) {
 				playerz.setGodUpdate(false);
 				player.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode: ", TextColors.GRAY, "off."));
@@ -38,15 +39,13 @@ public class GodCommand extends CommandExecutorBase{
 		} else if (src.hasPermission("rrr.cheat.god.others")) {
 			Player player = targetPlayer.get();
 			int id = Database.getID(player.getUniqueId().toString());
-			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+			PlayerCore playerz = Registry.getOnlinePlayers().getPlayer(id);
 			if (playerz.getGod())
 			{
 				src.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode for " + player.getName() + ": ", TextColors.GRAY, "off."));
 				player.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode: ", TextColors.GRAY, "off."));
 				playerz.setGodUpdate(false);
-			}
-			else
-			{
+			} else {
 				src.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode for " + player.getName() + ": ", TextColors.GRAY, "on."));
 				player.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode: ", TextColors.GRAY, "on."));
 				playerz.setGodUpdate(true);
@@ -55,8 +54,7 @@ public class GodCommand extends CommandExecutorBase{
 		}else if(!targetPlayer.isPresent() && src instanceof ConsoleSource) {
 			src.sendMessage(Text.of(TextColors.RED, "Console can only set Players to Godmode"));
 			return CommandResult.empty();
-		} else
-		{
+		} else {
 			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "You do not have permission to change others ability to enter Godmode."));
 			return CommandResult.empty();
 		}

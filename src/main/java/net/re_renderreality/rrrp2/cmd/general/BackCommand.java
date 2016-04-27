@@ -24,29 +24,26 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class BackCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
-		if (src instanceof Player)
-		{
+public class BackCommand extends CommandExecutorBase {
+	//Teleports the player to their last known location
+	//A last location is set at login, death, or a teleport
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		if (src instanceof Player) {
 			Player player = (Player) src;
 			int id = Database.getID(player.getUniqueId().toString());
 			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
 			String lastLocation = Utilities.convertLocation(player);
 
-			if (!(playerz.getLastlocation() == null))
-			{
+			if (!(playerz.getLastlocation() == null)) {
 				Location<World> location = Utilities.convertLocation(playerz.getLastlocation());
 
-				if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("rrp2.teleport.cooldown.override"))
-				{
+				//teleport cool down if player doesn't have override
+				if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("rrp2.teleport.cooldown.override")) {
 					RRRP2.teleportingPlayers.add(playerz.getID());
 					src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleporting to Last Location. Please wait " + ReadConfigTeleport.getTeleportCooldown() + " seconds."));
 					
 					Sponge.getScheduler().createTaskBuilder().execute(() -> {
-						if(RRRP2.teleportingPlayers.contains(playerz.getID()))
-						{
+						if(RRRP2.teleportingPlayers.contains(playerz.getID())) {
 							if (player.getLocation().getExtent().getUniqueId().equals(location.getExtent().getUniqueId()))
 								player.setLocation(location);
 							else
@@ -54,25 +51,19 @@ public class BackCommand extends CommandExecutorBase
 							RRRP2.teleportingPlayers.remove(playerz.getID());
 						}
 					}).delay(ReadConfigTeleport.getTeleportCooldown(), TimeUnit.SECONDS).name("RRRP2 - Back Timer").submit(Sponge.getGame().getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
-				}
-				else
-				{
+				} else {
 					if (player.getLocation().getExtent().getUniqueId().equals(location.getExtent().getUniqueId()))
 						player.setLocation(location);
 					else
 						player.transferToWorld(location.getExtent().getUniqueId(), location.getPosition());
 					src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleported to Last Location."));
 				}
-			}
-			else
-			{
+			} else {
 				src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Last death location not found!"));
 				return CommandResult.empty();
 			}
 			playerz.setLastlocation(lastLocation);
-		}
-		else
-		{
+		} else {
 			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /back!"));
 		}
 		

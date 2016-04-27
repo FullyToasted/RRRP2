@@ -29,11 +29,11 @@ public class GetMailCommand extends CommandExecutorBase
 	/**
 	 * Explanation of what command does and if complicated how to do it
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> OID = ctx.<Integer> getOne("mailID");
 		
+		//lists the mail a player has received. Mail is never truly deleted
 		if(src instanceof Player) {
 			Player player = (Player) src;
 			int pid = Database.getID(player.getUniqueId().toString());

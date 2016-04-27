@@ -57,11 +57,14 @@ public class SmiteCommand extends CommandExecutorBase
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<Player> optionalTarget = ctx.<Player> getOne("player");
 
+		//creates a lightning entity at the location looked at or at a player
 		if (!optionalTarget.isPresent()) {
 			
 			if (src instanceof Player || src instanceof ConsoleSource) {
 				if(src instanceof Player) {
 					Player player = (Player) src;
+					
+				    //block ray hits block
 					BlockRay<World> playerBlockRay = BlockRay.from(player).blockLimit(350).build();
 					BlockRayHit<World> finalHitRay = null;
 
@@ -76,6 +79,7 @@ public class SmiteCommand extends CommandExecutorBase
 
 					Location<World> lightningLocation = null;
 
+					//if ray hit nothing then use player location
 					if (finalHitRay == null) {
 						lightningLocation = player.getLocation();
 					}
@@ -90,9 +94,7 @@ public class SmiteCommand extends CommandExecutorBase
 			else {
 				src.sendMessage(Text.of(TextColors.RED, "Error! Must be an in-game player to use /lightning!"));
 			}
-		}
-		else
-		{
+		} else {
 			Player player = optionalTarget.get();
 			Location<World> playerLocation = player.getLocation();
 			spawnEntity(playerLocation, src);
@@ -103,7 +105,12 @@ public class SmiteCommand extends CommandExecutorBase
 		return CommandResult.success();
 	}
 
-	public void spawnEntity(Location<World> location, CommandSource src)
+	/**
+	 * spawns lightning entity at location
+	 * @param location to spawn at
+	 * @param src who executed command
+	 */
+	private void spawnEntity(Location<World> location, CommandSource src)
 	{
 		Extent extent = location.getExtent();
 		Optional<Entity> optional = extent.createEntity(EntityTypes.LIGHTNING, location.getPosition());

@@ -20,8 +20,8 @@ import org.spongepowered.api.world.World;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
-public class BlockDBCommand extends CommandExecutorBase
-{
+public class BlockDBCommand extends CommandExecutorBase {
+	//Gives block information to the player
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		if (src instanceof Player) {
 			Player player = (Player) src;

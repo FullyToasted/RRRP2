@@ -68,9 +68,9 @@ public class SkullCommand extends CommandExecutorBase
 				// Put it in inventory
 				source.getInventory().offer(skullStack);
 
-				source.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Created skull of player's head. Enjoy!"));
+				source.sendMessage(Text.of(TextColors.GOLD, "Created skull of player's head. Enjoy!"));
 			} else {
-				src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /skull!"));
+				src.sendMessage(Text.of(TextColors.RED, "Error! Must be an in-game player to use /skull!"));
 			}
 		}
 
@@ -81,7 +81,7 @@ public class SkullCommand extends CommandExecutorBase
 	@Override
 	public String[] getAliases()
 	{
-		return new String[] { "skull", "playerskull", "head" };
+		return new String[] { "skull", "playerskull", "head", "Skull" };
 	}
 
 	@Nonnull

@@ -19,7 +19,7 @@ public class CompassCommand extends CommandExecutorBase
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		if (src instanceof Player) {
 			Player player = (Player) src;
-			// Credit to kenzierocks for the following line. =D
+			// Gives the direction the player is looking
 			String direction = Direction.getClosest(player.getTransform().getRotationAsQuaternion().getDirection()).toString();
 			player.sendMessage(Text.of(TextColors.GOLD, "You are facing: ", TextColors.GRAY, direction));
 		} else {

@@ -16,6 +16,8 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
+import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class SeenCommand extends CommandExecutorBase{
 	
@@ -31,10 +33,11 @@ public class SeenCommand extends CommandExecutorBase{
 				id = Database.getPlayerIDfromUsername(player.get());
 				username = player.get();
 			} else if (pPlayer.isPresent()) {
-				id = Database.getPlayerIDfromUsername(pPlayer.get().getName());
+				id = Registry.getOnlinePlayers().getIDfromUsername(pPlayer.get().getName());
 				username = pPlayer.get().getName();
 			}
-			String lastSeen = Database.getLastSeen(id);
+			PlayerCore players = Registry.getOnlinePlayers().getPlayer(id);
+			String lastSeen = players.getLastseen();
 			if(id == 0) {
 				src.sendMessage(Text.of(TextColors.RED, "This player has never joined this server"));
 				return CommandResult.empty();

@@ -21,8 +21,8 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class HelpOPCommand extends CommandExecutorBase{
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		//send a ticket to the ingame ticket system
 		Optional<String> themsg = ctx.<String> getOne("Msg");
 		if(src instanceof Player) {
 			if(themsg.isPresent()) {

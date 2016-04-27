@@ -37,7 +37,7 @@ public class TreeCommand extends CommandExecutorBase {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<Integer> treeType = ctx.<Integer> getOne("Tree Type");
-		
+		//same as other tree command but smaller trees
 		if(src instanceof Player) {
 			if(treeType.isPresent()) {
 				random = new Random();
@@ -48,12 +48,10 @@ public class TreeCommand extends CommandExecutorBase {
 				BlockRay<World> playerBlockRay = BlockRay.from(player).blockLimit(350).build();
 				BlockRayHit<World> finalHitRay = null;
 
-				while (playerBlockRay.hasNext())
-				{
+				while (playerBlockRay.hasNext()) {
 					BlockRayHit<World> currentHitRay = playerBlockRay.next();
 
-					if (!world.getBlockType(currentHitRay.getBlockPosition()).equals(BlockTypes.AIR))
-					{
+					if (!world.getBlockType(currentHitRay.getBlockPosition()).equals(BlockTypes.AIR)) {
 						finalHitRay = currentHitRay;
 						break;
 					} 
@@ -61,12 +59,9 @@ public class TreeCommand extends CommandExecutorBase {
 
 				Location<World> treeLocation = null;
 
-				if (finalHitRay == null)
-				{
+				if (finalHitRay == null) {
 					treeLocation = player.getLocation();
-				}
-				else
-				{
+				} else {
 					treeLocation = finalHitRay.getLocation();
 				}
 				

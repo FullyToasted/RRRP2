@@ -29,12 +29,14 @@ public class FeedCommand extends CommandExecutorBase
 		if (src instanceof Player) {
 			Player player = (Player) src;
 
+			//checks to feed others
 			if (player.hasPermission("rrr.cheat.feed.others") && p.isPresent()) {
 				Player recipient = p.get();
 				Optional<FoodData> foodData = recipient.getOrCreate(FoodData.class);
 
 				if (foodData.isPresent()) {
 					FoodData newData = foodData.get().set(Keys.FOOD_LEVEL, 20);
+					//feeds player
 					recipient.offer(newData);
 					player.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Fed " + recipient.getName()));
 					recipient.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "You have been fed by " + player.getName()));
@@ -42,9 +44,7 @@ public class FeedCommand extends CommandExecutorBase
 				else {
 					src.sendMessage(Text.of(TextColors.RED, "Error! Player " + player.getName() + " does not have FoodData!"));
 				}
-			}
-			else if (p.isPresent()) {
-				
+			} else if (p.isPresent()) {
 				player.sendMessage(Text.of(TextColors.RED, "Error! You do not have permission to feed other players!"));
 				
 			} else {
@@ -52,15 +52,14 @@ public class FeedCommand extends CommandExecutorBase
 
 				if (foodData.isPresent()) {
 					FoodData newData = foodData.get().set(Keys.FOOD_LEVEL, 20);
+					//feeds player
 					player.offer(newData);
 					player.sendMessage(Text.of(TextColors.GOLD, "You have been fed."));
-				}
-				else {
+				} else {
 					src.sendMessage(Text.of(TextColors.RED, "Error! Player " + player.getName() + " does not have FoodData!"));
 				}
 			}
-		}
-		else if (src instanceof ConsoleSource || src instanceof CommandBlockSource) {
+		} else if (src instanceof ConsoleSource || src instanceof CommandBlockSource) {
 			src.sendMessage(Text.of(TextColors.RED, "ERROR! Must be an in-game player to use /feed!"));
 		}
 		
@@ -71,7 +70,7 @@ public class FeedCommand extends CommandExecutorBase
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "feed" };
+		return new String[] { "feed", "Feed" };
 	}
 
 	@Nonnull

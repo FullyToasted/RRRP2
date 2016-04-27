@@ -26,9 +26,11 @@ public class SudoCommand extends CommandExecutorBase
 		Game game = Registry.getGame();
 		Player p = ctx.<Player> getOne("player").get();
 		String command = ctx.<String> getOne("command").get();
+		
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			CommandManager cmdService = game.getCommandManager();
+			
 			if (!(p.hasPermission("rrr.admin.sudoexempt"))) {
 				cmdService.process(p, command);
 				player.sendMessage(Text.of(TextColors.GOLD, "Forcing " + p.getName() + " to run /" + command));
@@ -37,6 +39,7 @@ public class SudoCommand extends CommandExecutorBase
 				player.sendMessage(Text.of(TextColors.RED, "ERROR! This player is exempt from sudo!"));
 				return CommandResult.empty();
 			}
+			
 		} else if (src instanceof ConsoleSource || src instanceof CommandBlockSource) {
 			src.sendMessage(Text.of(TextColors.RED, "Error! Must be an in-game player to use /sudo!"));
 			return CommandResult.empty();

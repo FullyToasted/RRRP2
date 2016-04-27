@@ -32,6 +32,7 @@ public class WeatherCommand extends CommandExecutorBase
 			int numWeather = weatherNum.get();
 			Weather weather;
 			
+			//sets weather of selected world to Weather object
 			if (numWeather == 1) {
 				weather = Weathers.CLEAR;
 				player.sendMessage(Text.of(TextColors.GOLD, "Changing weather to ", TextColors.GRAY, "sunny."));

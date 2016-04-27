@@ -22,6 +22,7 @@ public class ServerStopCommand extends CommandExecutorBase
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
+		//optional stop message to show players
 		Optional<String> stopMessage = ctx.<String> getOne("reason");
 
 		if (stopMessage.isPresent()) {
