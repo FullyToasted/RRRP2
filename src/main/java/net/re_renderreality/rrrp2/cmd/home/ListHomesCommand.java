@@ -18,10 +18,9 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class ListHomesCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+public class ListHomesCommand extends CommandExecutorBase {
+	//Lists all of a player's current homes
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		if (src instanceof Player) {
 			Player source = (Player) src;
 			ArrayList<HomeCore> homes = Database.getHomesByPlayer(source);

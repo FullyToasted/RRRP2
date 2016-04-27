@@ -15,6 +15,7 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class RulesCommand extends CommandExecutorBase{
 	
+	//Sends a list of the server rules to the player
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 	
 		Utilities.getPaginationService().builder()

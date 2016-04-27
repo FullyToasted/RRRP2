@@ -16,8 +16,9 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigAnnouncements;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
-public class AnnouncementsRemoveCommand extends CommandExecutorBase{
+public class AnnouncementsRemoveCommand extends CommandExecutorBase {
 	
+	//remove an exsisting announcement
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 	
 		Optional<Integer> theNum = ctx.<Integer> getOne("Announcement Number");

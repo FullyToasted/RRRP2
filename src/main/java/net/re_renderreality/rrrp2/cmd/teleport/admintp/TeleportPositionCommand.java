@@ -22,10 +22,9 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class TeleportPositionCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+//tp to a coorinate
+public class TeleportPositionCommand extends CommandExecutorBase {
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		Player source = (Player) src;
 		Optional<Player> p = ctx.<Player> getOne("player");
 		Optional<String> optionalWorld = ctx.<String> getOne("world");
@@ -56,8 +55,7 @@ public class TeleportPositionCommand extends CommandExecutorBase
 				src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleported player " + p.get().getName() + " to " + x + "," + y + "," + z + "."));
 				p.get().sendMessage(Text.of(TextColors.GOLD, "You have been teleported by " + src.getName()));
 			}
-		}
-		else {
+		} else {
 			if (src instanceof Player) {
 				Player player = (Player) src;
 				int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(player.getName());

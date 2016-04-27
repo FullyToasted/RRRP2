@@ -17,10 +17,8 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
-public class SetHomeCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+public class SetHomeCommand extends CommandExecutorBase {
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<String> homeName = ctx.<String> getOne("homeName");
 		
 		if(src instanceof Player) {
@@ -41,7 +39,8 @@ public class SetHomeCommand extends CommandExecutorBase
 			}
 			int nextID = Database.findNextID("homes");
 			int playerHomeCount = Database.getPlayerHomeCount(source.getName());
-				
+			
+			//Makes sure that a player doesn't set more homes then they are allowed
 			int possible = 0;
 			for(int i = 1; i <= 100; i++) {
 				if(source.hasPermission("rrr.general.homes." + i)) {
@@ -49,6 +48,7 @@ public class SetHomeCommand extends CommandExecutorBase
 				}
 			}
 
+			//show this if player has reached their max limit on homes
 			if(!source.hasPermission("rrr.general.unlimitedhomes") && possible <= playerHomeCount) {
 				if(possible == 1) {
 					source.sendMessage(Text.builder("You are only allowed to own " + possible + " home").color(TextColors.RED).build());
@@ -57,6 +57,8 @@ public class SetHomeCommand extends CommandExecutorBase
 				}
 				return CommandResult.empty();
 			}
+			
+			//creates and inserts homecore object
 			home.setID(nextID);
 			home.setUsername(source.getName());
 			home.setUUID(source.getUniqueId().toString());

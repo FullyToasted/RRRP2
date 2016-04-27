@@ -30,7 +30,7 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 public class SpawnCommand extends CommandExecutorBase {
 	
 	/**
-	 * Lists a Pagination Generated help page for either all commands or the specified subcategory
+	 * TPs a player to the server spawn
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		if (src instanceof Player)
@@ -46,8 +46,8 @@ public class SpawnCommand extends CommandExecutorBase {
 				return CommandResult.empty();
 			}
 		
-			if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("rrrp2.teleport.cooldown.override"))
-			{
+			//tp cooldown if enabled
+			if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("rrrp2.teleport.cooldown.override")) {
 				RRRP2.teleportingPlayers.add(playerz.getID());
 				src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleporting to Spawn. Please wait " + ReadConfigTeleport.getTeleportCooldown() + " seconds."));
 				

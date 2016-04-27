@@ -18,6 +18,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
 public class AnnouncementsModifyCommand extends CommandExecutorBase{
 	
+	//modify an existing announcement
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 	
 		Optional<Integer> theID = ctx.<Integer> getOne("ID");

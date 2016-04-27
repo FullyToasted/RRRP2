@@ -29,13 +29,12 @@ import net.re_renderreality.rrrp2.database.core.HomeCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class ManageHomesCommand extends CommandExecutorBase
-{
+public class ManageHomesCommand extends CommandExecutorBase {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * Can do any of multiple things. For admins to manipulate other peoples' homes'
+	 * TODO: Allow players to search for peoples home by playername
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> hID = ctx.<Integer> getOne("HomeID");
 		
@@ -46,7 +45,7 @@ public class ManageHomesCommand extends CommandExecutorBase
 				int command = oCommand.get();
 				if(command == 1 || command == 2 || command == 3) {
 					HomeCore home = Database.getHomeByID(hID.get());
-					if(command == 1) {
+					if(command == 1) { //goto another players home
 						players.setLastlocationUpdate(Utilities.convertLocation(player));
 
 						if (player.getWorld().getName().equals(home.getWorld())) {
@@ -58,11 +57,11 @@ public class ManageHomesCommand extends CommandExecutorBase
 						}
 						player.sendMessage(Text.of(TextColors.GOLD, "Teleported to Home: ", TextColors.GRAY, home.getID()));
 						return CommandResult.success();						
-					} else if (command == 2) {
+					} else if (command == 2) { //delete someone elses home
 						home.delete();
 						src.sendMessage(Text.of(TextColors.GOLD, "Home deleted sucessfully!"));
 						return CommandResult.success();
-					} else if (command == 3) {
+					} else if (command == 3) { //inspect the details of a home
 						src.sendMessage(home.toText());
 						return CommandResult.success();
 					}
@@ -84,6 +83,9 @@ public class ManageHomesCommand extends CommandExecutorBase
 		return CommandResult.empty();
 	}
 	
+	/**
+	 * @param src player executing the command
+	 */
 	private void getHomesList(Player src) {
 		ArrayList<HomeCore> homes = new ArrayList<HomeCore>();
 		homes = Database.getHomes();
@@ -98,6 +100,10 @@ public class ManageHomesCommand extends CommandExecutorBase
 		sendPagination(completedText, src);
 	}
 
+	/**
+	 * @param home homecore to convert to TPable object
+	 * @return Transform<World> for player to be sent to
+	 */
 	private Transform<World> getHomeTransform(HomeCore home) {
 		World world = Sponge.getServer().getWorld(home.getWorld()).orElse(null);
 		double x = home.getX();
@@ -115,6 +121,10 @@ public class ManageHomesCommand extends CommandExecutorBase
 	
 	}
 	
+	/**
+	 * @param homes List of homes to send to player
+	 * @param src player to send list to
+	 */
 	private void sendPagination(Iterable<Text> homes, CommandSource src) {
 		Utilities.getPaginationService().builder()
 	    	.title(Text.of(TextColors.GOLD, "Homes"))

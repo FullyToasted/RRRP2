@@ -22,6 +22,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
+//force tp to a player
 public class TeleportCommand extends CommandExecutorBase {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		Optional<Player> optionalPlayer = ctx.<Player> getOne("player");

@@ -19,6 +19,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
+//force tp a player to src
 public class TeleportHereCommand extends CommandExecutorBase {
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {

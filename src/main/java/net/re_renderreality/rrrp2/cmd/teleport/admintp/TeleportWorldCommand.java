@@ -28,8 +28,9 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class TeleportWorldCommand extends CommandExecutorBase {
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException 
-	{
+	//teleports to a world if spawn is set there nether, overworld, and end are hard coded
+	//TODO Organize/Improve this system
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<String> optionalWorld = ctx.<String> getOne("world");
 		Optional<String> optionalWarp = ctx.<String> getOne("World");
 		Player p = (Player) src;
@@ -77,8 +78,8 @@ public class TeleportWorldCommand extends CommandExecutorBase {
 		return CommandResult.empty();
 	}
 			
-	
-	public void tp(World world, Player p) {
+	//
+	private void tp(World world, Player p) {
 		Transform<World> spawn = ReadConfigSpawn.getSpawn(world.getName());
 		if(!(spawn == null)) {
 			if (!p.getWorld().getUniqueId().equals(world.getUniqueId())) {

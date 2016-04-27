@@ -16,8 +16,9 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigRules;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
-public class RulesModifyCommand extends CommandExecutorBase{
+public class RulesModifyCommand extends CommandExecutorBase {
 	
+	//Modify an existing rule
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 	
 		Optional<Integer> theID = ctx.<Integer> getOne("ID");

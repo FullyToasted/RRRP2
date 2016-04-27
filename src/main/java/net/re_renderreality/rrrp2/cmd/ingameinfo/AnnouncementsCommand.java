@@ -15,6 +15,7 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class AnnouncementsCommand extends CommandExecutorBase{
 	
+	//send announcements to player
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 	
 		Utilities.getPaginationService().builder()

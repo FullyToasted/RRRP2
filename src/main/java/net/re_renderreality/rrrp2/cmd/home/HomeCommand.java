@@ -30,10 +30,9 @@ import net.re_renderreality.rrrp2.database.core.HomeCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class HomeCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+public class HomeCommand extends CommandExecutorBase {
+	//creates a new HomeCore and inserts it into database
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<String> homeName = ctx.<String> getOne("homename");
 		Player source = (Player) src;
 		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(source.getName());

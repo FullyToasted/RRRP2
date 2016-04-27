@@ -12,13 +12,11 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigMOTD;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
-public class MOTDCommand extends CommandExecutorBase
-{
+public class MOTDCommand extends CommandExecutorBase {
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * Display the MOTD
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		String uniquePlayerCount = ReadConfigMOTD.getMOTD();
 		uniquePlayerCount = uniquePlayerCount.replaceAll("%player", src.getName());
 		Text newMessage = TextSerializers.formattingCode('&').deserialize(uniquePlayerCount);

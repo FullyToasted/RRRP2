@@ -18,10 +18,9 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
 
-public class DeleteHomeCommand extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+public class DeleteHomeCommand extends CommandExecutorBase {
+	//gets a HomeCore and deletes it
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		Optional<String> homeName = ctx.<String> getOne("homename");
 		Player source = (Player) src;
 		
@@ -62,6 +61,7 @@ public class DeleteHomeCommand extends CommandExecutorBase
 				.description(Text.of("Removes Players Home"))
 				.permission("rrr.general.home")
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("homename")))))
-				.executor(this).build();
+				.executor(this)
+				.build();
 	}
 }

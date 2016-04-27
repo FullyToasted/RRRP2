@@ -17,18 +17,15 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 public class SetSpawnCommand extends CommandExecutorBase {
 	
 	/**
-	 * Lists a Pagination Generated help page for either all commands or the specified subcategory
+	 * Sets spawn for the world the player is in. Spawns set in other other worlds can be tp'd to using /tpworld
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
-		if (src instanceof Player)
-		{
+		if (src instanceof Player) {
 			Player player = (Player) src;
 			ReadConfigSpawn.setSpawn(player.getWorld().getName(), player.getTransform(), player.getWorld().getName());
 			player.getWorld().getProperties().setSpawnPosition(player.getLocation().getBlockPosition());
 			src.sendMessage(Text.of(TextColors.GREEN, "Success: ", TextColors.YELLOW, "Spawn set."));
-		}
-		else
-		{
+		} else {
 			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /setspawn!"));
 		}
 

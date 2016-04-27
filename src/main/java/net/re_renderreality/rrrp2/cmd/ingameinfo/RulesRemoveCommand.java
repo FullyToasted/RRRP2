@@ -18,6 +18,7 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 
 public class RulesRemoveCommand extends CommandExecutorBase{
 	
+	//remove an existing rule
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 	
 		Optional<Integer> theNum = ctx.<Integer> getOne("Rule Number");
