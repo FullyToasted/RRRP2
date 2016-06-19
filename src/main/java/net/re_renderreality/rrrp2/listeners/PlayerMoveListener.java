@@ -3,7 +3,7 @@ package net.re_renderreality.rrrp2.listeners;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.entity.DisplaceEntityEvent;
+import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -17,7 +17,7 @@ import net.re_renderreality.rrrp2.utils.AFK;
 
 public class PlayerMoveListener {
 	@Listener
-	public void onPlayerMove(DisplaceEntityEvent event, @First Player player)
+	public void onPlayerMove(MoveEntityEvent event, @First Player player)
 	{
 		PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 		if (ReadConfigTeleport.isTeleportCooldownEnabled() && RRRP2.teleportingPlayers.contains(playercore.getID())) {

@@ -6,6 +6,7 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.data.DataQuery;
+import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
@@ -21,8 +22,8 @@ public class ItemDBCommand extends CommandExecutorBase {
 		if (src instanceof Player) {
 			Player player = (Player) src;
 
-			if (player.getItemInHand().isPresent()) {
-				ItemStack itemInHand = player.getItemInHand().get();
+			if (player.getItemInHand(HandTypes.MAIN_HAND).isPresent()) {
+				ItemStack itemInHand = player.getItemInHand(HandTypes.MAIN_HAND).get();
 				player.sendMessage(Text.of(TextColors.GOLD, "The ID of the item in your hand is: ", TextColors.GRAY, itemInHand.getItem().getName()));
 				player.sendMessage(Text.of(TextColors.GOLD, "The meta of the item in your hand is: ", TextColors.GRAY, itemInHand.toContainer().get(DataQuery.of("UnsafeDamage")).get().toString()));
 			} else {

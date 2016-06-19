@@ -3,7 +3,7 @@ package net.re_renderreality.rrrp2.listeners;
 import org.spongepowered.api.entity.Transform;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.entity.DisplaceEntityEvent;
+import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -15,7 +15,7 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class PlayerDisplacementListener {
 	@Listener
-	public void onPlayerMove(DisplaceEntityEvent.TargetPlayer event, @First Player player )
+	public void onPlayerMove(MoveEntityEvent event, @First Player player )
 	{
 		PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 		

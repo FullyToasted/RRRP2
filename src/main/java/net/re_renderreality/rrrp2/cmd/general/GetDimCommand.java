@@ -22,7 +22,7 @@ public class GetDimCommand extends CommandExecutorBase
 	{
 		if(src instanceof Player) {
 			Player player = (Player) src;
-			src.sendMessage(Text.of(TextColors.GOLD, "You are currently in the: ", TextColors.GRAY, player.getWorld().getDimension().getName()));
+			src.sendMessage(Text.of(TextColors.GOLD, "You are currently in the: ", TextColors.GRAY, player.getWorld().getDimension().getContext().getName()));
 			return CommandResult.success();
 		} else {
 			src.sendMessage(Text.of(TextColors.RED, "Error! Only a Player can Execute this command."));

@@ -38,7 +38,7 @@ configurations {
 }
 
 dependencies {
-    compile "org.spongepowered:spongeapi:4.0.3"
+    compile "org.spongepowered:spongeapi:5.0.0-SNAPSHOT"
     shade "com.github.Flibio:Updatifier:v1.4.0:api"
 }
 
@@ -64,13 +64,6 @@ uploadArchives {
     }
 }
 
-def getGitHash() {
-    def process = 'git rev-parse --short HEAD'.execute()
-    process.waitFor()
-    return '-' + (process.exitValue() ? 'unknown' : process.text.trim())
-}
-
 blossom {
     replaceToken '@project.version@', project.version, 'src/main/java/io/github/ReRenderReality/RRRP2/PluginInfo.java'
-    replaceToken '@project.informativeVersion@', project.version + getGitHash(), 'src/main/java/io/github/ReRenderReality/RRRP2/PluginInfo.java'
 }

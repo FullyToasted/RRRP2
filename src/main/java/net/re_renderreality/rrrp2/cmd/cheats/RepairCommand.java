@@ -8,6 +8,7 @@ import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.source.CommandBlockSource;
 import org.spongepowered.api.command.source.ConsoleSource;
 import org.spongepowered.api.command.spec.CommandSpec;
+import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -30,13 +31,13 @@ public class RepairCommand extends CommandExecutorBase
 			Player player = (Player) src;
 
 			//repairs by creating a new item with same specifications
-			if (player.getItemInHand().isPresent()) {
-				ItemStack itemInHand = player.getItemInHand().get();
+			if (player.getItemInHand(HandTypes.MAIN_HAND).isPresent()) {
+				ItemStack itemInHand = player.getItemInHand(HandTypes.MAIN_HAND).get();
 				ItemType itemType = itemInHand.getItem();
 				int quantity = itemInHand.getQuantity();
 				ItemStack newItemStack = itemStackBuilder.quantity(quantity).itemType(itemType).build();
-				player.setItemInHand(null);
-				player.setItemInHand(newItemStack);
+				player.setItemInHand(HandTypes.MAIN_HAND, null);
+				player.setItemInHand(HandTypes.MAIN_HAND, newItemStack);
 				player.sendMessage(Text.of(TextColors.GOLD, "Repaired item(s) in your hand."));
 			} else {
 				src.sendMessage(Text.of(TextColors.RED, "ERROR! You must be holding something to repair!"));

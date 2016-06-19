@@ -14,7 +14,7 @@ public class RightClickEntityListener {
 	{
 		if(RRRP2.jockey.contains(player)) {
 			Entity target = event.getTargetEntity();
-			target.setPassenger(player);
+			target.setVehicle(player);
 		}		
 	}
 }
