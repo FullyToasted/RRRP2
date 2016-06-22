@@ -26,20 +26,23 @@ public class ReplyCommand extends CommandExecutorBase
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		Optional<String> message = ctx.<String> getOne("Message");
+		Optional<String> messages = ctx.<String> getOne("Message");
 		
 		Logger l = Registry.getLogger();
-		if (message.isPresent()) {
+		if (messages.isPresent()) {
+			String message = messages.get();
 			if(RRRP2.recentlyMessaged.containsKey(src.getName())) {
 				CommandSource target = RRRP2.recentlyMessaged.get(src.getName());
-				target.sendMessage(Text.of(TextColors.GRAY, target.getName() + " whsipers to you: " + message));
-				target.sendMessage(Text.of(TextColors.GRAY, "You whisper to " + target.getName() + message));
+				target.sendMessage(Text.of(TextColors.GRAY, src.getName() + " whsipers to you: " + message));
+				src.sendMessage(Text.of(TextColors.GRAY, "You whisper to " + target.getName() + ": "+ message));
 
 				RRRP2.recentlyMessaged.put(target.getName(), target);
 				
 				l.info(target.getName() + " whsipers to " + target.getName() + ": " + message);
 				for(Player p : RRRP2.socialSpy) {
-					p.sendMessage(Text.of(TextColors.GRAY, target.getName() + " whsipers to " + target.getName() + ": " + message));
+					if(!(p.getName().equals(src.getName()))) {
+						p.sendMessage(Text.of(TextColors.GRAY, target.getName() + " whsipers to " + target.getName() + ": " + message));
+					}
 				}
 				return CommandResult.success();
 			} else {

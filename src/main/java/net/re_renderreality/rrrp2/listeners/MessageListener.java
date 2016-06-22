@@ -22,13 +22,16 @@ public class MessageListener {
 		String message = event.getMessage();
 		
 		target.sendMessage(Text.of(TextColors.GRAY, source.getName() + " whsipers to you: " + message));
-		source.sendMessage(Text.of(TextColors.GRAY, "You whisper to " + target.getName() + message));
+		source.sendMessage(Text.of(TextColors.GRAY, "You whisper to " + target.getName() + ": " + message));
 
 		RRRP2.recentlyMessaged.put(target.getName(), source);
 		
 		l.info(target.getName() + " whsipers to " + target.getName() + ": " + message);
 		for(Player p : RRRP2.socialSpy) {
-			p.sendMessage(Text.of(TextColors.GRAY, source.getName() + " whsipers to " + target.getName() + ": " + message));
+			
+			if(!(p.getName().equals(source.getName()))) {
+				p.sendMessage(Text.of(TextColors.GRAY, source.getName() + " whsipers to " + target.getName() + ": " + message));
+			}
 		}
 	}
 }
