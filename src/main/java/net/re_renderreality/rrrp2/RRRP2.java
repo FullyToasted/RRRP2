@@ -22,6 +22,7 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
+import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -59,9 +60,11 @@ public class RRRP2{
 	public static RRRP2 plugin;
 	public static HashMap<Integer, SurroundedPlayer> surrounded = new HashMap<Integer, SurroundedPlayer>();
 	public static HashMap<Integer, AFK> afkList = new HashMap<>();
+	public static HashMap<String, CommandSource> recentlyMessaged = new HashMap<>();
 	public static List<Player> recentlyJoined = Lists.newArrayList();
 	public static List<Player> onePunch = Lists.newArrayList();
 	public static List<Player> jockey = Lists.newArrayList();
+	public static List<Player> socialSpy = Lists.newArrayList();
 	public static Set<Integer> teleportingPlayers = Sets.newHashSet();
 	public static List<TPInvitation> pendingInvites = Lists.newArrayList();
 	public static Set<Integer> frozenPlayers = Sets.newHashSet();
@@ -156,7 +159,7 @@ public class RRRP2{
 		CommandLoader.registerCommands();
 		
 		getGame().getEventManager().registerListeners(this, new PlayerJoinListener());
-		getGame().getEventManager().registerListeners(this, new MailListener());
+		getGame().getEventManager().registerListeners(this, new MessageListener());
 		getGame().getEventManager().registerListeners(this, new PlayerLeftEvent());
 		getGame().getEventManager().registerListeners(this, new DamageListener());
 		getGame().getEventManager().registerListeners(this, new DeathListener());

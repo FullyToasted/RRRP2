@@ -1,26 +1,28 @@
 package net.re_renderreality.rrrp2.events;
 
+import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Cancellable;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.NamedCause;
 import org.spongepowered.api.event.impl.AbstractEvent;
 
-public class MailSendEvent extends AbstractEvent implements Cancellable
+public class MessageEvent extends AbstractEvent implements Cancellable
 {
 	private boolean cancelled = false;
 
-	private Player sender;
+	private CommandSource sender;
+	private Player target;
 	private int senderID;
 	private int receiverID;
-	private String recipient;
+	private String recipientName;
 	private String message;
 	
 	//Getters
 	/**
 	 * @return sender of the mail
 	 */
-	public Player getSender() {
+	public CommandSource getSender() {
 		return sender;
 	}
 
@@ -28,7 +30,7 @@ public class MailSendEvent extends AbstractEvent implements Cancellable
 	 * @return name of the recepient of the mail
 	 */
 	public String getRecipient() {
-		return recipient;
+		return recipientName;
 	}
 	
 	/**
@@ -60,6 +62,13 @@ public class MailSendEvent extends AbstractEvent implements Cancellable
 	{
 		return message;
 	}
+	
+	/**
+	 * @return PlayerCore of the target
+	 */
+	public Player getTarget() {
+		return this.target;
+	}
 
 	//Setters
 	/**
@@ -77,10 +86,11 @@ public class MailSendEvent extends AbstractEvent implements Cancellable
 	 * 
 	 * @TODO: Implement IDs
 	 */
-	public MailSendEvent(Player sender, String recipientName, String message)
+	public MessageEvent(CommandSource sender, Player target, String message)
 	{
 		this.sender = sender;
-		this.recipient = recipientName;
+		this.target = target;
+		this.recipientName = target.getName();
 		this.message = message;
 	}
 
