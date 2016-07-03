@@ -21,6 +21,40 @@ import net.re_renderreality.rrrp2.database.Registry;
 
 public class WeatherLockCommand extends CommandExecutorBase
 {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/lockweather";
+		description = "Locks World's weather";
+		perm = "rrr.cheat.weatherlock";
+		useage = "/weatherlock";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	private Game game = Registry.getGame();
 
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
@@ -53,14 +87,21 @@ public class WeatherLockCommand extends CommandExecutorBase
 	{
 		return new String[] { "lockweather", "killweather" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("LockWeather Command"))
-			.permission("rrr.cheat.lockweather")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("name"))))
 			.executor(this).build();
 	}

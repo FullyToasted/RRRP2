@@ -16,9 +16,43 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
-public class ServerStopCommand extends CommandExecutorBase
-{
+public class ServerStopCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/stop";
+		description = "Stops the sever";
+		perm = "rrr.admin.stop";
+		useage = "/stop";
+		notes = "Will need console access to turn server back on";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
@@ -41,14 +75,21 @@ public class ServerStopCommand extends CommandExecutorBase
 	{
 		return new String[] { "stop", "shutdown" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Stop Command"))
-			.permission("rrr.admin.stop")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.onlyOne(GenericArguments.optional(GenericArguments.remainingJoinedStrings(Text.of("reason")))))
 			.executor(this)
 			.build();

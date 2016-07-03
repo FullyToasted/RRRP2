@@ -13,9 +13,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
-public class OnePunchCommand extends CommandExecutorBase
-{
+public class OnePunchCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/onepunch";
+		description = "Gives your fist a strong knockback";
+		perm = "rrr.cheat.onepunch";
+		useage = "/onepunch";
+		notes = "Still a WIP";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	/**
 	 * Adds player to one punch user list
 	 */
@@ -39,13 +72,20 @@ public class OnePunchCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "OnePunch", "onepunch", "Onepunch", "onePunch"};
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("One Punch Command"))
-				.permission("rrr.cheat.onepunch")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this)
 				.build();
 	}

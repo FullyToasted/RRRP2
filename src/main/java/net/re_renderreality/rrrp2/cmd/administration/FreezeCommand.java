@@ -18,6 +18,40 @@ import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class FreezeCommand extends AsyncCommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/Freeze";
+		description = "";
+		perm = "rrr.";
+		useage = "/";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	@Override
 	public void executeAsync(CommandSource src, CommandContext ctx) {
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
@@ -78,6 +112,13 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 	@Override
 	public String[] getAliases() {
 		return new String[] { "freeze", "Freeze" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
 	}
 
 	@Nonnull

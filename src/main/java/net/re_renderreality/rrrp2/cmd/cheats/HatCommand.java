@@ -16,9 +16,43 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
-public class HatCommand extends CommandExecutorBase
-{
+public class HatCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/hat";
+		description = "Puts the item in your hand on your head";
+		perm = "rrr.cheat.hat";
+		useage = "/hat";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException 
 	{
@@ -54,13 +88,20 @@ public class HatCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "hat", "Hat" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Hat Command"))
-				.permission("rrr.cheat.hat")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this)
 				.build();
 	}

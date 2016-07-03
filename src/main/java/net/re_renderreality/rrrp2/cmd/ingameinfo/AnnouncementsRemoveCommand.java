@@ -15,8 +15,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigAnnouncements;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class AnnouncementsRemoveCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/removeannouncement";
+		description = "Request a player to teleort to your location";
+		perm = "rrr.admin.announcement";
+		useage = "/removeannouncement <ID>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	//remove an exsisting announcement
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
@@ -41,6 +75,13 @@ public class AnnouncementsRemoveCommand extends CommandExecutorBase {
 	@Override
 	public String[] getAliases() {
 		return new String[] { "RemoveAnnouncement", "removeAnnouncement", "Removeannouncement", "removeannouncement"};
+	}	
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
 	}
 	
 	@Nonnull
@@ -48,8 +89,8 @@ public class AnnouncementsRemoveCommand extends CommandExecutorBase {
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Displays Server Rules"))
-			.permission("rrr.admin.announcements.remove")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.onlyOne(GenericArguments.integer(Text.of("Announcement Number"))))
 			.executor(this)
 			.build();

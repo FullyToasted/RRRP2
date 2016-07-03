@@ -24,8 +24,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class EnchantCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/enchant";
+		description = "Enchants the item in your hand";
+		perm = "rrr.cheat.enchant";
+		useage = "/enchant (target) <level> <enchantment>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<Player> target = ctx.<Player> getOne("target");
@@ -144,6 +178,13 @@ public class EnchantCommand extends CommandExecutorBase {
 	{
 		return new String[] { "enchant", "ench", "Enchant" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
@@ -151,8 +192,8 @@ public class EnchantCommand extends CommandExecutorBase {
 	{
 		return CommandSpec
 			.builder()
-			.description(Text.of("Enchant Command"))
-			.permission("rrr.cheat.enchant.self")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.seq(GenericArguments.optional(GenericArguments.player(Text.of("target"))), 
 											GenericArguments.onlyOne(GenericArguments.integer(Text.of("level")))), 
 											GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("enchantment"))))

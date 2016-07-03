@@ -37,6 +37,40 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class BanCommand extends CommandExecutorBase
 {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/ban";
+		description = "Ban a player and prevent them from accessing the server";
+		perm = "rrr.admin.ban";
+		useage = "/ban <player> <reason>";
+		notes = "Must supply a reason for the ban!";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Game game = RRRP2.getRRRP2().getGame();
@@ -121,6 +155,13 @@ public class BanCommand extends CommandExecutorBase
 	{
 		return new String[] { "Ban", "ban" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
 
 	@Nonnull
 	@Override
@@ -128,8 +169,8 @@ public class BanCommand extends CommandExecutorBase
 	{
 		return CommandSpec
 			.builder()
-			.description(Text.of("Ban Command"))
-			.permission("rrr.admin.ban")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 						GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))),
 						GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("reason")))))

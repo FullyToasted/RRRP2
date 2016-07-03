@@ -19,6 +19,7 @@ import org.spongepowered.api.util.blockray.BlockRayHit;
 import org.spongepowered.api.world.World;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class BlockDBCommand extends CommandExecutorBase {
 	//Gives block information to the player
@@ -57,6 +58,13 @@ public class BlockDBCommand extends CommandExecutorBase {
 	public String[] getAliases()
 	{
 		return new String[] { "blockinfo" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

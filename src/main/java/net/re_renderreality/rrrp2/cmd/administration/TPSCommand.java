@@ -13,11 +13,45 @@ import org.spongepowered.api.world.World;
 import com.google.common.collect.Iterables;
 
 import net.re_renderreality.rrrp2.backend.AsyncCommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
-public class TPSCommand extends AsyncCommandExecutorBase
-{
+public class TPSCommand extends AsyncCommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/tps";
+		description = "Find the sever's tickrate";
+		perm = "rrr.admin.tps";
+		useage = "/tps";
+		notes = "This is not the most acurate method in the world";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
-	 * Explanation of what command does and if complicated how to do it
+	 * Display the sever TPS
 	 */
 	public void executeAsync(CommandSource src, CommandContext ctx)
 	{
@@ -46,11 +80,18 @@ public class TPSCommand extends AsyncCommandExecutorBase
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Displays the server TPS and other useful information"))
-			.permission("rrr.admin.tps")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

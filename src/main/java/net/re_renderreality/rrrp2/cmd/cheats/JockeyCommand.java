@@ -13,9 +13,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
-public class JockeyCommand extends CommandExecutorBase
-{
+public class JockeyCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/jockey";
+		description = "Allows you to ride other entities";
+		perm = "rrr.cheat.jockey";
+		useage = "/jockey";
+		notes = "Right click an entity";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	/**
 	 * Allows players to jockey other entities. This just adds a user to the active jockeyer list
 	 */
@@ -39,13 +72,20 @@ public class JockeyCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "jockey", "Jockey"};
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Jockey Command"))
-				.permission("rrr.cheat.jockey")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this)
 				.build();
 	}

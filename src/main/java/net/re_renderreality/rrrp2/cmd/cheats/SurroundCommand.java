@@ -24,10 +24,44 @@ import org.spongepowered.api.world.World;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.utils.SurroundedPlayer;
 
 public class SurroundCommand extends CommandExecutorBase {
-
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/surround";
+		description = "Surrounds a player with the chosen block";
+		perm = "rrr.cheat.surround";
+		useage = "/surround <Player> (Block Type)";
+		notes = "Use /free to free";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<Player> player = ctx.<Player> getOne("Player");
@@ -93,6 +127,13 @@ public class SurroundCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec() {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("Dirt", 1);
@@ -101,8 +142,8 @@ public class SurroundCommand extends CommandExecutorBase {
 		map.put("Obsidian", 4);
 		map.put("Bedrock", 5);
 		return CommandSpec.builder()
-				.description(Text.of("Surrounds target in chosen block"))
-				.permission("rrr.cheat.surround")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("Player"))),
 						GenericArguments.optional(GenericArguments.choices(Text.of("Block"), map)))
 				.executor(this).build();

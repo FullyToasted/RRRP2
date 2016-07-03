@@ -37,6 +37,8 @@ import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.NamedCause;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnCause;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnTypes;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.util.blockray.BlockRay;
@@ -46,14 +48,48 @@ import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.extent.Extent;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
 //TODO: Update the command failed message
-public class SmiteCommand extends CommandExecutorBase
-{
+public class SmiteCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/smite";
+		description = "Smite someone with the power of Thor";
+		perm = "rrr.cheat.smite";
+		useage = "/smite (target)";
+		notes = "If no target strikes where you look";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<Player> optionalTarget = ctx.<Player> getOne("player");
 
@@ -115,7 +151,7 @@ public class SmiteCommand extends CommandExecutorBase
 		Extent extent = location.getExtent();
 		Optional<Entity> optional = extent.createEntity(EntityTypes.LIGHTNING, location.getPosition());
 		Entity lightning = optional.get();
-		extent.spawnEntity(lightning, Cause.of(NamedCause.source(src)));
+		extent.spawnEntity(lightning, Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	}
 
 	@Nonnull
@@ -124,6 +160,13 @@ public class SmiteCommand extends CommandExecutorBase
 	{
 		return new String[] { "Zeus", "Smite", "Lightning", "smite", "Lightning" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
@@ -131,8 +174,8 @@ public class SmiteCommand extends CommandExecutorBase
 	{
 		return CommandSpec
 				.builder()
-				.description(Text.of("Calls upon the power of Zeus"))
-				.permission("rrr.cheat.lightning")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 				.executor(this).build();
 	}

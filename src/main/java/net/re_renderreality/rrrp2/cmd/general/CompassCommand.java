@@ -1,6 +1,7 @@
 package net.re_renderreality.rrrp2.cmd.general;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -33,6 +34,13 @@ public class CompassCommand extends CommandExecutorBase
 	@Override
 	public String[] getAliases() {
 		return new String[] { "direction", "compass" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

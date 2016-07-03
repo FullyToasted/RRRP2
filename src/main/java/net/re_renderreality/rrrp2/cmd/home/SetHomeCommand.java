@@ -16,8 +16,43 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
 public class SetHomeCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/sethome";
+		description = "Sets a player home";
+		perm = "rrr.general.home";
+		useage = "/sethome (name)";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<String> homeName = ctx.<String> getOne("homeName");
 		
@@ -88,14 +123,21 @@ public class SetHomeCommand extends CommandExecutorBase {
 	{
 		return new String[] { "SetHome", "Sethome", "setHome", "sethome" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-				.description(Text.of("Set's Players Home"))
-				.permission("rrr.general.home")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("homeName")))))
 				.executor(this).build();
 	}

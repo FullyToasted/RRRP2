@@ -19,11 +19,46 @@ import org.spongepowered.api.world.World;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 //force tp to a player
 public class TeleportCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/tpo";
+		description = "Force a teleport";
+		perm = "rrr.admin.tpo";
+		useage = "/tpo <player2tp> (target)";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		Optional<Player> optionalPlayer = ctx.<Player> getOne("player");
 		Optional<Player> optionalTarget = ctx.<Player> getOne("target");
@@ -120,6 +155,13 @@ public class TeleportCommand extends CommandExecutorBase {
 	public String[] getAliases() {
 		return new String[] { "tpo", "TPO" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Teleport;
+	}
 
 	@Nonnull
 	@Override
@@ -127,8 +169,8 @@ public class TeleportCommand extends CommandExecutorBase {
 	{
 		return CommandSpec
 			.builder()
-			.description(Text.of("Teleport Operator Command"))
-			.permission("rrr.admin.tpo")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.firstParsing(
 				GenericArguments.seq(
 					GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))), 

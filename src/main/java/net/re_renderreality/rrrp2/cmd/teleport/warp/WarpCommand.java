@@ -1,4 +1,4 @@
-package net.re_renderreality.rrrp2.cmd.teleport.warp;
+ package net.re_renderreality.rrrp2.cmd.teleport.warp;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -26,12 +26,46 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigTeleport;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.database.core.WarpCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class WarpCommand extends CommandExecutorBase
-{
+public class WarpCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/warp";
+		description = "Warp to a warp point";
+		perm = "rrr.teleport.warp";
+		useage = "/warp <warppoint>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<String> warpName = ctx.<String> getOne("warpname");
@@ -128,11 +162,18 @@ public class WarpCommand extends CommandExecutorBase
 
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Teleport;
+	}
+
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-				.description(Text.of("Set's Players Home"))
-				.permission("rrr.general.warp.use")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("warpname"))))
 				.executor(this)
 				.build();

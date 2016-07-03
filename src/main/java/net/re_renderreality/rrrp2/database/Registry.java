@@ -12,6 +12,7 @@ public class Registry {
 	private static Logger logger;
 	private static RRRP2 plugin;
 	private static OnlinePlayers onlinePlayers;
+	public enum helpCategory { Admin, Cheater, General, Teleport, Misc}
 	
 	/**
 	 * @param g Game to set registered Game object to.

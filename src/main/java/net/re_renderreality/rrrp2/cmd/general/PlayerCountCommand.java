@@ -11,6 +11,7 @@ import org.spongepowered.api.text.Text;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class PlayerCountCommand extends CommandExecutorBase {
 	/**
@@ -27,6 +28,13 @@ public class PlayerCountCommand extends CommandExecutorBase {
 	@Override
 	public String[] getAliases() {
 		return new String[] { "PlayerCount", "Unique", "playercount" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 	
 	@Nonnull

@@ -27,6 +27,39 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class TeleportWorldCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/tpworld";
+		description = "Request a player to teleort to your location";
+		perm = "rrr.admin.tpworld";
+		useage = "/tpworld <Overworld|Nether|End|DimName>";
+		notes = "Spawn must be set in this dimmension for the command to work";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	//teleports to a world if spawn is set there nether, overworld, and end are hard coded
 	//TODO Organize/Improve this system
@@ -105,6 +138,13 @@ public class TeleportWorldCommand extends CommandExecutorBase {
 	public String[] getAliases() {
 		return new String[] { "TPworld", "TPWorld", "tpWorld", "tpWorld" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Teleport;
+	}
 
 	@Nonnull
 	@Override
@@ -119,8 +159,8 @@ public class TeleportWorldCommand extends CommandExecutorBase {
 			}
 		}
 		return CommandSpec.builder()
-				.description(Text.of("TP All Operator Command"))
-				.permission("rrr.admin.tpworld")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.firstParsing(GenericArguments.choices(Text.of("World"), map),
 								GenericArguments.onlyOne(GenericArguments.string(Text.of("world")))))
 				.executor(this)

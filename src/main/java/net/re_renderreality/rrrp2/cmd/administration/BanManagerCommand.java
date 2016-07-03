@@ -32,7 +32,40 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class BanManagerCommand extends CommandExecutorBase {
-
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/banmanager";
+		description = "Manage the server banlist from one command";
+		perm = "rrr.admin.manager.bans";
+		useage = "/banmanager (command) (banID)";
+		notes = "Get more information by using /banmanager";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
@@ -135,14 +168,21 @@ public class BanManagerCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("view", 1);
 		map.put("delete", 2);
 		return CommandSpec.builder()
-			.description(Text.of("Read Mail that has been received"))
-			.permission("rrr.admin.ban.manage")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("Command"), map)),
 						GenericArguments.optional(GenericArguments.integer(Text.of("BanID"))))
 			.executor(this)

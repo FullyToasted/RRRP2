@@ -17,8 +17,43 @@ import org.spongepowered.api.world.World;
 import com.flowpowered.math.vector.Vector3i;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class TopCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/top";
+		description = "Teleports you to the highest safe y-coordinate";
+		perm = "rrr.teleport.top";
+		useage = "/top";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	//tps a player up as high as possible
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		if (src instanceof Player) {
@@ -51,14 +86,21 @@ public class TopCommand extends CommandExecutorBase {
 	{
 		return new String[] { "top", "Top" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Teleport;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("God Command"))
-			.permission("rrr.teleport.top")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

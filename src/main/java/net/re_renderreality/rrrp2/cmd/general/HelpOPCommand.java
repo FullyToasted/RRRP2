@@ -51,6 +51,13 @@ public class HelpOPCommand extends CommandExecutorBase{
 	public String[] getAliases() {
 		return new String[] { "HelpOP", "helpOP", "helpop", "Helpop"};
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
+	}
 
 	@Nonnull
 	@Override

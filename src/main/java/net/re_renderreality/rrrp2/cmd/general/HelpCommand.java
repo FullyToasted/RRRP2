@@ -1,11 +1,13 @@
 package net.re_renderreality.rrrp2.cmd.general;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import org.spongepowered.api.Server;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -13,8 +15,10 @@ import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
@@ -57,7 +61,7 @@ public class HelpCommand extends CommandExecutorBase {
 			} else if (s.get() == 5) {
 				Utilities.getPaginationService().builder()
 					.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.getHelp().various)
+		        	.contents(HelpGenerator.getHelp().misc)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 		        	.sendTo(src);
 				return CommandResult.success();
@@ -79,10 +83,69 @@ public class HelpCommand extends CommandExecutorBase {
 		}
 	}
 	
+	private ArrayList<Text> admin() {
+		ArrayList<Text> array = new ArrayList<Text>();
+		array.add(Text.of(TextColors.GOLD, "                              Admin Commands"));
+		array.add(Text.of("-----------------------------------------------------"));
+		array.add(Text.of("/ClearEntities: Clears all the entities of the specified type"));
+		array.add(Text.of("/ListEntities: List all entities currently loaded"));
+		array.add(Text.of("/TPS: Show useful information about the server performance"));
+		array.add(Text.of("/Whois: Gives all known information about player"));
+		array.add(Text.of(" "));
+		return array;
+	}
+	
+	private ArrayList<Text> cheat() {
+		ArrayList<Text> array = new ArrayList<Text>();
+		array.add(Text.of("                            Cheater Commands =)"));
+		array.add(Text.of("-----------------------------------------------------"));
+		array.add(Text.of("/Heal: Heals self or can heal another player"));
+		array.add(Text.of("/Fly: Enable fly mode for self or another player"));
+		
+		array.add(Text.of(" "));
+		return array;
+	}
+	
+	private ArrayList<Text> general() {
+		ArrayList<Text> array = new ArrayList<Text>();
+		array.add(Text.of("                            General Commands"));
+		array.add(Text.of("-----------------------------------------------------"));
+		array.add(Text.of("/Help: Help Command"));
+		
+		
+		array.add(Text.of(" "));
+		return array;
+	}
+	
+	private ArrayList<Text> teleport() {
+		ArrayList<Text> array = new ArrayList<Text>();
+		array.add(Text.of("                             Teleport Commands"));
+		array.add(Text.of("-----------------------------------------------------"));
+		
+		array.add(Text.of(" "));
+		return array;
+	}
+	
+	private ArrayList<Text> misc() {
+		ArrayList<Text> array = new ArrayList<Text>();
+		array.add(Text.of("                              Other Commands"));
+		array.add(Text.of("-----------------------------------------------------"));
+		
+		array.add(Text.of(" "));
+		return array;
+	}
+	
 	@Nonnull
 	@Override
 	public String[] getAliases() {
 		return new String[] { "RRR", "rrr", "RRRcommands" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 	
 	@Nonnull

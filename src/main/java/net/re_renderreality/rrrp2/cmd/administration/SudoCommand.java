@@ -19,8 +19,41 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
-public class SudoCommand extends CommandExecutorBase
-{
+public class SudoCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/sudo";
+		description = "Execute a command as someone else";
+		perm = "rrr.admin.sudo";
+		useage = "/sudo <player> <command>";
+		notes = "Need a slash before the command ex: /suicide";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Game game = Registry.getGame();
@@ -52,14 +85,21 @@ public class SudoCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "sudo" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec
 				.builder()
-				.description(Text.of("Sudo Command"))
-				.permission("rrr.admin.sudo")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.seq(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 							GenericArguments.remainingJoinedStrings(Text.of("command"))))
 				.executor(this)

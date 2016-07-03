@@ -8,6 +8,7 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
 import net.re_renderreality.rrrp2.RRRP2;
@@ -29,6 +30,13 @@ public class PlayerJoinListener
 	@Listener
 	public void onPlayerJoin(ClientConnectionEvent.Join event) {
 		Player player = event.getTargetEntity();
+		
+		//TEMP
+		player.sendMessage(Text.builder().append(Text.of("Test")).onHover(TextActions.showText(Text.of("Description"))).onClick(TextActions.executeCallback( c -> { 
+			c.sendMessage(Text.of("Hello"));
+		})).build());
+		//TEMP
+		
 		String uuid = player.getUniqueId().toString();
 		int id = Database.getIDFromDatabase(uuid);
 		

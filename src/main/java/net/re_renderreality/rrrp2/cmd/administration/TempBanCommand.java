@@ -37,7 +37,39 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class TempBanCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
 	
+	protected void setLocalVariables() {
+		name = "/tempban";
+		description = "Ban a player from the server temporarily";
+		perm = "rrr.admin.tempban";
+		useage = "/tempban <player> <time dd:hh:mm:ss> <reason>";
+		notes = "Must provide a tempban reason!";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Game game = RRRP2.getRRRP2().getGame();
@@ -124,6 +156,13 @@ public class TempBanCommand extends CommandExecutorBase {
 	{
 		return new String[] { "Tempban", "TempBan", "tempban", "tempBan"};
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
 
 	@Nonnull
 	@Override
@@ -131,8 +170,8 @@ public class TempBanCommand extends CommandExecutorBase {
 	{
 		return CommandSpec
 			.builder()
-			.description(Text.of("TempBan Command"))
-			.permission("rrr.admin.tempban")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 					GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))), 
 					GenericArguments.onlyOne(GenericArguments.string(Text.of("dd:hh:mm:ss"))), 

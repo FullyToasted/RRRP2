@@ -14,11 +14,45 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 import javax.annotation.Nonnull;
 
-public class MoreCommand extends CommandExecutorBase
-{
+public class MoreCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/more";
+		description = "Gives you a full stack of the item in your hand";
+		perm = "rrr.cheat.more";
+		useage = "/more";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		if (src instanceof Player) {
@@ -43,13 +77,20 @@ public class MoreCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "more", "stack", "More", "more" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("More Command"))
-				.permission("rrr.cheat.more")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this)
 				.build();
 	}

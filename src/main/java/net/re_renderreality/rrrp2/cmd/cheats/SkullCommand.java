@@ -22,8 +22,41 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
-public class SkullCommand extends CommandExecutorBase
-{
+public class SkullCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/skull";
+		description = "Gives you the skull of the player you want";
+		perm = "rrr.cheat.skull";
+		useage = "/skull <name>";
+		notes = "Works on players who havent joined the server";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	private Game game = Registry.getGame();
 
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
@@ -83,14 +116,21 @@ public class SkullCommand extends CommandExecutorBase
 	{
 		return new String[] { "skull", "playerskull", "head", "Skull" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Skull Command"))
-			.permission("rrr.cheat.skull")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 			.executor(this)
 			.build();

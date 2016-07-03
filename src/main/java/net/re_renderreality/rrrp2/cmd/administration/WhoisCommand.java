@@ -25,7 +25,40 @@ import org.spongepowered.api.text.format.TextColors;
  * @author Avarai/Poesidon2012
  * @note Plans: Write Complete Command with refrences to the Database.
  */
-public class WhoisCommand extends CommandExecutorBase{
+public class WhoisCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/whois";
+		description = "Gives detailed information on the desired player";
+		perm = "rrr.admin.whois";
+		useage = "/whois <player>";
+		notes = "Works with player offline";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
@@ -117,10 +150,17 @@ public class WhoisCommand extends CommandExecutorBase{
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Gives detailed information about the requested player"))
-				.permission("rrr.general.whois.self")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 						GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))))
 				.executor(this).build();

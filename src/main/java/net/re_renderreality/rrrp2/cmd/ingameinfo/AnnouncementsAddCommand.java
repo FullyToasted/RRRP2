@@ -15,8 +15,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigAnnouncements;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class AnnouncementsAddCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/addannouncement";
+		description = "Adds a sever announcement";
+		perm = "rrr.admin.announcements";
+		useage = "/addannouncements <announcement>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	//Add an announcement
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
@@ -39,11 +73,18 @@ public class AnnouncementsAddCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Add Server Announcement"))
-			.permission("rrr.admin.announcements.add")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.remainingJoinedStrings(Text.of("Announcement")))
 			.executor(this)
 			.build();

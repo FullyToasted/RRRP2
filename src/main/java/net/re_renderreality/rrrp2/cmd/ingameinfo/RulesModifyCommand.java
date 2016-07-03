@@ -15,8 +15,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigRules;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class RulesModifyCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/modifyrule";
+		description = "Modify an existing server rule";
+		perm = "rrr.admin.rules";
+		useage = "/modifyrule <ID> <rule>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	//Modify an existing rule
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
@@ -42,11 +76,18 @@ public class RulesModifyCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Modifies Server Rules"))
-			.permission("rrr.admin.rules.modify")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.onlyOne(GenericArguments.integer(Text.of("ID"))),GenericArguments.remainingJoinedStrings(Text.of("Rule")))
 			.executor(this)
 			.build();

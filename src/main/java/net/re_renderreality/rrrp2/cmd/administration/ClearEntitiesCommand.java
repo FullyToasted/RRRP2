@@ -16,6 +16,39 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.world.World;
 
 public class ClearEntitiesCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/clearentities";
+		description = "Clears all entities of the specified type";
+		perm = "rrr.admin.clearentities";
+		useage = "/clearentities <entityname>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	/**
 	 * arg = entity to be removed by the command.
@@ -51,13 +84,20 @@ public class ClearEntitiesCommand extends CommandExecutorBase {
 	public String[] getAliases() {
 		return new String[] { "clearentities", "centities", "ClearEntities", "Clearentities", "clearEntities", "cEntities", "CEntities", "ClearEntity", "clearentity", "Clearentity" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Clears all the entities of the specified type"))
-				.permission("rrr.admin.clearentities")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("Entity")))))
 				.executor(this).build();
 	}

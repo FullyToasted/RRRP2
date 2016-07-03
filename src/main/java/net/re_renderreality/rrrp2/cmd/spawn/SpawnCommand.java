@@ -28,6 +28,39 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class SpawnCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/spawn";
+		description = "Teleport to spawn";
+		perm = "rrr.general.spawn";
+		useage = "/spawn";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	/**
 	 * TPs a player to the server spawn
@@ -92,11 +125,18 @@ public class SpawnCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Brings Player to the set spawnpoint"))
-			.permission("rrr.general.spawn")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

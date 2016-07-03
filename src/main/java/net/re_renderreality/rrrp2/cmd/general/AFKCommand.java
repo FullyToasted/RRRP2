@@ -14,6 +14,7 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.AFK;
 
@@ -47,6 +48,13 @@ public class AFKCommand extends CommandExecutorBase
 	public String[] getAliases()
 	{
 		return new String[] { "afk", "AFK" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

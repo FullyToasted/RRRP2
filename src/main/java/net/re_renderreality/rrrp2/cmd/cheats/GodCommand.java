@@ -20,7 +20,40 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
-public class GodCommand extends CommandExecutorBase{
+public class GodCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/god";
+		description = "Makes the target invincible";
+		perm = "rrr.cheat.god.self";
+		useage = "/god (target)";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		//This command just toggles a player core boolean actual functionality is in the damage listener
@@ -67,14 +100,21 @@ public class GodCommand extends CommandExecutorBase{
 	{
 		return new String[] { "god", "GOD", "God" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("God Command"))
-			.permission("rrr.cheat.god.self")
+			.description(Text.of("description"))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 			.executor(this)
 			.build();

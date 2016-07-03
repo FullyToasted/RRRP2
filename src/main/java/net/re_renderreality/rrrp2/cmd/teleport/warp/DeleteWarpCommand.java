@@ -16,10 +16,44 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.WarpCore;
 
-public class DeleteWarpCommand extends CommandExecutorBase
-{
+public class DeleteWarpCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/deletewarp";
+		description = "Deletes a warp location";
+		perm = "rrr.admin.warp";
+		useage = "/deletewarp <WarpName>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<String> warpName = ctx.<String> getOne("warpname");
@@ -56,11 +90,18 @@ public class DeleteWarpCommand extends CommandExecutorBase
 
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Teleport;
+	}
+
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-				.description(Text.of("Removes Players Home"))
-				.permission("rrr.admin.warp.delete")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("warpname")))))
 				.executor(this).build();
 	}

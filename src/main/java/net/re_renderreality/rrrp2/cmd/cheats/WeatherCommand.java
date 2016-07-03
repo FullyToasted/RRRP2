@@ -19,9 +19,43 @@ import org.spongepowered.api.world.weather.Weather;
 import org.spongepowered.api.world.weather.Weathers;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
-public class WeatherCommand extends CommandExecutorBase
-{
+public class WeatherCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/weather";
+		description = "Alters the World's weather";
+		perm = "rrr.cheat.weather";
+		useage = "/weather <clear|rain|storm> (duration)";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Optional<Integer> weatherNum = ctx.<Integer> getOne("weather");
@@ -65,6 +99,13 @@ public class WeatherCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "weather", "weather" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
@@ -75,8 +116,8 @@ public class WeatherCommand extends CommandExecutorBase
 		map.put("storm", 3);
 		return CommandSpec
 				.builder()
-				.description(Text.of("Weather Command"))
-				.permission("rrr.cheat.weather")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.seq(GenericArguments.choices(Text.of("Command"), map)),
 							GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.integer(Text.of("duration")))))
 				.executor(this)

@@ -13,8 +13,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigSpawn;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class SetSpawnCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/setspawn";
+		description = "Sets the spawn of a world";
+		perm = "rrr.admin.setspawn";
+		useage = "/setspawn";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	/**
 	 * Sets spawn for the world the player is in. Spawns set in other other worlds can be tp'd to using /tpworld
@@ -36,6 +70,13 @@ public class SetSpawnCommand extends CommandExecutorBase {
 	@Override
 	public String[] getAliases() {
 		return new String[] { "SetSpawn", "setspawn", "setSpawn" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
 	}
 	
 	@Nonnull

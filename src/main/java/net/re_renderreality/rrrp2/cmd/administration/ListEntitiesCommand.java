@@ -17,7 +17,39 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.world.World;
 
 public class ListEntitiesCommand extends CommandExecutorBase{
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
 	
+	protected void setLocalVariables() {
+		name = "/listentities";
+		description = "List all entities loaded on the server";
+		perm = "rrr.admin.listentities";
+		useage = "/listentities";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	/**
 	 * Lists all entities currently loaded on the server
 	 */
@@ -45,11 +77,18 @@ public class ListEntitiesCommand extends CommandExecutorBase{
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Lists all Entities on the Server"))
-			.permission("rrr.admin.listentities")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

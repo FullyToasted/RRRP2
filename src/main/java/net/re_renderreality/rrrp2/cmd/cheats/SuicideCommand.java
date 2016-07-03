@@ -16,7 +16,40 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
 public class SuicideCommand extends CommandExecutorBase {
-
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/suicide";
+		description = "It tickles";
+		perm = "rrr.cheat.suicide";
+		useage = "/suicide";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 		if(src instanceof Player) {
@@ -38,14 +71,21 @@ public class SuicideCommand extends CommandExecutorBase {
 	public String[] getAliases() {
 		return new String[] { "suicide", "Suicide" };
 	}
-
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
+	
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Give up and commit suicide"))
-			.permission("rrr.cheat.suicide")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

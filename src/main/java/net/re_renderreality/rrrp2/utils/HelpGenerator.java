@@ -1,96 +1,74 @@
 package net.re_renderreality.rrrp2.utils;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.action.TextActions;
+import org.spongepowered.api.text.format.TextColors;
+
+import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.backend.CommandLoader;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class HelpGenerator {
-	public Iterable<Text> admin;
-	public Iterable<Text> cheat;
-	public Iterable<Text> general;
-	public Iterable<Text> teleport;
-	public Iterable<Text> various;
-	public Iterable<Text> all;
+	public HashMap<String, Text> admin;
+	public HashMap<String, Text> cheat;
+	public HashMap<String, Text> general;
+	public HashMap<String, Text> teleport;
+	public HashMap<String, Text> misc;
+	public HashMap<String, Text> all;
 	//creates a HelpGenerator instance
 	private static HelpGenerator help = new HelpGenerator();
-
-	private HelpGenerator()
-	{
+	
+	private static HashSet<? extends CommandExecutorBase> commands = CommandLoader.getLoadedCommands();
+	
+	private HelpGenerator()	{
 		;
 	}
 	//Dont Change Spacing on first two Text lines of each function
 	//Keep space-Text at end of command list
-	private ArrayList<Text> admin() {
-		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                              Admin Commands"));
-		array.add(Text.of("-----------------------------------------------------"));
-		array.add(Text.of("/ClearEntities: Clears all the entities of the specified type"));
-		array.add(Text.of("/ListEntities: List all entities currently loaded"));
-		array.add(Text.of("/TPS: Show useful information about the server performance"));
-		array.add(Text.of("/Whois: Gives all known information about player"));
-		array.add(Text.of(" "));
-		return array;
-	}
 	
-	private ArrayList<Text> cheat() {
-		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                            Cheater Commands =)"));
-		array.add(Text.of("-----------------------------------------------------"));
-		array.add(Text.of("/Heal: Heals self or can heal another player"));
-		array.add(Text.of("/Fly: Enable fly mode for self or another player"));
-		
-		array.add(Text.of(" "));
-		return array;
-	}
-	
-	private ArrayList<Text> general() {
-		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                            General Commands"));
-		array.add(Text.of("-----------------------------------------------------"));
-		array.add(Text.of("/Help: Help Command"));
-		
-		
-		array.add(Text.of(" "));
-		return array;
-	}
-	
-	private ArrayList<Text> teleport() {
-		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                             Teleport Commands"));
-		array.add(Text.of("-----------------------------------------------------"));
-		
-		array.add(Text.of(" "));
-		return array;
-	}
-	
-	private ArrayList<Text> various() {
-		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                              Other Commands"));
-		array.add(Text.of("-----------------------------------------------------"));
-		
-		array.add(Text.of(" "));
-		return array;
-	}
 	
 	/**
 	 * populates the help generator object
 	 */
 	public void populate() {
-		admin = admin();
-		cheat = cheat();
-		general = general();
-		teleport = teleport();
-		various = various();
-		
-		ArrayList<Text> allcommands = new ArrayList<Text>();
-		allcommands.addAll(admin());
-		allcommands.addAll(cheat());
-		allcommands.addAll(general());
-		allcommands.addAll(teleport());
-		allcommands.addAll(various());
-		all = allcommands;
-		
-		return ;
+		commands.forEach(cmd -> {
+			String name = cmd.getName();
+			String perm = cmd.getPerm();
+			String useage = cmd.getUseage();
+			String description = cmd.getDescription();
+			String note = cmd.getNotes();
+			
+			Text t = Text.builder().append(Text.of(TextColors.GOLD, name)).onHover(TextActions.showText(Text.of(TextColors.DARK_GRAY, description))).onClick(TextActions.executeCallback( c -> { 
+				if(note == null) {
+					c.sendMessage(Text.of(TextColors.GOLD, "Command Name: ", TextColors.DARK_GRAY, name,
+										TextColors.GOLD, "\nDescription: ", TextColors.DARK_GRAY, description,
+										TextColors.GOLD, "\nPermission: ", TextColors.DARK_GRAY, perm,
+										TextColors.GOLD, "\nUseage: ", TextColors.DARK_GRAY, useage,
+										TextColors.GOLD, "\nCommand Name: ", TextColors.DARK_GRAY, name));
+				} else {
+					c.sendMessage(Text.of(TextColors.GOLD, "Command Name: ", TextColors.DARK_GRAY, name,
+							TextColors.GOLD, "\nDescription: ", TextColors.DARK_GRAY, description,
+							TextColors.GOLD, "\nPermission: ", TextColors.DARK_GRAY, perm,
+							TextColors.GOLD, "\nUseage: ", TextColors.DARK_GRAY, useage,
+							TextColors.GOLD, "\nCommand Name: ", TextColors.DARK_GRAY, name,
+							TextColors.RED, "\nNOTE: " + note));
+				}
+			})).build();
+			if(cmd.getHelpCategory() == Registry.helpCategory.Admin) {
+				admin.put(perm, t);
+			} else if (cmd.getHelpCategory() == Registry.helpCategory.Cheater) {
+				cheat.put(perm, t);
+			} else if (cmd.getHelpCategory() == Registry.helpCategory.General) {
+				general.put(perm, t);
+			} else if (cmd.getHelpCategory() == Registry.helpCategory.Teleport) {
+				teleport.put(perm, t);
+			} else if (cmd.getHelpCategory() == Registry.helpCategory.Misc) {
+				misc.put(perm, t);
+			} 		
+		});
 	}
 	
 	/**

@@ -23,6 +23,39 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class TeleportAllCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/tpall";
+		description = "Force TP all players to you";
+		perm = "rrr.admin.tpall";
+		useage = "/tpall";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	//force tp all players on server to src
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
@@ -71,13 +104,20 @@ public class TeleportAllCommand extends CommandExecutorBase {
 	public String[] getAliases() {
 		return new String[] { "TPall", "TPAll", "tpAll", "tpall" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Teleport;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("TP All Operator Command"))
-				.permission("rrr.admin.tpall.self")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player")))))
 				.executor(this)
 				.build();

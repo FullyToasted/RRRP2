@@ -1,5 +1,6 @@
 package net.re_renderreality.rrrp2.listeners;
 
+import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -15,9 +16,12 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigChat;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class ChatListener {
+	
+	private static boolean lastmessage = false;
 
 	@Listener(order = Order.PRE)
 	public void onMessage(MessageChannelEvent.Chat event)
@@ -26,7 +30,7 @@ public class ChatListener {
 		int id = Database.getIDFromDatabase(player.getUniqueId().toString());
 		PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
 		//String message = event.getMessage().toPlain();
-		
+		 
 		StringBuilder original = new StringBuilder(event.getMessage().toPlain());
 	
 		Subject subject = player.getContainingCollection().get(player.getIdentifier());
@@ -63,31 +67,57 @@ public class ChatListener {
 		if (suffixInOriginal.length() != 0)
 			suffixInOriginal = suffixInOriginal.substring(0, suffixInOriginal.length() - 1) + ReadConfigChat.getLastCharactar();
 	
-		if (!player.hasPermission("rrr.color.chat.use"))
-		{
-			event.setMessage(Text.builder()
-				.append(TextSerializers.formattingCode('&').deserialize(prefixInOriginal))
-				.append(Text.builder().append(TextSerializers.formattingCode('&').deserialize(playerName)).color(nameColor).build())
-				.append(TextSerializers.formattingCode('&').deserialize(suffixInOriginal))
-				.append(Text.of(TextColors.RESET))
-				.append(Text.of(restOfOriginal))
-				.onClick(event.getMessage().getClickAction().orElse(null))
-				.style(event.getMessage().getStyle())
-				.onHover(event.getMessage().getHoverAction().orElse(null))
-				.build());
+		Logger l = Registry.getLogger();
+		l.info(lastmessage + " " + restOfOriginal);
+		if (!player.hasPermission("rrr.color.chat.use")) {
+			if(lastmessage) {
+				event.setMessage(Text.builder()
+					.append(TextSerializers.formattingCode('&').deserialize(prefixInOriginal))
+					.append(Text.builder().append(TextSerializers.formattingCode('&').deserialize(playerName)).color(nameColor).build())
+					.append(TextSerializers.formattingCode('&').deserialize(suffixInOriginal))
+					.append(Text.of(TextColors.RESET))
+					.append(Text.of(restOfOriginal))
+					.onClick(event.getMessage().getClickAction().orElse(null))
+					.style(event.getMessage().getStyle())
+					.onHover(event.getMessage().getHoverAction().orElse(null))
+					.build());
+			} else {
+				event.setMessage(Text.builder()
+					.append(TextSerializers.formattingCode('&').deserialize(prefixInOriginal))
+					.append(Text.builder().append(TextSerializers.formattingCode('&').deserialize(playerName)).color(nameColor).build())
+					.append(TextSerializers.formattingCode('&').deserialize(suffixInOriginal))
+					.append(Text.of(TextColors.GRAY))
+					.append(Text.builder().append(Text.of(restOfOriginal)).color(TextColors.GRAY).build())
+					.onClick(event.getMessage().getClickAction().orElse(null))
+					.style(event.getMessage().getStyle())
+					.onHover(event.getMessage().getHoverAction().orElse(null))
+					.build());
+			}
+		} else {
+			if(lastmessage) {
+				event.setMessage(Text.builder()
+					.append(TextSerializers.formattingCode('&').deserialize(prefixInOriginal))
+					.append(Text.builder().append(TextSerializers.formattingCode('&').deserialize(playerName)).color(nameColor).build())
+					.append(TextSerializers.formattingCode('&').deserialize(suffixInOriginal))
+					.append(Text.of(TextColors.RESET))
+					.append(TextSerializers.formattingCode('&').deserialize(restOfOriginal))
+					.onClick(event.getMessage().getClickAction().orElse(null))
+					.style(event.getMessage().getStyle())
+					.onHover(event.getMessage().getHoverAction().orElse(null))
+					.build());
+			} else {
+				event.setMessage(Text.builder()
+					.append(TextSerializers.formattingCode('&').deserialize(prefixInOriginal))
+					.append(Text.builder().append(TextSerializers.formattingCode('&').deserialize(playerName)).color(nameColor).build())
+					.append(TextSerializers.formattingCode('&').deserialize(suffixInOriginal))
+					.append(Text.of(TextColors.GRAY))
+					.append(Text.builder().append(TextSerializers.formattingCode('&').deserialize(restOfOriginal)).color(TextColors.GRAY).build())
+					.onClick(event.getMessage().getClickAction().orElse(null))
+					.style(event.getMessage().getStyle())
+					.onHover(event.getMessage().getHoverAction().orElse(null))
+					.build());
+			}
 		}
-		else
-		{
-			event.setMessage(Text.builder()
-				.append(TextSerializers.formattingCode('&').deserialize(prefixInOriginal))
-				.append(Text.builder().append(TextSerializers.formattingCode('&').deserialize(playerName)).color(nameColor).build())
-				.append(TextSerializers.formattingCode('&').deserialize(suffixInOriginal))
-				.append(Text.of(TextColors.RESET))
-				.append(TextSerializers.formattingCode('&').deserialize(restOfOriginal))
-				.onClick(event.getMessage().getClickAction().orElse(null))
-				.style(event.getMessage().getStyle())
-				.onHover(event.getMessage().getHoverAction().orElse(null))
-				.build());
-		}
+		lastmessage = !lastmessage;
 	}
 }

@@ -29,8 +29,42 @@ import org.spongepowered.api.world.gen.type.BiomeTreeTypes;
 import com.flowpowered.math.vector.Vector3i;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class BigTreeCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/bigtree";
+		description = "Spawns a large tree where you are looking";
+		perm = "rrr.cheat.bigtree";
+		useage = "/bigtree <treetype>";
+		notes = "Currently works sometimes maybe...";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	private PopulatorObject populate;
 	private Random random;
@@ -144,6 +178,13 @@ public class BigTreeCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec() {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("Birch", 1);
@@ -153,8 +194,8 @@ public class BigTreeCommand extends CommandExecutorBase {
 		map.put("Taiga", 5);
 		
 		return CommandSpec.builder()
-				.description(Text.of("Spawns a tree at the given coords"))
-				.permission("rrr.cheat.tree")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.onlyOne(GenericArguments.choices(Text.of("Tree Type"), map)))
 				.executor(this).build();
 	}

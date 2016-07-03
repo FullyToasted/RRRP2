@@ -16,6 +16,39 @@ import net.re_renderreality.rrrp2.database.Registry;
 
 public class ConsoleCommand extends CommandExecutorBase
 {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/asconsole";
+		description = "Execute a command as the console";
+		perm = "rrr.admin.console";
+		useage = "/asConsole <command>";
+		notes = "Needs a / in front of it";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Game game = Registry.getGame();
@@ -30,13 +63,20 @@ public class ConsoleCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "asconsole", "asConsole" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Console Command - Can execute commands as console"))
-				.permission("rrr.admin.console")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.onlyOne(GenericArguments.remainingJoinedStrings(Text.of("command"))))
 				.executor(this)
 				.build();

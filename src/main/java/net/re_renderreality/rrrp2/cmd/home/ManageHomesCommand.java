@@ -25,11 +25,46 @@ import com.flowpowered.math.vector.Vector3d;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class ManageHomesCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/managehomes";
+		description = "Allows staff to investigate all set homes";
+		perm = "rrr.admin.manager.homes";
+		useage = "/managehomes (goto|delete|inspect) (ID)";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Can do any of multiple things. For admins to manipulate other peoples' homes'
 	 * TODO: Allow players to search for peoples home by playername
@@ -141,6 +176,13 @@ public class ManageHomesCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -148,8 +190,8 @@ public class ManageHomesCommand extends CommandExecutorBase {
 		map.put("delete", 2);
 		map.put("inspect", 3);
 		return CommandSpec.builder()
-			.description(Text.of("Manage other players gomes"))
-			.permission("rrr.admin.homes.manage")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("Command"), map)),
 						GenericArguments.optional(GenericArguments.integer(Text.of("HomeID"))))
 			.executor(this)

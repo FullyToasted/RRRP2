@@ -20,8 +20,40 @@ import net.re_renderreality.rrrp2.database.Registry;
 
 import javax.annotation.Nonnull;
 
-public class RepairCommand extends CommandExecutorBase
-{
+public class RepairCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/repair";
+		description = "Repairs the item in your hand";
+		perm = "rrr.cheat.repair";
+		useage = "/repair";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Game game = Registry.getGame();
@@ -54,13 +86,20 @@ public class RepairCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "repair", "Repair" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Repair Item in Player's Hand"))
-				.permission("rrr.cheat.repair")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this)
 				.build();
 	}

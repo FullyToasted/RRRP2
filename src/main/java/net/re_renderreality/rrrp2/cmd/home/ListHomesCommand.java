@@ -15,10 +15,46 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class ListHomesCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/listhomes";
+		description = "List all of your set homes";
+		perm = "rrr.general.home";
+		useage = "/lsithomes";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
+	
 	//Lists all of a player's current homes
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		if (src instanceof Player) {
@@ -55,14 +91,21 @@ public class ListHomesCommand extends CommandExecutorBase {
 	{
 		return new String[] { "ListHomes", "Listhomes", "listHomes", "listhomes" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-				.description(Text.of("Set's Players Home"))
-				.permission("rrr.general.home")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this).build();
 	}
 }

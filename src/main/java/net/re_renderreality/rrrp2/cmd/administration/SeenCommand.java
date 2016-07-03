@@ -19,10 +19,42 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
-public class SeenCommand extends CommandExecutorBase{
+public class SeenCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	protected void setLocalVariables() {
+		name = "/seen";
+		description = "Check the last time a player was online";
+		perm = "rrr.admin.seen";
+		useage = "/seen <player>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<String> player = ctx.<String> getOne("player name");
 		Optional<Player> pPlayer = ctx.<Player> getOne("player");
 		
@@ -58,10 +90,17 @@ public class SeenCommand extends CommandExecutorBase{
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Gives information about the requested player's last date online"))
-				.permission("rrr.admin.seen")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 							GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))))
 				.executor(this).build();

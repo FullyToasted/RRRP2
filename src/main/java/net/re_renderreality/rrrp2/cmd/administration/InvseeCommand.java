@@ -17,11 +17,46 @@ import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.api.text.Text;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class InvseeCommand extends CommandExecutorBase {
 	/**
 	 * @NOTE does not work
 	 */
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/invsee";
+		description = "Allows you to see another players inventory";
+		perm = "rrr.admin.invsee";
+		useage = "/invsee <target>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<Player> player = ctx.<Player> getOne("Player");
@@ -47,11 +82,18 @@ public class InvseeCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("View the target's inventory"))
-			.permission("rrr.admin.invsee")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.player(Text.of("Player"))))
 			.executor(this)
 			.build();

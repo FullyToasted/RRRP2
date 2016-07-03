@@ -1,6 +1,9 @@
 package net.re_renderreality.rrrp2.backend;
 
 import com.google.common.base.Preconditions;
+
+import net.re_renderreality.rrrp2.database.Registry;
+
 import org.spongepowered.api.command.CommandCallable;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.command.spec.CommandSpec;
@@ -15,7 +18,18 @@ import java.util.stream.Collectors;
  * An interface that allows a {@link CommandCallable} to be specified along with an executor.
  */
 public abstract class CommandExecutorBase implements CommandExecutor {
-
+	
+	/**
+	 * set the local variables in a command class
+	 */
+	protected abstract void setLocalVariables();
+	
+	public abstract String getName();
+	public abstract String getDescription();
+	public abstract String getPerm();
+	public abstract String getUseage();
+	public abstract String getNotes();
+	
     /**
      * Gets the modules that this command belongs to, to determine whether it is loaded or not.
      *
@@ -38,6 +52,15 @@ public abstract class CommandExecutorBase implements CommandExecutor {
     public String getPrimaryAlias() {
         return getAliases()[0];
     }
+    
+    /**
+     * Gets the Command Base Type
+     * 
+     * @reurn The Command Type
+     */
+    @Nonnull
+    public abstract Registry.helpCategory getHelpCategory();
+    
 
     /**
      * Gets the aliases for this command.

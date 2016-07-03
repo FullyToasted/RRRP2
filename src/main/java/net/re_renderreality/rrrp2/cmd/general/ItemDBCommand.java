@@ -13,6 +13,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 import javax.annotation.Nonnull;
 
@@ -40,6 +41,13 @@ public class ItemDBCommand extends CommandExecutorBase {
 	@Override
 	public String[] getAliases() {
 		return new String[] { "iteminfo", "itemdb" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

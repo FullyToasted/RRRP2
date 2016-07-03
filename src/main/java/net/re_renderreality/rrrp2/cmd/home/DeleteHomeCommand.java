@@ -16,9 +16,44 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
 
 public class DeleteHomeCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/deletehome";
+		description = "Removes a set home and frees the slot";
+		perm = "rrr.general.home";
+		useage = "/deletehome <homename>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	//gets a HomeCore and deletes it
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		Optional<String> homeName = ctx.<String> getOne("homename");
@@ -51,6 +86,13 @@ public class DeleteHomeCommand extends CommandExecutorBase {
 	public String[] getAliases()
 	{
 		return new String[] { "DeleteHome", "Deletehome", "deleteHome", "deletehome", "rmhome", "RMhome", "rmHome", "RMHome", "delhome", "DelHome", "Delhome", "delHome" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

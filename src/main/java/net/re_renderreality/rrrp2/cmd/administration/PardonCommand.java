@@ -23,13 +23,46 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.BanCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
 public class PardonCommand extends CommandExecutorBase {
-
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/unban";
+		description = "Unbans a player from the server";
+		perm = "rrr.admin.unban";
+		useage = "/unban <player>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Logger l = RRRP2.getRRRP2().getLogger();
 		Game game = RRRP2.getRRRP2().getGame();
 		Optional<String> sPlayer = ctx.<String> getOne("player name");
@@ -81,6 +114,13 @@ public class PardonCommand extends CommandExecutorBase {
 	{
 		return new String[] { "unban", "UnBan", "unBan", "Unban", "pardon", "Pardon" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
 
 	@Nonnull
 	@Override
@@ -88,8 +128,8 @@ public class PardonCommand extends CommandExecutorBase {
 	{
 		return CommandSpec
 			.builder()
-			.description(Text.of("Unban Command"))
-			.permission("rrr.admin.unban")
+			.description(Text.of(perm))
+			.permission(description)
 			.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("player name"))))
 			.executor(this).build();
 	}

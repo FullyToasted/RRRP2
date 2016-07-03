@@ -15,8 +15,42 @@ import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigRules;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class RulesAddCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/addrule";
+		description = "Add a server rule";
+		perm = "rrr.admin.rules";
+		useage = "/addrule <rule>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	//Add a rule to the list
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
@@ -28,8 +62,7 @@ public class RulesAddCommand extends CommandExecutorBase {
 			src.sendMessage(Text.of(TextColors.GOLD, "Rule Added Sucessfully!"));
 		}
 		return CommandResult.empty();
-	}
-		
+	}		
 		
 	@Nonnull
 	@Override
@@ -39,11 +72,18 @@ public class RulesAddCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Adds Server Rules"))
-			.permission("rrr.admin.rules.add")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.remainingJoinedStrings(Text.of("Rule")))
 			.executor(this)
 			.build();

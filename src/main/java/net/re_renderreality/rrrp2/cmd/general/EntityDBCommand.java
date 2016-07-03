@@ -19,6 +19,7 @@ import org.spongepowered.api.world.World;
 import com.flowpowered.math.vector.Vector3i;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class EntityDBCommand extends CommandExecutorBase {
 	//shows information about the entity being looked on
@@ -60,6 +61,13 @@ public class EntityDBCommand extends CommandExecutorBase {
 		}
 
 		return CommandResult.success();
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

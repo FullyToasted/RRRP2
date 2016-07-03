@@ -12,12 +12,46 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
-public class SpeedCommand extends CommandExecutorBase
-{
+public class SpeedCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/speed";
+		description = "Alters the targets speed";
+		perm = "rrr.cheat.speed.self";
+		useage = "/speed <speed> (player)";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
@@ -67,13 +101,20 @@ public class SpeedCommand extends CommandExecutorBase
 	public String[] getAliases() {
 		return new String[] { "speed", "Speed" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Cheater;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Speed Command"))
-				.permission("rrr.cheat.speed.self")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.seq(
 						GenericArguments.onlyOne(GenericArguments.integer(Text.of("speed"))),
 						GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))))))

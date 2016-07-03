@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.AFK;
 import net.re_renderreality.rrrp2.utils.SubjectComparator;
@@ -127,6 +128,13 @@ public class ListCommand extends CommandExecutorBase {
 	public String[] getAliases()
 	{
 		return new String[] { "list", "List" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

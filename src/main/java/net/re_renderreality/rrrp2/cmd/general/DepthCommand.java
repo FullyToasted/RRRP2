@@ -12,6 +12,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class DepthCommand extends CommandExecutorBase
 {
@@ -37,6 +38,13 @@ public class DepthCommand extends CommandExecutorBase
 	@Override
 	public String[] getAliases() {
 		return new String[] { "depth", "Depth" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 	
 	@Nonnull

@@ -16,6 +16,7 @@ import net.re_renderreality.rrrp2.cmd.teleport.warp.*;
 
 import org.spongepowered.api.Sponge;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,12 +29,14 @@ public final class CommandLoader {
      * No need to instantiate!
      */
     private CommandLoader() {}
+    
+    private static HashSet<? extends CommandExecutorBase> loadedCommands; 
 
     /**
      * @return returns A set of all the command Objects
      */
     private static Set<? extends CommandExecutorBase> getCommands() {
-        return Sets.newHashSet(
+        loadedCommands =  Sets.newHashSet(
         		new AFKCommand(),
                 new AnnouncementsCommand(),
                 new AnnouncementsAddCommand(),
@@ -123,6 +126,12 @@ public final class CommandLoader {
                 new WeatherCommand(),
                 new WeatherLockCommand()
         );
+        
+        return loadedCommands;
+    }
+    
+    public static HashSet<? extends CommandExecutorBase> getLoadedCommands() {
+    	return loadedCommands;
     }
 
     /**

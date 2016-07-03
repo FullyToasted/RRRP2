@@ -16,11 +16,41 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
-public class SocialSpyCommand extends CommandExecutorBase
-{
-	/**
-	 * Command to Reply to a recent message
-	 */
+public class SocialSpyCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/socialspy";
+		description = "Allows you to see peoples private conversations";
+		perm = "rrr.admin.socialspy";
+		useage = "/socialspy";
+		notes = "Will turn off when you log out";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
 		Logger l = Registry.getLogger();
@@ -50,12 +80,19 @@ public class SocialSpyCommand extends CommandExecutorBase
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		
 		return CommandSpec.builder()
-			.description(Text.of("A message to another player"))
-			.permission("rrr.admin.socialspy")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

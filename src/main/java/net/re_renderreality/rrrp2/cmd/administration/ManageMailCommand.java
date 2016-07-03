@@ -24,8 +24,40 @@ import net.re_renderreality.rrrp2.database.core.MailCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class ManageMailCommand extends CommandExecutorBase
-{
+public class ManageMailCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/managemail";
+		description = "";
+		perm = "rrr.admin.manager.mail";
+		useage = "/managemail (read|delete) (MailID)";
+		notes = "Using no arguments will list all mail";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	/**
 	 * Explanation of what command does and if complicated how to do it
 	 */
@@ -101,14 +133,21 @@ public class ManageMailCommand extends CommandExecutorBase
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Admin;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("read", 1);
 		map.put("delete", 2);
 		return CommandSpec.builder()
-			.description(Text.of("Read Mail that has been received"))
-			.permission("rrr.admin.mail.manage")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("Command"), map)),
 						GenericArguments.optional(GenericArguments.integer(Text.of("mailID"))))
 			.executor(this)

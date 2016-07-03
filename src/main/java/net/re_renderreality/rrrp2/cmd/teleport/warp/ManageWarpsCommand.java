@@ -25,12 +25,46 @@ import com.flowpowered.math.vector.Vector3d;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.database.core.WarpCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class ManageWarpsCommand  extends CommandExecutorBase
-{
+public class ManageWarpsCommand  extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/tphere";
+		description = "Manage the warp list";
+		perm = "rrr.admin.manager.warp";
+		useage = "/tphere (goto|delete|inspect) (WarpID)";
+		notes = "Typing the command without arguments will list all warps";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Explanation of what command does and if complicated how to do it
 	 */
@@ -131,6 +165,13 @@ public class ManageWarpsCommand  extends CommandExecutorBase
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.Teleport;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -138,8 +179,8 @@ public class ManageWarpsCommand  extends CommandExecutorBase
 		map.put("delete", 2);
 		map.put("inspect", 3);
 		return CommandSpec.builder()
-			.description(Text.of("Manage other players gomes"))
-			.permission("rrr.admin.warp.manage")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("Command"), map)),
 						GenericArguments.optional(GenericArguments.integer(Text.of("WarpID"))))
 			.executor(this)

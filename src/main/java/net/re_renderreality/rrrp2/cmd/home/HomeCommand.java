@@ -26,11 +26,46 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigTeleport;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.HomeCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class HomeCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/home";
+		description = "Request a player to teleort to your location";
+		perm = "rrr.general.home";
+		useage = "/home <homename>";
+		notes = "You can see your homes with /listhomes";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	//creates a new HomeCore and inserts it into database
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		Optional<String> homeName = ctx.<String> getOne("homename");
@@ -133,14 +168,21 @@ public class HomeCommand extends CommandExecutorBase {
 	{
 		return new String[] { "Home", "home" };
 	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
+	}
 
 	@Nonnull
 	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-				.description(Text.of("Set's Players Home"))
-				.permission("rrr.general.home")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.string(Text.of("homename")))))
 				.executor(this).build();
 	}

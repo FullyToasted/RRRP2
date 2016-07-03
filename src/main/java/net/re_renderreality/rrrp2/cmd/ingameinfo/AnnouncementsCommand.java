@@ -11,9 +11,43 @@ import org.spongepowered.api.text.Text;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigAnnouncements;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class AnnouncementsCommand extends CommandExecutorBase{
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/announcements";
+		description = "Display the sevrer announcements";
+		perm = "rrr.general.announcements";
+		useage = "/announcements";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	//send announcements to player
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
@@ -35,11 +69,18 @@ public class AnnouncementsCommand extends CommandExecutorBase{
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Displays Server Announcements"))
-			.permission("rrr.general.announcements")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

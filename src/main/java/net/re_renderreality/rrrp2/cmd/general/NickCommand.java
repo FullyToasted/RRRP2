@@ -18,6 +18,7 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
@@ -71,6 +72,13 @@ public class NickCommand  extends CommandExecutorBase
 	public String[] getAliases()
 	{
 		return new String[] { "nick", "Nick" };
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 
 	@Nonnull

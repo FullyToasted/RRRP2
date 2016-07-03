@@ -12,7 +12,42 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigMOTD;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 public class MOTDCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/motd";
+		description = "Displays the MOTD";
+		perm = "rrr.general.mod";
+		useage = "/motd";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Display the MOTD
 	 */
@@ -32,11 +67,18 @@ public class MOTDCommand extends CommandExecutorBase {
 	
 	@Nonnull
 	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
+	}
+	
+	@Nonnull
+	@Override
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Displays the Message of the Day"))
-			.permission("rrr.general.motd")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

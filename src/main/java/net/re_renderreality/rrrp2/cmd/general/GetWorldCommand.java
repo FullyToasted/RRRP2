@@ -12,6 +12,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
+import net.re_renderreality.rrrp2.database.Registry;
 
 public class GetWorldCommand extends CommandExecutorBase
 {
@@ -45,5 +46,12 @@ public class GetWorldCommand extends CommandExecutorBase
 			.permission("rrr.general.getworld")
 			.executor(this)
 			.build();
+	}
+	
+	@Nonnull
+	@Override
+	public Registry.helpCategory getHelpCategory()
+	{
+		return Registry.helpCategory.General;
 	}
 }
