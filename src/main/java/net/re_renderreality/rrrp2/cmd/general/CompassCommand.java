@@ -15,9 +15,43 @@ import org.spongepowered.api.util.Direction;
 
 import javax.annotation.Nonnull;
 
-public class CompassCommand extends CommandExecutorBase
-{
+public class CompassCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/compass";
+		description = "Tells Direction you are facing";
+		perm = "rrr.general.compass";
+		useage = "/compass";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			// Gives the direction the player is looking
@@ -47,8 +81,8 @@ public class CompassCommand extends CommandExecutorBase
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Direction Command"))
-				.permission("rrr.general.compass")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this)
 				.build();
 	}

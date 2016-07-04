@@ -54,6 +54,7 @@ public class RulesModifyCommand extends CommandExecutorBase {
 	
 	//Modify an existing rule
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 	
 		Optional<Integer> theID = ctx.<Integer> getOne("ID");
 		Optional<String> theRule = ctx.<String> getOne("Rule");

@@ -18,8 +18,7 @@ import net.re_renderreality.rrrp2.backend.AsyncCommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.events.TPHereEvent;
 
-public class TPHereCommand extends AsyncCommandExecutorBase
-{
+public class TPHereCommand extends AsyncCommandExecutorBase {
 	private String name;
 	private String description;
 	private String perm;
@@ -57,8 +56,8 @@ public class TPHereCommand extends AsyncCommandExecutorBase
 	private Game game = RRRP2.getRRRP2().getGame();
 
 	@Override
-	public void executeAsync(CommandSource src, CommandContext ctx)
-	{
+	public void executeAsync(CommandSource src, CommandContext ctx) {
+		setLocalVariables();
 		Player recipient = ctx.<Player> getOne("player").get();
 
 		if (src instanceof Player) {

@@ -54,8 +54,8 @@ public class SudoCommand extends CommandExecutorBase {
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Game game = Registry.getGame();
 		Player p = ctx.<Player> getOne("player").get();
 		String command = ctx.<String> getOne("command").get();

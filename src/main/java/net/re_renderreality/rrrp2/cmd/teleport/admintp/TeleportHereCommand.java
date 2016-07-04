@@ -57,6 +57,7 @@ public class TeleportHereCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Player recipient = ctx.<Player> getOne("player").get();
 
 		if (src instanceof Player) {

@@ -58,6 +58,7 @@ public class SetWarpCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		Optional<String> warpName = ctx.<String> getOne("warpName");
 		
 		if(src instanceof Player) {

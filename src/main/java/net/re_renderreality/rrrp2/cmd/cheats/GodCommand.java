@@ -54,8 +54,8 @@ public class GodCommand extends CommandExecutorBase {
 	public String getNotes() {
 		return this.notes;
 	}
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		//This command just toggles a player core boolean actual functionality is in the damage listener
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.god.self") && src instanceof Player) {

@@ -68,8 +68,8 @@ public class BigTreeCommand extends CommandExecutorBase {
 	
 	private PopulatorObject populate;
 	private Random random;
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Integer> treeType = ctx.<Integer> getOne("Tree Type");
 		
 		if(src instanceof Player) {

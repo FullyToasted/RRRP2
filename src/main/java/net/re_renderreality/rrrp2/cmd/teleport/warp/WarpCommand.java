@@ -66,8 +66,8 @@ public class WarpCommand extends CommandExecutorBase {
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		Optional<String> warpName = ctx.<String> getOne("warpname");
 		Player source = (Player) src;
 		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(source.getName());

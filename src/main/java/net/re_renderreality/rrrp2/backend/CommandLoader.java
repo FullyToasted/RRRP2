@@ -138,6 +138,9 @@ public final class CommandLoader {
      * Registers the RRRP2 commands.
      */
     public static void registerCommands() {
-        getCommands().forEach(cmd -> Sponge.getCommandManager().register(RRRP2.getRRRP2(), cmd.getSpec(), cmd.getAliases()));   		
+        getCommands().forEach(cmd -> {
+        	cmd.setLocalVariables();
+        	Sponge.getCommandManager().register(RRRP2.getRRRP2(), cmd.getSpec(), cmd.getAliases());
+        });  		
     }    
 }

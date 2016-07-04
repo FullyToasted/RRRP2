@@ -25,12 +25,46 @@ import net.re_renderreality.rrrp2.database.core.MailCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class GetMailCommand extends CommandExecutorBase
-{
+public class GetMailCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/getmail";
+		description = "Read your received mail";
+		perm = "rrr.general.mail";
+		useage = "/getmail (read|delete) (MailID)";
+		notes = "Typing the command with no arguments will list your mail";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Explanation of what command does and if complicated how to do it
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> OID = ctx.<Integer> getOne("mailID");
 		
@@ -131,8 +165,8 @@ public class GetMailCommand extends CommandExecutorBase
 		map.put("read", 1);
 		map.put("delete", 2);
 		return CommandSpec.builder()
-			.description(Text.of("Read Mail that has been received"))
-			.permission("rrr.general.mail.receive")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("Command"), map)),
 						GenericArguments.optional(GenericArguments.integer(Text.of("mailID"))))
 			.executor(this)

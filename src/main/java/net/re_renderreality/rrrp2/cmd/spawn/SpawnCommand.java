@@ -66,8 +66,8 @@ public class SpawnCommand extends CommandExecutorBase {
 	 * TPs a player to the server spawn
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
-		if (src instanceof Player)
-		{
+		setLocalVariables();
+		if (src instanceof Player) {
 			Player player = (Player) src;
 			int id = Database.getID(player.getUniqueId().toString());
 			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);

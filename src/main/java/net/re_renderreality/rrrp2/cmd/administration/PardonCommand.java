@@ -63,6 +63,7 @@ public class PardonCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Logger l = RRRP2.getRRRP2().getLogger();
 		Game game = RRRP2.getRRRP2().getGame();
 		Optional<String> sPlayer = ctx.<String> getOne("player name");

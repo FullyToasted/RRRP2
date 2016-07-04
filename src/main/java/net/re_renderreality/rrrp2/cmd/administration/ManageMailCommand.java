@@ -33,7 +33,7 @@ public class ManageMailCommand extends CommandExecutorBase {
 	
 	protected void setLocalVariables() {
 		name = "/managemail";
-		description = "";
+		description = "Allows an admin to manage all of the players' mail";
 		perm = "rrr.admin.manager.mail";
 		useage = "/managemail (read|delete) (MailID)";
 		notes = "Using no arguments will list all mail";
@@ -61,8 +61,8 @@ public class ManageMailCommand extends CommandExecutorBase {
 	/**
 	 * Explanation of what command does and if complicated how to do it
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> OID = ctx.<Integer> getOne("mailID");
 		

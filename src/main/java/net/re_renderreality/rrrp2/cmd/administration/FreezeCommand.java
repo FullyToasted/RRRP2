@@ -25,10 +25,10 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 	private String notes;
 	
 	protected void setLocalVariables() {
-		name = "/Freeze";
-		description = "";
-		perm = "rrr.";
-		useage = "/";
+		name = "/freeze";
+		description = "Freeze a player in place";
+		perm = "rrr.admin.freeze";
+		useage = "/freeze <player>";
 		notes = null;
 	}
 	
@@ -54,6 +54,7 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 	
 	@Override
 	public void executeAsync(CommandSource src, CommandContext ctx) {
+		setLocalVariables();
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		Optional<String> all = ctx.<String> getOne("all");
 		
@@ -125,8 +126,8 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("Player Freeze Command"))
-				.permission("rrr.admin.freeze")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 							GenericArguments.onlyOne(GenericArguments.string(Text.of("all")))))
 				.executor(this)

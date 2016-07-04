@@ -22,8 +22,43 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
 public class BlockDBCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/blockdb";
+		description = "Gives information about the block in your hand";
+		perm = "rrr.general.blockdb";
+		useage = "/blockdb";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	//Gives block information to the player
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 
@@ -72,8 +107,8 @@ public class BlockDBCommand extends CommandExecutorBase {
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("BlockInfo Command"))
-			.permission("rrr.general.blockinfo")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this).build();
 	}
 }

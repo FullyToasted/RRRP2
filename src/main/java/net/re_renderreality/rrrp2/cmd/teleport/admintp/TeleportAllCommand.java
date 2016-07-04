@@ -59,6 +59,7 @@ public class TeleportAllCommand extends CommandExecutorBase {
 	
 	//force tp all players on server to src
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> target = ctx.<Player> getOne("player");
 
 		if (src instanceof Player) {

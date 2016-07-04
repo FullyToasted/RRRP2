@@ -52,6 +52,7 @@ public class SuicideCommand extends CommandExecutorBase {
 	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+		setLocalVariables();
 		if(src instanceof Player) {
 			Player player = (Player) src;
 			

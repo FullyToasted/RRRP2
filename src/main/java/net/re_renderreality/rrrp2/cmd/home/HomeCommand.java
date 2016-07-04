@@ -68,6 +68,7 @@ public class HomeCommand extends CommandExecutorBase {
 	
 	//creates a new HomeCore and inserts it into database
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> homeName = ctx.<String> getOne("homename");
 		Player source = (Player) src;
 		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(source.getName());

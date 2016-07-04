@@ -25,10 +25,43 @@ import net.re_renderreality.rrrp2.utils.Utilities;
 /**
  * Sets a player's nickname
  */
-public class NickCommand  extends CommandExecutorBase
-{
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+public class NickCommand  extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/nick";
+		description = "Sets your nickname";
+		perm = "rrr.general.nick";
+		useage = "/nick (player) <newname>";
+		notes = "Can use color codes";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> player = ctx.<String> getOne("player name");
 		Optional<Player> pPlayer = ctx.<Player> getOne("player");
 		String nick = ctx.<String>getOne("nick").get();
@@ -87,8 +120,8 @@ public class NickCommand  extends CommandExecutorBase
 	{
 		return CommandSpec
 			.builder()
-			.description(Text.of("Nickname a player"))
-			.permission("rrr.general.nick")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(
 					GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 					GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))),

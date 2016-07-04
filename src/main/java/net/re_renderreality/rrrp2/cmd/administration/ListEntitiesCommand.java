@@ -54,7 +54,8 @@ public class ListEntitiesCommand extends CommandExecutorBase{
 	 * Lists all entities currently loaded on the server
 	 */
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException{ 
-	
+		setLocalVariables();
+		
 		Hashtable<String, Integer> entities = new Hashtable<String, Integer>();
 		
 		//counts up every entity

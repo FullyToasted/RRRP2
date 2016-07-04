@@ -53,8 +53,8 @@ public class TPSCommand extends AsyncCommandExecutorBase {
 	/**
 	 * Display the sever TPS
 	 */
-	public void executeAsync(CommandSource src, CommandContext ctx)
-	{
+	public void executeAsync(CommandSource src, CommandContext ctx) {
+		setLocalVariables();
 		//gets server tps
 		double tps = Sponge.getServer().getTicksPerSecond();
 		src.sendMessage(Text.of(TextColors.GOLD, "Current TPS: ", TextColors.GRAY, tps));

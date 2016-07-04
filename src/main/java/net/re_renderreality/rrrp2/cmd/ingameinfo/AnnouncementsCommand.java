@@ -51,7 +51,8 @@ public class AnnouncementsCommand extends CommandExecutorBase{
 	
 	//send announcements to player
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
-	
+		setLocalVariables();
+		
 		Utilities.getPaginationService().builder()
 	    	.title(ReadConfigAnnouncements.getHeader())
 	    	.contents(ReadConfigAnnouncements.getAnnouncements())

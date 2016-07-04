@@ -31,12 +31,6 @@ public class PlayerJoinListener
 	public void onPlayerJoin(ClientConnectionEvent.Join event) {
 		Player player = event.getTargetEntity();
 		
-		//TEMP
-		player.sendMessage(Text.builder().append(Text.of("Test")).onHover(TextActions.showText(Text.of("Description"))).onClick(TextActions.executeCallback( c -> { 
-			c.sendMessage(Text.of("Hello"));
-		})).build());
-		//TEMP
-		
 		String uuid = player.getUniqueId().toString();
 		int id = Database.getIDFromDatabase(uuid);
 		

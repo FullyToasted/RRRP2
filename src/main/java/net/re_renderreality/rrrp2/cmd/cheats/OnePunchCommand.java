@@ -52,8 +52,8 @@ public class OnePunchCommand extends CommandExecutorBase {
 	/**
 	 * Adds player to one punch user list
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if( src instanceof Player) {
 			Player source = (Player) src;
 			if(RRRP2.onePunch.contains(source)) {

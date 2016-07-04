@@ -64,6 +64,7 @@ public class TeleportWorldCommand extends CommandExecutorBase {
 	//teleports to a world if spawn is set there nether, overworld, and end are hard coded
 	//TODO Organize/Improve this system
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> optionalWorld = ctx.<String> getOne("world");
 		Optional<String> optionalWarp = ctx.<String> getOne("World");
 		Player p = (Player) src;

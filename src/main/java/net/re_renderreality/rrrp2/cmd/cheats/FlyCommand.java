@@ -56,8 +56,8 @@ public class FlyCommand extends CommandExecutorBase {
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		
 		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.fly.self")) {

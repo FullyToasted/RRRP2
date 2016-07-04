@@ -62,6 +62,7 @@ public class EnchantCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> target = ctx.<Player> getOne("target");
 		String enchantmentName = ctx.<String> getOne("enchantment").get();
 		int level = ctx.<Integer> getOne("level").get();

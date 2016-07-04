@@ -29,7 +29,7 @@ public class TPCommand extends AsyncCommandExecutorBase {
 		name = "/tp";
 		description = "Request to tp a player";
 		perm = "rrr.teleport.tp";
-		useage = "/tphere <player2tp> (target)";
+		useage = "/tphere (target)";
 		notes = null;
 	}
 	
@@ -58,6 +58,7 @@ public class TPCommand extends AsyncCommandExecutorBase {
 
 	@Override
 	public void executeAsync(CommandSource src, CommandContext ctx) {
+		setLocalVariables();
 		Player recipient = ctx.<Player> getOne("player").get();
 
 		if (src instanceof Player) {

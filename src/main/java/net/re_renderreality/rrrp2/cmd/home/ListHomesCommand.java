@@ -57,6 +57,7 @@ public class ListHomesCommand extends CommandExecutorBase {
 	
 	//Lists all of a player's current homes
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player source = (Player) src;
 			ArrayList<HomeCore> homes = Database.getHomesByPlayer(source);

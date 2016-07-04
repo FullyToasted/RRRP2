@@ -68,6 +68,7 @@ public class BanManagerCommand extends CommandExecutorBase {
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
+		setLocalVariables();
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> OID = ctx.<Integer> getOne("BanID");
 		

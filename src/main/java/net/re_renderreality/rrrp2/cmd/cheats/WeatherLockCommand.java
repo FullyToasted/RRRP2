@@ -57,8 +57,8 @@ public class WeatherLockCommand extends CommandExecutorBase
 	
 	private Game game = Registry.getGame();
 
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		String name = ctx.<String> getOne("name").get();
 
 		Optional<World> optWorld = game.getServer().getWorld(name);

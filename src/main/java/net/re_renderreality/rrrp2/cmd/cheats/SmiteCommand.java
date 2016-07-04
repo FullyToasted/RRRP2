@@ -91,6 +91,7 @@ public class SmiteCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> optionalTarget = ctx.<Player> getOne("player");
 
 		//creates a lightning entity at the location looked at or at a player

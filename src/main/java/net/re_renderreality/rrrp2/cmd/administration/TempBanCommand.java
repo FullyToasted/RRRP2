@@ -70,8 +70,8 @@ public class TempBanCommand extends CommandExecutorBase {
 	public String getNotes() {
 		return this.notes;
 	}
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Game game = RRRP2.getRRRP2().getGame();
 		
 		Optional<Player> player = ctx.<Player> getOne("player");

@@ -20,13 +20,46 @@ import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.events.MessageEvent;
 
-public class MessageCommand extends CommandExecutorBase
-{
+public class MessageCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/msg";
+		description = "Send a private message to another player";
+		perm = "rrr.general.msg";
+		useage = "/msg <player> <msg>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Command to create a MailCore and send it to another player
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		Optional<Player> player = ctx.<Player> getOne("player");
 		Optional<String> message = ctx.<String> getOne("Message");
 		//Database Layout 
@@ -91,8 +124,8 @@ public class MessageCommand extends CommandExecutorBase
 	{
 		
 		return CommandSpec.builder()
-			.description(Text.of("Send a Message to another player"))
-			.permission("rrr.general.message")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 						GenericArguments.remainingJoinedStrings(Text.of("Message")))
 			.executor(this)

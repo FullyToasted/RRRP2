@@ -70,6 +70,7 @@ public class ManageHomesCommand extends CommandExecutorBase {
 	 * TODO: Allow players to search for peoples home by playername
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> hID = ctx.<Integer> getOne("HomeID");
 		

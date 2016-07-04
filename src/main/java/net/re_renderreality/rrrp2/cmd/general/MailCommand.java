@@ -26,13 +26,46 @@ import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.MailCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
-public class MailCommand extends CommandExecutorBase
-{
+public class MailCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/mail";
+		description = "Send an ingame mail to a player";
+		perm = "rrr.general.mail";
+		useage = "/mail <player> <mail>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Command to create a MailCore and send it to another player
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		Logger l = RRRP2.getRRRP2().getLogger();
 		Optional<String> player = ctx.<String> getOne("player name");
 		Optional<Player> pPlayer = ctx.<Player> getOne("player");
@@ -124,8 +157,8 @@ public class MailCommand extends CommandExecutorBase
 	{
 		
 		return CommandSpec.builder()
-			.description(Text.of("Send Mail to another player"))
-			.permission("rrr.general.mail.send")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.firstParsing(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))),
 						GenericArguments.onlyOne(GenericArguments.string(Text.of("player name")))),
 						GenericArguments.remainingJoinedStrings(Text.of("Message")))

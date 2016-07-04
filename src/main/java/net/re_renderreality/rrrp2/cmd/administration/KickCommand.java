@@ -53,8 +53,8 @@ public class KickCommand extends CommandExecutorBase
 	public String getNotes() {
 		return this.notes;
 	}
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> player = ctx.<Player> getOne("player");
 		//if reason is not there use default reason
 		Optional<String> oReason = ctx.<String> getOne("reason");

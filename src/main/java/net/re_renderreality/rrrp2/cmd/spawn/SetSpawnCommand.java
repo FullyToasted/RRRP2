@@ -54,6 +54,7 @@ public class SetSpawnCommand extends CommandExecutorBase {
 	 * Sets spawn for the world the player is in. Spawns set in other other worlds can be tp'd to using /tpworld
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			ReadConfigSpawn.setSpawn(player.getWorld().getName(), player.getTransform(), player.getWorld().getName());

@@ -16,11 +16,45 @@ import net.re_renderreality.rrrp2.database.Registry;
 
 public class GetDimCommand extends CommandExecutorBase
 {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/getdim";
+		description = "Gets dimension name that you are in";
+		perm = "rrr.general.getdim";
+		useage = "/getdim";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * shows the dimension type the world a player is in
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		if(src instanceof Player) {
 			Player player = (Player) src;
 			src.sendMessage(Text.of(TextColors.GOLD, "You are currently in the: ", TextColors.GRAY, player.getWorld().getDimension().getContext().getName()));
@@ -42,8 +76,8 @@ public class GetDimCommand extends CommandExecutorBase
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Gets the Dimmension of the player"))
-			.permission("rrr.general.getdim")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

@@ -55,8 +55,8 @@ public class ManageHelpOP extends CommandExecutorBase{
 	public String getNotes() {
 		return this.notes;
 	}
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> ids = ctx.<String> getOne("ID");
 		Optional<Integer> choice = ctx.<Integer> getOne("Choice");
 		

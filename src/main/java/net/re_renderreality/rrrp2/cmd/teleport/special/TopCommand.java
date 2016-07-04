@@ -56,6 +56,7 @@ public class TopCommand extends CommandExecutorBase {
 	
 	//tps a player up as high as possible
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			Location<World> playerLoc = player.getLocation();

@@ -62,8 +62,8 @@ public class SurroundCommand extends CommandExecutorBase {
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> player = ctx.<Player> getOne("Player");
 		Optional<Integer> block = ctx.<Integer> getOne("Block");
 		

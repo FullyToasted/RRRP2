@@ -29,7 +29,7 @@ public class FreeCommand extends CommandExecutorBase {
 	private String notes;
 	
 	protected void setLocalVariables() {
-		name = "Frees a player from their encapsulation";
+		name = "/free";
 		description = "Frees a player from their encapsulation";
 		perm = "rrr.cheat.free";
 		useage = "/free <player>";
@@ -55,8 +55,8 @@ public class FreeCommand extends CommandExecutorBase {
 	public String getNotes() {
 		return this.notes;
 	}
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> player = ctx.<Player> getOne("Player");
 		
 		if(src instanceof Player || src instanceof ConsoleSource) {

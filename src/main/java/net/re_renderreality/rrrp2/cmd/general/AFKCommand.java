@@ -18,9 +18,43 @@ import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.AFK;
 
-public class AFKCommand extends CommandExecutorBase
-{
+public class AFKCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/AFK";
+		description = "Manually sets your status to away from keyboard";
+		perm = "rrr.general.afk";
+		useage = "/afk";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		//Overrides and instantly causes AFK to execute
 		if (src instanceof Player) {
 			Player source = (Player) src;
@@ -62,8 +96,8 @@ public class AFKCommand extends CommandExecutorBase
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("AFK Command"))
-			.permission("rrr.general.afk")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

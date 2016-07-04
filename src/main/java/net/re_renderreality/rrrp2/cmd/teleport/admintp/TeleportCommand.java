@@ -60,6 +60,7 @@ public class TeleportCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		Optional<Player> optionalPlayer = ctx.<Player> getOne("player");
 		Optional<Player> optionalTarget = ctx.<Player> getOne("target");
 

@@ -54,8 +54,8 @@ public class ListWarpsCommand extends CommandExecutorBase {
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player source = (Player) src;
 			ArrayList<WarpCore> warps = Database.getWarps();

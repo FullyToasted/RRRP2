@@ -52,6 +52,7 @@ public class MOTDCommand extends CommandExecutorBase {
 	 * Display the MOTD
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		String uniquePlayerCount = ReadConfigMOTD.getMOTD();
 		uniquePlayerCount = uniquePlayerCount.replaceAll("%player", src.getName());
 		Text newMessage = TextSerializers.formattingCode('&').deserialize(uniquePlayerCount);

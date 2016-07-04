@@ -55,6 +55,7 @@ public class SeenCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> player = ctx.<String> getOne("player name");
 		Optional<Player> pPlayer = ctx.<Player> getOne("player");
 		

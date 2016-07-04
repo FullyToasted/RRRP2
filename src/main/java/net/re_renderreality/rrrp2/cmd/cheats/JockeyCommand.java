@@ -52,8 +52,8 @@ public class JockeyCommand extends CommandExecutorBase {
 	/**
 	 * Allows players to jockey other entities. This just adds a user to the active jockeyer list
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if( src instanceof Player) {
 			Player source = (Player) src;
 			if(RRRP2.jockey.contains(source)) {

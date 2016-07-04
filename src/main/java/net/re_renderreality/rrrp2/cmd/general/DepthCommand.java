@@ -14,13 +14,46 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
-public class DepthCommand extends CommandExecutorBase
-{
+public class DepthCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/depth";
+		description = "tells what you are at relative to y=64";
+		perm = "rrr.general.depth";
+		useage = "/depth";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Gives depth of player relitive to y=64
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if(src instanceof Player) {
 			int depth = ((Player) src).getLocation().getBlockY() - 63;
 			String relative = (depth > 0) ? "above" : "below";
@@ -52,8 +85,8 @@ public class DepthCommand extends CommandExecutorBase
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Tells position relative to y=64"))
-			.permission("rrr.general.depth")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

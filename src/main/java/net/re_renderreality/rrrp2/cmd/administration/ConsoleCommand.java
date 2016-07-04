@@ -51,6 +51,7 @@ public class ConsoleCommand extends CommandExecutorBase
 	}
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
+		setLocalVariables();
 		Game game = Registry.getGame();
 		String command = ctx.<String> getOne("command").get();
 		//sends command to be executed as console

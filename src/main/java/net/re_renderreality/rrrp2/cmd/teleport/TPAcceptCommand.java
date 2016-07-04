@@ -60,6 +60,7 @@ public class TPAcceptCommand extends CommandExecutorBase {
 	private Game game = RRRP2.getRRRP2().getGame();
 
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			Player sender = null;

@@ -55,8 +55,8 @@ public class FeedCommand extends CommandExecutorBase {
 	public String getNotes() {
 		return this.notes;
 	}
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> p = ctx.<Player> getOne("player");
 
 		if (src instanceof Player) {

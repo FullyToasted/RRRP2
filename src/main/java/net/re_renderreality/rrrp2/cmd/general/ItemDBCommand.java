@@ -18,8 +18,43 @@ import net.re_renderreality.rrrp2.database.Registry;
 import javax.annotation.Nonnull;
 
 public class ItemDBCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/itemdb";
+		description = "Gives info on the item in your hand";
+		perm = "rrr.general.itemdb";
+		useage = "/itemdb";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	//get information about the item being held
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 
@@ -54,8 +89,8 @@ public class ItemDBCommand extends CommandExecutorBase {
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("ItemInfo Command"))
-				.permission("rrr.general.itemdb")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this)
 				.build();
 	}

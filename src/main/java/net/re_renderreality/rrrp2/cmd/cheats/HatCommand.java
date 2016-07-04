@@ -54,8 +54,8 @@ public class HatCommand extends CommandExecutorBase {
 	}
 	
 	@Override
-	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException 
-	{
+	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException  {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			Optional<ItemStack> itemInHand = player.getItemInHand(HandTypes.MAIN_HAND);

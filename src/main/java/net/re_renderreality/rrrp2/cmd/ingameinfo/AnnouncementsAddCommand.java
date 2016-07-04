@@ -54,6 +54,7 @@ public class AnnouncementsAddCommand extends CommandExecutorBase {
 	
 	//Add an announcement
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 	
 		Optional<String> theAnnouncement = ctx.<String> getOne("Announcement");
 		if(theAnnouncement.isPresent()) {

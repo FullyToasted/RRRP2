@@ -14,11 +14,45 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 
 public class PlayerCountCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/playercount";
+		description = "Shows the current amount of unique players to join the server";
+		perm = "rrr.general.playercount";
+		useage = "/playercount";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Gives a count of how many players are currently online
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		int id = Database.findNextID("players") - 1;
 		src.sendMessage(Text.of("There have been " + id + " unique players on this server"));
 		return CommandResult.success();
@@ -27,7 +61,7 @@ public class PlayerCountCommand extends CommandExecutorBase {
 	@Nonnull
 	@Override
 	public String[] getAliases() {
-		return new String[] { "PlayerCount", "Unique", "playercount" };
+		return new String[] { "PlayerCount", "Unique", "playercount", "unique" };
 	}
 	
 	@Nonnull
@@ -42,8 +76,8 @@ public class PlayerCountCommand extends CommandExecutorBase {
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("Lists the Amount of Unique Players on the Server"))
-			.permission("rrr.general.playercount")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

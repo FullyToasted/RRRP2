@@ -54,6 +54,7 @@ public class SetHomeCommand extends CommandExecutorBase {
 	}
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> homeName = ctx.<String> getOne("homeName");
 		
 		if(src instanceof Player) {

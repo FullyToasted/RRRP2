@@ -54,41 +54,32 @@ public class TPDenyCommand extends CommandExecutorBase
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
-		if (src instanceof Player)
-		{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
+		if (src instanceof Player) {
 			Player player = (Player) src;
 			Player sender = null;
 
 			TPInvitation cancel = null;
 
 			for (TPInvitation invitation : RRRP2.pendingInvites) {
-				if (invitation.recipient == player)
-				{
+				if (invitation.recipient == player)	{
 					sender = invitation.sender;
 					cancel = invitation;
 					break;
 				}
 			}
 
-			if (cancel != null && sender != null)
-			{
+			if (cancel != null && sender != null) {
 				sender.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Your TP Request was Denied by " + player.getName() + "!"));
 				RRRP2.pendingInvites.remove(cancel);
 				src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.WHITE, "TP Request Denied."));
-			}
-			else
-			{
+			} else {
 				src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Pending TP request not found!"));
 			}
-		}
-		else if (src instanceof ConsoleSource)
-		{
+		} else if (src instanceof ConsoleSource) {
 			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /tpdeny!"));
-		}
-		else if (src instanceof CommandBlockSource)
-		{
+		} else if (src instanceof CommandBlockSource) {
 			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /tpdeny!"));
 		}
 		return CommandResult.success();

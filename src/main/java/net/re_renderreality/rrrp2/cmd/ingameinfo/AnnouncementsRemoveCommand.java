@@ -54,6 +54,7 @@ public class AnnouncementsRemoveCommand extends CommandExecutorBase {
 	
 	//remove an exsisting announcement
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 	
 		Optional<Integer> theNum = ctx.<Integer> getOne("Announcement Number");
 		if(theNum.isPresent()) {

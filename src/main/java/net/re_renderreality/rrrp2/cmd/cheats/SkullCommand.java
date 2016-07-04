@@ -59,8 +59,8 @@ public class SkullCommand extends CommandExecutorBase {
 	
 	private Game game = Registry.getGame();
 
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> optionalTarget = ctx.<Player> getOne("player");
 
 		if (!optionalTarget.isPresent()) {

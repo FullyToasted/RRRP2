@@ -54,6 +54,7 @@ public class RulesAddCommand extends CommandExecutorBase {
 	
 	//Add a rule to the list
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 	
 		Optional<String> theRule = ctx.<String> getOne("Rule");
 		if(theRule.isPresent()) {

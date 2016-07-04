@@ -54,6 +54,7 @@ public class AnnouncementsModifyCommand extends CommandExecutorBase{
 	
 	//modify an existing announcement
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 	
 		Optional<Integer> theID = ctx.<Integer> getOne("ID");
 		Optional<String> theAnnouncement = ctx.<String> getOne("Announcement");

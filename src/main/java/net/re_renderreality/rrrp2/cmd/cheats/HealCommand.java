@@ -58,6 +58,7 @@ public class HealCommand extends CommandExecutorBase {
 	 * Heals other players or self.
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> p = ctx.<Player> getOne("player");
 
 		if (src instanceof Player) {

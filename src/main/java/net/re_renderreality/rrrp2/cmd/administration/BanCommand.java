@@ -73,6 +73,7 @@ public class BanCommand extends CommandExecutorBase
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
+		setLocalVariables();
 		Game game = RRRP2.getRRRP2().getGame();
 		Optional<Player> player = ctx.<Player> getOne("player");
 		Optional<String> sPlayer = ctx.<String> getOne("player name");

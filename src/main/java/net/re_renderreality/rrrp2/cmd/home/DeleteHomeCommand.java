@@ -56,6 +56,7 @@ public class DeleteHomeCommand extends CommandExecutorBase {
 	
 	//gets a HomeCore and deletes it
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		Optional<String> homeName = ctx.<String> getOne("homename");
 		Player source = (Player) src;
 		

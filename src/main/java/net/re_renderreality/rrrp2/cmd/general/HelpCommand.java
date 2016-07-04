@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import org.spongepowered.api.Server;
+import org.slf4j.Logger;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -23,115 +23,209 @@ import net.re_renderreality.rrrp2.utils.HelpGenerator;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class HelpCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	private Iterable<Text> admin;
+	private Iterable<Text> cheat;
+	private Iterable<Text> general;
+	private Iterable<Text> teleport;
+	private Iterable<Text> misc;
+	private Iterable<Text> all;
+	
+	private HelpGenerator help = HelpGenerator.getHelp();
+	
+	protected void setLocalVariables() {
+		name = "/rrr";
+		description = "Displays the help menu you are viewing";
+		perm = "rrr.general.help";
+		useage = "/rrr (subdirectory)";
+		notes = "options: General, Admin, Teleport, Cheats";
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
 	
 	/**
 	 * Lists a Pagination Generated help page for either all commands or the specified subcategory @TODO NEEDS to be completely rewritten
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		Logger l = Registry.getLogger();
+		setLocalVariables();
+		admin = admin(src);
+		cheat = cheat(src);
+		general = general(src);
+		teleport = teleport(src);
+		misc = misc(src);
+		all = all(src);
+		
 		Optional<Integer> s = ctx.<Integer> getOne("SubDirectory");
 		if (s.isPresent()) {
-			if (s.get() == 1) {
+			if (s.get() == 1) { //admin
 				Utilities.getPaginationService().builder()
-		        	.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.getHelp().admin)
+		        	.title(Text.of(TextColors.AQUA, "RRR Commands"))
+		        	.contents(admin)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == 2) {
+			} else if (s.get() == 2) { //cheat
 				Utilities.getPaginationService().builder()
-					.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.getHelp().cheat)
+					.title(Text.of(TextColors.AQUA, "RRR Commands"))
+		        	.contents(cheat)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == 3) {
+			} else if (s.get() == 3) { //general
 				Utilities.getPaginationService().builder()
-					.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.getHelp().general)
+					.title(Text.of(TextColors.AQUA, "RRR Commands"))
+		        	.contents(general)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == 4) {
+			} else if (s.get() == 4) { //teleport
 				Utilities.getPaginationService().builder()
-					.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.getHelp().teleport)
+					.title(Text.of(TextColors.AQUA, "RRR Commands"))
+		        	.contents(teleport)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else if (s.get() == 5) {
+			} else if (s.get() == 5) { //misc
 				Utilities.getPaginationService().builder()
-					.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.getHelp().misc)
+					.title(Text.of(TextColors.AQUA, "RRR Commands"))
+		        	.contents(misc)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 		        	.sendTo(src);
 				return CommandResult.success();
-			} else {
+			} else { //all
 				Utilities.getPaginationService().builder()
-					.title(Text.of("RRRP2 Commands"))
-		        	.contents(HelpGenerator.getHelp().all)
+					.title(Text.of(TextColors.AQUA, "RRR Commands"))
+		        	.contents(all)
 		        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 		        	.sendTo(src);
 				return CommandResult.success();
 			}
 		} else {
 			Utilities.getPaginationService().builder()
-	        	.title(Text.of("RRRP2 Commands"))
-	        	.contents(HelpGenerator.getHelp().all)
+	        	.title(Text.of(TextColors.AQUA, "RRR Commands"))
+	        	.contents(all)
 	        	.footer(Text.of("Thank you for choosing Re-RenderReality"))
 	        	.sendTo(src);
 			return CommandResult.success();
 		}
 	}
 	
-	private ArrayList<Text> admin() {
+	private ArrayList<Text> admin(CommandSource src) {
 		ArrayList<Text> array = new ArrayList<Text>();
 		array.add(Text.of(TextColors.GOLD, "                              Admin Commands"));
 		array.add(Text.of("-----------------------------------------------------"));
-		array.add(Text.of("/ClearEntities: Clears all the entities of the specified type"));
-		array.add(Text.of("/ListEntities: List all entities currently loaded"));
-		array.add(Text.of("/TPS: Show useful information about the server performance"));
-		array.add(Text.of("/Whois: Gives all known information about player"));
-		array.add(Text.of(" "));
-		return array;
+		for(String s : help.admin.keySet()) {
+			if(src.hasPermission(s)) {
+				array.add(help.admin.get(s));
+			}
+		}
+		if(array.size() == 2) {
+			ArrayList<Text> arrays = new ArrayList<Text>();
+			return arrays;
+		} else {
+			return array;
+		}
 	}
 	
-	private ArrayList<Text> cheat() {
+	private ArrayList<Text> cheat(CommandSource src) {
 		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                            Cheater Commands =)"));
+		array.add(Text.of(TextColors.GOLD, "                            Cheater Commands =)"));
 		array.add(Text.of("-----------------------------------------------------"));
-		array.add(Text.of("/Heal: Heals self or can heal another player"));
-		array.add(Text.of("/Fly: Enable fly mode for self or another player"));
-		
-		array.add(Text.of(" "));
-		return array;
+		for(String s : help.cheat.keySet()) {
+			if(src.hasPermission(s)) {
+				array.add(help.cheat.get(s));
+			}
+		}
+		if(array.size() == 2) {
+			ArrayList<Text> arrays = new ArrayList<Text>();
+			return arrays;
+		} else {
+			return array;
+		}
 	}
 	
-	private ArrayList<Text> general() {
+	private ArrayList<Text> general(CommandSource src) {
 		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                            General Commands"));
+		array.add(Text.of(TextColors.GOLD, "                            General Commands"));
 		array.add(Text.of("-----------------------------------------------------"));
-		array.add(Text.of("/Help: Help Command"));
-		
-		
-		array.add(Text.of(" "));
-		return array;
+		for(String s : help.general.keySet()) {
+			if(src.hasPermission(s)) {
+				array.add(help.general.get(s));
+			}
+		}
+		if(array.size() == 2) {
+			ArrayList<Text> arrays = new ArrayList<Text>();
+			return arrays;
+		} else {
+			return array;
+		}
 	}
 	
-	private ArrayList<Text> teleport() {
+	private ArrayList<Text> teleport(CommandSource src) {
 		ArrayList<Text> array = new ArrayList<Text>();
-		array.add(Text.of("                             Teleport Commands"));
+		array.add(Text.of(TextColors.GOLD, "                             Teleport Commands"));
 		array.add(Text.of("-----------------------------------------------------"));
-		
-		array.add(Text.of(" "));
-		return array;
+		for(String s : help.teleport.keySet()) {
+			if(src.hasPermission(s)) {
+				array.add(help.teleport.get(s));
+			}
+		}
+		if(array.size() == 2) {
+			ArrayList<Text> arrays = new ArrayList<Text>();
+			return arrays;
+		} else {
+			return array;
+		}
 	}
 	
-	private ArrayList<Text> misc() {
+	private ArrayList<Text> misc(CommandSource src) {
 		ArrayList<Text> array = new ArrayList<Text>();
 		array.add(Text.of("                              Other Commands"));
 		array.add(Text.of("-----------------------------------------------------"));
-		
-		array.add(Text.of(" "));
+		for(String s : help.misc.keySet()) {
+			if(src.hasPermission(s)) {
+				array.add(help.misc.get(s));
+			}
+		}
+		if(array.size() == 2) {
+			ArrayList<Text> arrays = new ArrayList<Text>();
+			return arrays;
+		} else {
+			return array;
+		}
+	}
+	
+	private ArrayList<Text> all(CommandSource src) {
+		ArrayList<Text> array = new ArrayList<Text>();
+		array.addAll(admin(src));
+		array.addAll(cheat(src));
+		array.addAll(general(src));
+		array.addAll(teleport(src));
+		array.addAll(misc(src));
 		return array;
 	}
 	
@@ -158,8 +252,8 @@ public class HelpCommand extends CommandExecutorBase {
 		map.put("Teleport", 4);
 		map.put("Various", 5);
 		return CommandSpec.builder()
-				.description(Text.of("Displays a list of commands for the user"))
-				.permission("rrr.general.help")
+				.description(Text.of(description))
+				.permission(perm)
 				.arguments(GenericArguments.optional(GenericArguments.choices(Text.of("SubDirectory"), map)))
 				.executor(this).build();
 	}

@@ -53,8 +53,8 @@ public class SpeedCommand extends CommandExecutorBase {
 	}
 	
 	@Override
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> optionalTarget = ctx.<Player> getOne("player");
 		int multiplier = ctx.<Integer> getOne("speed").get();
 

@@ -19,13 +19,46 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
-public class ReplyCommand extends CommandExecutorBase
-{
+public class ReplyCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/reply";
+		description = "Reply to the most recent message recieved";
+		perm = "rrr.general.msg";
+		useage = "/r <msg>";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	/**
 	 * Command to Reply to a recent message
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> messages = ctx.<String> getOne("Message");
 		
 		Logger l = Registry.getLogger();
@@ -75,8 +108,8 @@ public class ReplyCommand extends CommandExecutorBase
 	{
 		
 		return CommandSpec.builder()
-			.description(Text.of("A message to another player"))
-			.permission("rrr.general.message")
+			.description(Text.of(description))
+			.permission(perm)
 			.arguments(GenericArguments.remainingJoinedStrings(Text.of("Message")))
 			.executor(this)
 			.build();

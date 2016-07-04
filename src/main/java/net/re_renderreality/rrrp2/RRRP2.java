@@ -139,7 +139,6 @@ public class RRRP2{
 		Announcements.getConfig().setup();
 		Chat.getConfig().setup();
 		
-		HelpGenerator.getHelp().populate();
 		getLogger().info(container.getName() + ": Config Initiallation Finished");
 	}
 	
@@ -157,6 +156,8 @@ public class RRRP2{
 		Registry.setLogger(getLogger());
 		Registry.setOnlinePlayers(getOnlinePlayer());
 		CommandLoader.registerCommands();
+		
+		HelpGenerator.getHelp().populate();
 		
 		getGame().getEventManager().registerListeners(this, new PlayerJoinListener());
 		getGame().getEventManager().registerListeners(this, new MessageListener());

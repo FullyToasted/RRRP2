@@ -54,8 +54,8 @@ public class RepairCommand extends CommandExecutorBase {
 	public String getNotes() {
 		return this.notes;
 	}
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Game game = Registry.getGame();
 		ItemStack.Builder itemStackBuilder = game.getRegistry().createBuilder(ItemStack.Builder.class);
 

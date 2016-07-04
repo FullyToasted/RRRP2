@@ -22,8 +22,43 @@ import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
 public class EntityDBCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/entityinfo";
+		description = "Gives info on the mob you are looking at";
+		perm = "rrr.general.entitydb";
+		useage = "/entityinfo";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	//shows information about the entity being looked on
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 
@@ -80,8 +115,8 @@ public class EntityDBCommand extends CommandExecutorBase {
 	@Override
 	public CommandSpec getSpec() {
 		return CommandSpec.builder()
-				.description(Text.of("EntityInfo Command"))
-				.permission("rrr.general.entityinfo")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this).build();
 	}
 }

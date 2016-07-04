@@ -68,8 +68,8 @@ public class ManageWarpsCommand  extends CommandExecutorBase {
 	/**
 	 * Explanation of what command does and if complicated how to do it
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
 		Optional<Integer> hID = ctx.<Integer> getOne("HomeID");
 		

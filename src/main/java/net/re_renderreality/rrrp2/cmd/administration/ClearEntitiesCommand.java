@@ -55,8 +55,8 @@ public class ClearEntitiesCommand extends CommandExecutorBase {
 	 * 
 	 * Removes only one entity at a time.
 	 */
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{	
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {	
+		setLocalVariables();
 		int count = 0;
 		String entity = ctx.<String>getOne("Entity").get();
 		

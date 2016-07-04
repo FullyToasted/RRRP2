@@ -33,7 +33,42 @@ import java.util.stream.StreamSupport;
 import javax.annotation.Nonnull;
 
 public class ListCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/list";
+		description = "Displays a list of all online players";
+		perm = "rrr.general.list";
+		useage = "/list";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		//Checks for plugins like PEX
 		Optional<PermissionService> optPermissionService = Sponge.getServiceManager().provide(PermissionService.class);
 
@@ -142,8 +177,8 @@ public class ListCommand extends CommandExecutorBase {
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-			.description(Text.of("List Command"))
-			.permission("rrr.general.list")
+			.description(Text.of(description))
+			.permission(perm)
 			.executor(this)
 			.build();
 	}

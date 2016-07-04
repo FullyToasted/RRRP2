@@ -54,6 +54,7 @@ public class RulesRemoveCommand extends CommandExecutorBase{
 	
 	//remove an existing rule
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 	
 		Optional<Integer> theNum = ctx.<Integer> getOne("Rule Number");
 		if(theNum.isPresent()) {

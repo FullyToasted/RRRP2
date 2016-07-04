@@ -7,7 +7,6 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.message.MessageChannelEvent;
 import org.spongepowered.api.service.permission.Subject;
-import org.spongepowered.api.service.permission.option.OptionSubject;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
@@ -38,14 +37,9 @@ public class ChatListener {
 		String suffix = "";
 		TextColor nameColor = TextColors.WHITE;
 	
-		if (subject instanceof OptionSubject)
-		{
-			OptionSubject optionSubject = (OptionSubject) subject;
-	
-			prefix = optionSubject.getOption("prefix").orElse("");
-			suffix = optionSubject.getOption("suffix").orElse("");
-			nameColor = Sponge.getRegistry().getType(TextColor.class, optionSubject.getOption("namecolor").orElse("")).orElse(TextColors.WHITE);
-		}
+		prefix = subject.getOption("prefix").orElse("");
+		suffix = subject.getOption("suffix").orElse("");
+		nameColor = Sponge.getRegistry().getType(TextColor.class, subject.getOption("namecolor").orElse("")).orElse(TextColors.WHITE);
 	
 		String restOfOriginal = original.substring(original.indexOf(">") + 1, original.length());
 	

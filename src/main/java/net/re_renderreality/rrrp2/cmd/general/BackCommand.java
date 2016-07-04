@@ -26,9 +26,44 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class BackCommand extends CommandExecutorBase {
+	private String name;
+	private String description;
+	private String perm;
+	private String useage;
+	private String notes;
+	
+	protected void setLocalVariables() {
+		name = "/back";
+		description = "Teleports you back to your last teleport location";
+		perm = "rrr.general.back";
+		useage = "/back";
+		notes = null;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public String getPerm() {
+		return this.perm;
+	}
+	
+	public String getUseage() {
+		return this.useage;
+	}
+	
+	public String getNotes() {
+		return this.notes;
+	}
+	
 	//Teleports the player to their last known location
 	//A last location is set at login, death, or a teleport
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			int id = Database.getID(player.getUniqueId().toString());
@@ -90,8 +125,8 @@ public class BackCommand extends CommandExecutorBase {
 	public CommandSpec getSpec()
 	{
 		return CommandSpec.builder()
-				.description(Text.of("Returns Player to last Death or Teleport Location"))
-				.permission("rrr.general.back")
+				.description(Text.of(description))
+				.permission(perm)
 				.executor(this).build();
 	}
 }

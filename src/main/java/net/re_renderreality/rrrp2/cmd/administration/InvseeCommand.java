@@ -59,6 +59,7 @@ public class InvseeCommand extends CommandExecutorBase {
 	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Player> player = ctx.<Player> getOne("Player");
 		
 		if(src instanceof Player) {

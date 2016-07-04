@@ -56,8 +56,8 @@ public class WeatherCommand extends CommandExecutorBase {
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<Integer> weatherNum = ctx.<Integer> getOne("weather");
 		Optional<Integer> duration = ctx.<Integer> getOne("duration");
 

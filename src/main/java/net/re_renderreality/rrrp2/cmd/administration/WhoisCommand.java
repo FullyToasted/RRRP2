@@ -60,8 +60,8 @@ public class WhoisCommand extends CommandExecutorBase {
 		return this.notes;
 	}
 	
-	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
-	{
+	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
+		setLocalVariables();
 		Optional<String> player = ctx.<String> getOne("player name");
 		Optional<Player> pPlayer = ctx.<Player> getOne("player");
 		
