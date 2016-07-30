@@ -3,6 +3,10 @@ package net.re_renderreality.rrrp2.utils;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.event.cause.Cause;
+import org.spongepowered.api.event.cause.NamedCause;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnCause;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnTypes;
 import org.spongepowered.api.world.World;
 
 import com.flowpowered.math.vector.Vector3i;
@@ -55,52 +59,52 @@ public class SurroundedPlayer {
 		BlockState blockBelow = world.containsBlock(below) ? world.getBlock(below) : null;
 	    if (blockBelow != null) {
 	    	bbelow = world.getBlock(below).getType(); 
-	        world.setBlock(below, BlockState.builder().blockType(block).build());
+	        world.setBlock(below, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockAbove = world.containsBlock(above) ? world.getBlock(above) : null;
 	    if (blockAbove != null) {
 	    	babove = world.getBlock(above).getType();
-	        world.setBlock(above, BlockState.builder().blockType(block).build());
+	        world.setBlock(above, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockLeft1 = world.containsBlock(left1) ? world.getBlock(left1) : null;
 	    if (blockLeft1 != null) {
 	    	bleft1 = world.getBlock(left1).getType();
-	        world.setBlock(left1, BlockState.builder().blockType(block).build());
+	        world.setBlock(left1, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockLeft2 = world.containsBlock(left2) ? world.getBlock(left2) : null;
 	    if (blockLeft2 != null) {
 	    	bleft2 = world.getBlock(left2).getType();
-	        world.setBlock(left2, BlockState.builder().blockType(block).build());
+	        world.setBlock(left2, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockRight1 = world.containsBlock(right1) ? world.getBlock(right1) : null;
 	    if (blockRight1 != null) {
 	    	bright1 = world.getBlock(right1).getType();
-	        world.setBlock(right1, BlockState.builder().blockType(block).build());
+	        world.setBlock(right1, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockRight2 = world.containsBlock(right2) ? world.getBlock(right2) : null;
 	    if (blockRight2 != null) {
 	    	bright2 = world.getBlock(right2).getType();
-	        world.setBlock(right2, BlockState.builder().blockType(block).build());
+	        world.setBlock(right2, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockFront1 = world.containsBlock(front1) ? world.getBlock(front1) : null;
 	    if (blockFront1 != null) {
 	    	bfront1 = world.getBlock(front1).getType();
-	        world.setBlock(front1, BlockState.builder().blockType(block).build());
+	        world.setBlock(front1, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockFront2 = world.containsBlock(front2) ? world.getBlock(front2) : null;
 	    if (blockFront2 != null) {
 	    	bfront2 = world.getBlock(front2).getType();
-	        world.setBlock(front2, BlockState.builder().blockType(block).build());
+	        world.setBlock(front2, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockBack1 = world.containsBlock(back1) ? world.getBlock(back1) : null;
 	    if (blockBack1 != null) {
 	    	bback1 = world.getBlock(back1).getType();
-	        world.setBlock(back1, BlockState.builder().blockType(block).build());
+	        world.setBlock(back1, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockBack2 = world.containsBlock(back2) ? world.getBlock(back2) : null;
 	    if (blockBack2 != null) {
 	    	bback2 = world.getBlock(back2).getType();
-	        world.setBlock(back2, BlockState.builder().blockType(block).build());
+	        world.setBlock(back2, BlockState.builder().blockType(block).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    this.surrounded = true;
 	    return true;
@@ -109,43 +113,43 @@ public class SurroundedPlayer {
 	public boolean free() {
 		BlockState blockBelow = world.containsBlock(below) ? world.getBlock(below) : null;
 	    if (blockBelow != null) {
-	        world.setBlock(below, BlockState.builder().blockType(bbelow).build());
+	        world.setBlock(below, BlockState.builder().blockType(bbelow).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockAbove = world.containsBlock(above) ? world.getBlock(above) : null;
 	    if (blockAbove != null) {
-	        world.setBlock(above, BlockState.builder().blockType(babove).build());
+	        world.setBlock(above, BlockState.builder().blockType(babove).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockLeft1 = world.containsBlock(left1) ? world.getBlock(left1) : null;
 	    if (blockLeft1 != null) {
-	        world.setBlock(left1, BlockState.builder().blockType(bleft1).build());
+	        world.setBlock(left1, BlockState.builder().blockType(bleft1).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockLeft2 = world.containsBlock(left2) ? world.getBlock(left2) : null;
 	    if (blockLeft2 != null) {
-	        world.setBlock(left2, BlockState.builder().blockType(bleft2).build());
+	        world.setBlock(left2, BlockState.builder().blockType(bleft2).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockRight1 = world.containsBlock(right1) ? world.getBlock(right1) : null;
 	    if (blockRight1 != null) {
-	        world.setBlock(right1, BlockState.builder().blockType(bright1).build());
+	        world.setBlock(right1, BlockState.builder().blockType(bright1).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockRight2 = world.containsBlock(right2) ? world.getBlock(right2) : null;
 	    if (blockRight2 != null) {
-	        world.setBlock(right2, BlockState.builder().blockType(bright2).build());
+	        world.setBlock(right2, BlockState.builder().blockType(bright2).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockFront1 = world.containsBlock(front1) ? world.getBlock(front1) : null;
 	    if (blockFront1 != null) {
-	        world.setBlock(front1, BlockState.builder().blockType(bfront1).build());
+	        world.setBlock(front1, BlockState.builder().blockType(bfront1).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockFront2 = world.containsBlock(front2) ? world.getBlock(front2) : null;
 	    if (blockFront2 != null) {
-	        world.setBlock(front2, BlockState.builder().blockType(bfront2).build());
+	        world.setBlock(front2, BlockState.builder().blockType(bfront2).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockBack1 = world.containsBlock(back1) ? world.getBlock(back1) : null;
 	    if (blockBack1 != null) {
-	        world.setBlock(back1, BlockState.builder().blockType(bback1).build());
+	        world.setBlock(back1, BlockState.builder().blockType(bback1).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    BlockState blockBack2 = world.containsBlock(back2) ? world.getBlock(back2) : null;
 	    if (blockBack2 != null) {
-	        world.setBlock(back2, BlockState.builder().blockType(bback2).build());
+	        world.setBlock(back2, BlockState.builder().blockType(bback2).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	    }
 	    return true;
 	}

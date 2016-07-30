@@ -17,6 +17,10 @@ import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.data.property.block.PassableProperty;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.event.cause.Cause;
+import org.spongepowered.api.event.cause.NamedCause;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnCause;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnTypes;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.util.blockray.BlockRay;
@@ -128,7 +132,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 		        
 		        BlockState blockBelow = world.containsBlock(below) ? world.getBlock(below) : null;
 		        if (blockBelow != null) {
-		            world.setBlock(below, BlockState.builder().blockType(BlockTypes.DIRT).build());
+		            world.setBlock(below, BlockState.builder().blockType(BlockTypes.DIRT).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 		        }
 		        
 		        //Remove Grass, redstone, etc.
@@ -139,7 +143,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 
 		        boolean passableBlockRemoved = false;
 		        if (blockPassable) {
-		            world.setBlock(pos, BlockState.builder().blockType(BlockTypes.AIR).build(), true);
+		            world.setBlock(pos, BlockState.builder().blockType(BlockTypes.AIR).build(), Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 		            passableBlockRemoved = true;
 		        }
 		        
@@ -152,7 +156,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 		            treePlaced = true;
 		        } else if (passableBlockRemoved) {
 		            //Reset passable Block
-		            world.setBlock(pos, blockOnPosition);
+		            world.setBlock(pos, blockOnPosition, Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 		            
 		        } else {
 		        	src.sendMessage(Text.of(TextColors.RED, "Failed"));
@@ -162,7 +166,7 @@ public class BigTreeCommand extends CommandExecutorBase {
 		        if (blockBelow != null && !(treePlaced && (blockBelow.getType() == BlockTypes.AIR ||
 		                blockBelow.getType() == BlockTypes.WATER ||
 		                blockBelow.getType() == BlockTypes.FLOWING_WATER))) {
-		            world.setBlock(below, blockBelow);
+		            world.setBlock(below, blockBelow, Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 		        }
 		        return CommandResult.success();
 			}
