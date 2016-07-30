@@ -78,7 +78,7 @@ public class SetWarpCommand extends CommandExecutorBase {
 				src.sendMessage(Text.of(TextColors.GOLD, "Warp Overriden!"));
 				return CommandResult.success();
 			}
-			int nextID = Database.findNextID("homes");
+			int nextID = Database.findNextID("warps");
 			
 			warp.setID(nextID);
 			warp.setCreator(source.getName());
@@ -92,14 +92,14 @@ public class SetWarpCommand extends CommandExecutorBase {
 		return CommandResult.empty();
 	}
 
-	private void setWarp(WarpCore home, Player source) {
-		home.setWorld(source.getWorld().getName());
-		home.setX(source.getTransform().getLocation().getX());
-		home.setY(source.getTransform().getLocation().getY());
-		home.setZ(source.getTransform().getLocation().getZ());
-		home.setYaw(source.getTransform().getYaw());
-		home.setPitch(source.getTransform().getPitch());	
-		home.setRoll(source.getTransform().getRoll());
+	private void setWarp(WarpCore warp, Player source) {
+		warp.setWorld(source.getWorld().getName());
+		warp.setX(source.getTransform().getLocation().getX());
+		warp.setY(source.getTransform().getLocation().getY());
+		warp.setZ(source.getTransform().getLocation().getZ());
+		warp.setYaw(source.getTransform().getYaw());
+		warp.setPitch(source.getTransform().getPitch());	
+		warp.setRoll(source.getTransform().getRoll());
 	}
 	
 	@Nonnull

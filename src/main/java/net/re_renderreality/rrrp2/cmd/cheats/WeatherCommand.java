@@ -118,7 +118,7 @@ public class WeatherCommand extends CommandExecutorBase {
 				.builder()
 				.description(Text.of(description))
 				.permission(perm)
-				.arguments(GenericArguments.seq(GenericArguments.choices(Text.of("Command"), map)),
+				.arguments(GenericArguments.seq(GenericArguments.choices(Text.of("weather"), map)),
 							GenericArguments.optional(GenericArguments.onlyOne(GenericArguments.integer(Text.of("duration")))))
 				.executor(this)
 				.build();

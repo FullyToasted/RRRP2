@@ -359,9 +359,16 @@ public class Database {
 				rs = statement.executeQuery("Select * from helpop WHERE resolved = 0;");
 			}
 			while(rs.next()) {
-				completedString.add(Text.of(TextColors.GOLD, "ID: ", TextColors.GRAY, rs.getInt("ID"), TextColors.GOLD, " Submitter: ", TextColors.GRAY, rs.getString("submitter"),
-											" Resolved: ", TextColors.GRAY, Utilities.boolToString(rs.getBoolean("resolved")), TextColors.GOLD, " Message: ", TextColors.GRAY, 
-											rs.getString("message"), TextColors.GOLD));
+				Text t;
+				if(rs.getBoolean("resolved")) {
+					t = Text.of(TextColors.GREEN, Utilities.boolToString(rs.getBoolean("resolved")));
+				} else {
+					t = Text.of(TextColors.RED, Utilities.boolToString(rs.getBoolean("resolved")));
+				}
+				Text fin = Text.builder().append(Text.of(TextColors.GOLD, "ID: ", TextColors.GRAY, rs.getInt("ID"), 
+											TextColors.GOLD, " Submitter: ", TextColors.GRAY, rs.getString("submitter"), 
+											TextColors.GOLD, " Resolved: ")).append(t).build();
+				completedString.add(fin);
 			}
 			rs.close();
 			
@@ -380,9 +387,16 @@ public class Database {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("Select * from helpop WHERE resolved = 0;");
 			while(rs.next()) {
-				completedString.add(Text.of(TextColors.GOLD, "ID: ", TextColors.GRAY, rs.getInt("ID"), TextColors.GOLD, " Submitter: ", TextColors.GRAY, rs.getString("submitter"), TextColors.GOLD,
-											" Resolved: ", TextColors.GRAY, Utilities.boolToString(rs.getBoolean("resolved")), TextColors.GOLD, " Message: ", TextColors.GRAY, 
-											rs.getString("message"), TextColors.GOLD));
+				Text t;
+				if(rs.getBoolean("resolved")) {
+					t = Text.of(TextColors.GREEN, Utilities.boolToString(rs.getBoolean("resolved")));
+				} else {
+					t = Text.of(TextColors.RED, Utilities.boolToString(rs.getBoolean("resolved")));
+				}
+				Text fin = Text.builder().append(Text.of(TextColors.GOLD, "ID: ", TextColors.GRAY, rs.getInt("ID"), 
+											TextColors.GOLD, " Submitter: ", TextColors.GRAY, rs.getString("submitter"), 
+											TextColors.GOLD, " Resolved: ")).append(t).build();
+				completedString.add(fin);
 			}
 			rs.close();
 			

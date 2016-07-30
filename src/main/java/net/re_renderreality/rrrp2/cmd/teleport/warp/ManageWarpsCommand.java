@@ -38,7 +38,7 @@ public class ManageWarpsCommand  extends CommandExecutorBase {
 	private String notes;
 	
 	protected void setLocalVariables() {
-		name = "/tphere";
+		name = "/managewarps";
 		description = "Manage the warp list";
 		perm = "rrr.admin.manager.warp";
 		useage = "/tphere (goto|delete|inspect) (WarpID)";
@@ -71,7 +71,7 @@ public class ManageWarpsCommand  extends CommandExecutorBase {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		setLocalVariables();
 		Optional<Integer> oCommand = ctx.<Integer> getOne("Command");
-		Optional<Integer> hID = ctx.<Integer> getOne("HomeID");
+		Optional<Integer> hID = ctx.<Integer> getOne("WarpID");
 		
 		if(src instanceof Player) {
 			Player player = (Player) src;

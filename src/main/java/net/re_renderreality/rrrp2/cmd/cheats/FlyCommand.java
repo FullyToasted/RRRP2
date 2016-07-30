@@ -63,7 +63,7 @@ public class FlyCommand extends CommandExecutorBase {
 		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.fly.self")) {
 			if( src instanceof Player) {
 				Player player = (Player) src;
-				PlayerCore playerz = Registry.getOnlinePlayers().getPlayerCorefromUsername(targetPlayer.get().getName());
+				PlayerCore playerz = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 				
 				//toggles fly mode
 				if(player.get(Keys.CAN_FLY).isPresent()) {
