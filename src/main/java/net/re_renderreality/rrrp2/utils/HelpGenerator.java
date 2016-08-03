@@ -1,5 +1,6 @@
 package net.re_renderreality.rrrp2.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -13,12 +14,12 @@ import net.re_renderreality.rrrp2.backend.CommandLoader;
 import net.re_renderreality.rrrp2.database.Registry;
 
 public class HelpGenerator {
-	public HashMap<String, Text> admin = new HashMap<String,Text>();
-	public HashMap<String, Text> cheat = new HashMap<String,Text>();
-	public HashMap<String, Text> general = new HashMap<String,Text>();
-	public HashMap<String, Text> teleport = new HashMap<String,Text>();
-	public HashMap<String, Text> misc = new HashMap<String,Text>();
-	public HashMap<String, Text> all = new HashMap<String,Text>();
+	public HashMap<String, ArrayList<Text>> admin = new HashMap<String,ArrayList<Text>>();
+	public HashMap<String, ArrayList<Text>> cheat = new HashMap<String,ArrayList<Text>>();
+	public HashMap<String, ArrayList<Text>> general = new HashMap<String,ArrayList<Text>>();
+	public HashMap<String, ArrayList<Text>> teleport = new HashMap<String,ArrayList<Text>>();
+	public HashMap<String, ArrayList<Text>> misc = new HashMap<String,ArrayList<Text>>();
+	public HashMap<String, ArrayList<Text>> all = new HashMap<String,ArrayList<Text>>();
 	//creates a HelpGenerator instance
 	private static HelpGenerator help = new HelpGenerator();
 	
@@ -59,15 +60,60 @@ public class HelpGenerator {
 			})).build();
 			
 			if(cmd.getHelpCategory() == Registry.helpCategory.Admin) {
-				admin.put(perm, t);
+				if(!admin.containsKey(perm)) {
+					ArrayList<Text> temp = new ArrayList<Text>();
+					temp.add(t);
+					admin.put(perm, temp);
+				} else {
+					ArrayList<Text> temp = admin.get(perm);
+					admin.remove(perm);
+					temp.add(t);					
+					admin.put(perm, temp);
+				}
 			} else if (cmd.getHelpCategory() == Registry.helpCategory.Cheater) {
-				cheat.put(perm, t);
+				if(!cheat.containsKey(perm)) {
+					ArrayList<Text> temp = new ArrayList<Text>();
+					temp.add(t);
+					cheat.put(perm, temp);
+				} else {
+					ArrayList<Text> temp = cheat.get(perm);
+					cheat.remove(perm);
+					temp.add(t);					
+					cheat.put(perm, temp);
+				}
 			} else if (cmd.getHelpCategory() == Registry.helpCategory.General) {
-				general.put(perm, t);
+				if(!general.containsKey(perm)) {
+					ArrayList<Text> temp = new ArrayList<Text>();
+					temp.add(t);
+					general.put(perm, temp);
+				} else {
+					ArrayList<Text> temp = general.get(perm);
+					general.remove(perm);
+					temp.add(t);					
+					general.put(perm, temp);
+				}
 			} else if (cmd.getHelpCategory() == Registry.helpCategory.Teleport) {
-				teleport.put(perm, t);
+				if(!teleport.containsKey(perm)) {
+					ArrayList<Text> temp = new ArrayList<Text>();
+					temp.add(t);
+					teleport.put(perm, temp);
+				} else {
+					ArrayList<Text> temp = teleport.get(perm);
+					teleport.remove(perm);
+					temp.add(t);					
+					teleport.put(perm, temp);
+				}
 			} else if (cmd.getHelpCategory() == Registry.helpCategory.Misc) {
-				misc.put(perm, t);
+				if(!misc.containsKey(perm)) {
+					ArrayList<Text> temp = new ArrayList<Text>();
+					temp.add(t);
+					misc.put(perm , temp);
+				} else {
+					ArrayList<Text> temp = misc.get(perm);
+					misc.remove(perm);
+					temp.add(t);					
+					misc.put(perm, temp);
+				}
 			} 		
 		});
 	}

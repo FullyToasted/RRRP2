@@ -21,7 +21,7 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
-public class ManageHelpOP extends CommandExecutorBase{
+public class ManageHelpOP extends CommandExecutorBase {
 	private String name;
 	private String description;
 	private String perm;
@@ -157,4 +157,3 @@ public class ManageHelpOP extends CommandExecutorBase{
 				.executor(this).build();
 	}
 }
-

@@ -140,7 +140,9 @@ public class HelpCommand extends CommandExecutorBase {
 		array.add(Text.of("-----------------------------------------------------"));
 		for(String s : help.admin.keySet()) {
 			if(src.hasPermission(s)) {
-				array.add(help.admin.get(s));
+				for(Text t : help.admin.get(s)) {
+					array.add(t);
+				}
 			}
 		}
 		if(array.size() == 2) {
@@ -157,7 +159,9 @@ public class HelpCommand extends CommandExecutorBase {
 		array.add(Text.of("-----------------------------------------------------"));
 		for(String s : help.cheat.keySet()) {
 			if(src.hasPermission(s)) {
-				array.add(help.cheat.get(s));
+				for(Text t : help.cheat.get(s)) {
+					array.add(t);
+				}
 			}
 		}
 		if(array.size() == 2) {
@@ -174,7 +178,9 @@ public class HelpCommand extends CommandExecutorBase {
 		array.add(Text.of("-----------------------------------------------------"));
 		for(String s : help.general.keySet()) {
 			if(src.hasPermission(s)) {
-				array.add(help.general.get(s));
+				for(Text t : help.general.get(s)) {
+					array.add(t);
+				}
 			}
 		}
 		if(array.size() == 2) {
@@ -191,7 +197,9 @@ public class HelpCommand extends CommandExecutorBase {
 		array.add(Text.of("-----------------------------------------------------"));
 		for(String s : help.teleport.keySet()) {
 			if(src.hasPermission(s)) {
-				array.add(help.teleport.get(s));
+				for(Text t : help.teleport.get(s)) {
+					array.add(t);
+				}
 			}
 		}
 		if(array.size() == 2) {
@@ -208,7 +216,9 @@ public class HelpCommand extends CommandExecutorBase {
 		array.add(Text.of("-----------------------------------------------------"));
 		for(String s : help.misc.keySet()) {
 			if(src.hasPermission(s)) {
-				array.add(help.misc.get(s));
+				for(Text t : help.misc.get(s)) {
+					array.add(t);
+				}
 			}
 		}
 		if(array.size() == 2) {
