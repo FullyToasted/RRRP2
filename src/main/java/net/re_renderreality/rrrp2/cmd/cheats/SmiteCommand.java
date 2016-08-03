@@ -150,8 +150,7 @@ public class SmiteCommand extends CommandExecutorBase {
 	private void spawnEntity(Location<World> location, CommandSource src)
 	{
 		Extent extent = location.getExtent();
-		Optional<Entity> optional = extent.createEntity(EntityTypes.LIGHTNING, location.getPosition());
-		Entity lightning = optional.get();
+		Entity lightning = extent.createEntity(EntityTypes.LIGHTNING, location.getPosition());
 		extent.spawnEntity(lightning, Cause.of(NamedCause.source(SpawnCause.builder().type(SpawnTypes.PLUGIN).build())));
 	}
 
