@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.Configurable;
-import net.re_renderreality.rrrp2.utils.Log;
 
 /**
  * Handles the config.conf file
@@ -37,7 +36,6 @@ public class Config implements Configurable
 	@Override
 	public void setup()
 	{
-		Log.test("FILE EXSIST? " + !Files.exists(configFile));
 		if (!Files.exists(configFile))
 		{
 			try

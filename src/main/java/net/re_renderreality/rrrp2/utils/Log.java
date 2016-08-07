@@ -8,6 +8,10 @@ import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 public class Log {
 
 private static Logger logger;
+
+	public static void setLogger(Logger l) {
+		logger = l;
+	}
 	
 	public static void info(String message) {
 		if(ReadConfig.getDebugLevel() == DebugLevel.INFO || ReadConfig.getDebugLevel() == DebugLevel.ALL || ReadConfig.getDebugLevel() == DebugLevel.DEBUG) {
@@ -36,7 +40,7 @@ private static Logger logger;
 	
 	public static void debug(String message) {
 		if(ReadConfig.getDebugLevel() == DebugLevel.DEBUG || ReadConfig.getDebugLevel() == DebugLevel.ALL) {
-			logger.debug(message);
+			logger.info(message);
 		}
 	}
 
@@ -51,6 +55,6 @@ private static Logger logger;
 	}
 
 	public static void test(String test) {
-		Log.error(test);
+		logger.warn(test);
 	}	
 }

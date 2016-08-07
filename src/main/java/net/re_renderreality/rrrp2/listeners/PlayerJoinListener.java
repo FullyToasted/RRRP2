@@ -4,10 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
 import net.re_renderreality.rrrp2.RRRP2;
@@ -61,7 +63,6 @@ public class PlayerJoinListener
 				Utilities.broadcastMessage(newMessage);
 			}
 		} else {
-		
 			String connectionMessage = ReadConfigMesseges.getJoinMsg();
 			Database.addUUID(uuid, id);
 			if (ReadConfigMesseges.getJoinMsgEnabled())
@@ -76,9 +77,20 @@ public class PlayerJoinListener
 		
 		OnlinePlayers OP = Registry.getOnlinePlayers();
 		PlayerCore players = Database.getPlayerCore(id);
+		
+		if(players.getInvisible()) {
+			if(player.get(Keys.INVISIBLE).isPresent()) {
+				player.offer(Keys.INVISIBLE, true);
+				player.sendMessage(Text.of(TextColors.GOLD, "Toggled Visibillity: ", TextColors.GRAY, "off"));
+				RRRP2.invisiblePlayers.add(player);
+				players.setInvisibleUpdate(!players.getInvisible());
+			}
+		}
+		
 		if (firstjoin) {
 			players.setFirstseenUpdate(todaysDate);
 		}
+		
 		players.setIPUpdate(player.getConnection().getAddress().getHostString());
 		players.setLastseenUpdate(todaysDate);
 		Database.commit();

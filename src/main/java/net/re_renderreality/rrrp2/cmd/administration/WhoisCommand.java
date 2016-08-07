@@ -127,9 +127,9 @@ public class WhoisCommand extends CommandExecutorBase {
 			src.sendMessage(Text.of(TextColors.GOLD, "Fly: ", TextColors.RED, offlinePlayer.getFly()));
 		}
 		if(offlinePlayer.getJailed()) {
-			src.sendMessage(Text.of(TextColors.GOLD, "TpToggle: ", TextColors.GREEN, offlinePlayer.getJailed()));
+			src.sendMessage(Text.of(TextColors.GOLD, "Jailed: ", TextColors.GREEN, offlinePlayer.getJailed()));
 		} else {
-			src.sendMessage(Text.of(TextColors.GOLD, "TpToggle: ", TextColors.RED, offlinePlayer.getJailed()));
+			src.sendMessage(Text.of(TextColors.GOLD, "Jailed: ", TextColors.RED, offlinePlayer.getJailed()));
 		}
 		if(offlinePlayer.getTPToggle()) {
 			src.sendMessage(Text.of(TextColors.GOLD, "TpToggle: ", TextColors.GREEN, offlinePlayer.getTPToggle()));

@@ -69,6 +69,7 @@ public class RRRP2{
 	public static List<Player> onePunch = Lists.newArrayList();
 	public static List<Player> jockey = Lists.newArrayList();
 	public static List<Player> socialSpy = Lists.newArrayList();
+	public static List<Player> invisiblePlayers = Lists.newArrayList();
 	public static Set<Integer> teleportingPlayers = Sets.newHashSet();
 	public static List<TPInvitation> pendingInvites = Lists.newArrayList();
 	public static Set<Integer> frozenPlayers = Sets.newHashSet();
@@ -85,19 +86,20 @@ public class RRRP2{
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event)
 	{
-		Log.info(container.getName() + ": Config Initiallation Beginning....");
+		Log.setLogger(logger);
+		logger.info(container.getName() + ": Config Initiallation Beginning....");
 		plugin = this;
 
 		// Create Config Directory for EssentialCmds
 		if (!Files.exists(configDir))
 		{
-			Log.debug(container.getName() + ": Config root not found generating...");
+			logger.info(container.getName() + ": Config root not found generating...");
 			if (Files.exists(configDir.resolveSibling("RRRP2")))
 			{
 				try
 				{
 					Files.move(configDir.resolveSibling("RRRP2"), configDir);
-					Log.debug(container.getName() + ": Config root generated");
+					logger.info(container.getName() + ": Config root generated");
 				}
 				catch (IOException e) 
 				{
@@ -109,7 +111,7 @@ public class RRRP2{
 				try
 				{
 					Files.createDirectories(configDir);
-					Log.debug(container.getName() + ": Config root generated");
+					logger.info(container.getName() + ": Config root generated");
 				}
 				catch (IOException e)
 				{
@@ -122,10 +124,10 @@ public class RRRP2{
 		// Create data Directory for the Plugin
 		if (!Files.exists(configDir.resolve("data")))
 		{
-			Log.debug(container.getName() + ": Config data subfolder not found generating...");
+			logger.info(container.getName() + ": Config data subfolder not found generating...");
 			try
 			{
-				Log.debug(container.getName() + ": Config data subfolder generated");
+				logger.info(container.getName() + ": Config data subfolder generated");
 				Files.createDirectories(configDir.resolve("data"));
 			}
 			catch (IOException e)
@@ -133,6 +135,7 @@ public class RRRP2{
 				e.printStackTrace();
 			}
 		}
+		
 		Config.getConfig().setup();
 		Messages.getConfig().setup();
 		MOTD.getConfig().setup();

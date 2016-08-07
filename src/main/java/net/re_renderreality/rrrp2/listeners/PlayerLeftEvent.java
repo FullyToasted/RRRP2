@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
@@ -41,6 +42,15 @@ public class PlayerLeftEvent
 			event.setMessage(newMessage);
 		}
 		PlayerCore playa = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
+		
+		if(playa.getInvisible()) {
+			if(player.get(Keys.INVISIBLE).isPresent()) {
+				player.offer(Keys.INVISIBLE, false);
+				RRRP2.invisiblePlayers.remove(player);
+				playa.setInvisibleUpdate(!playa.getInvisible());
+			}
+		}
+		
 		if(!(playa == null) && !(playa.getBanned())) {
 			playa.setLastlocationUpdate(lastloc);
 			playa.setLastseenUpdate(todaysDate);

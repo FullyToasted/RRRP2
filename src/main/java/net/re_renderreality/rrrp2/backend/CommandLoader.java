@@ -13,6 +13,7 @@ import net.re_renderreality.rrrp2.cmd.teleport.*;
 import net.re_renderreality.rrrp2.cmd.teleport.admintp.*;
 import net.re_renderreality.rrrp2.cmd.teleport.special.*;
 import net.re_renderreality.rrrp2.cmd.teleport.warp.*;
+import net.re_renderreality.rrrp2.cmd.vanish.*;
 
 import org.spongepowered.api.Sponge;
 
@@ -121,6 +122,7 @@ public final class CommandLoader {
                 new TPHereCommand(),
                 new TPSCommand(),
                 new TreeCommand(),
+                new VanishCommand(),
                 new WarpCommand(),
                 new WhoisCommand(),
                 new WeatherCommand(),
