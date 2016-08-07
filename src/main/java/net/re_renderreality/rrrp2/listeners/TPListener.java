@@ -14,7 +14,7 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.PluginInfo;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
-import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.events.TPAcceptEvent;
 import net.re_renderreality.rrrp2.events.TPEvent;
@@ -51,8 +51,7 @@ public class TPListener {
 	public void tpAcceptEventHandler(TPAcceptEvent event) {
 		String senderName = event.getSender().getName();
 		Player p = event.getRecipient();
-		int id = Database.getID(p.getUniqueId().toString());
-		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+		PlayerCore player = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.getName());
 		
 		if (ReadConfig.getTeleportCooldownEnabled() && !event.getRecipient().hasPermission("rrr.general.teleport.cooldownoverride")) {
 			RRRP2.teleportingPlayers.add(player.getID());
@@ -78,8 +77,7 @@ public class TPListener {
 	{
 		String recipientName = event.getRecipient().getName();
 		Player p = event.getRecipient();
-		int id = Database.getID(p.getUniqueId().toString());
-		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+		PlayerCore player = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.getName());
 
 		if (ReadConfig.getTeleportCooldownEnabled() && !event.getSender().hasPermission("rrr.general.teleport.cooldownoverride")) {
 			RRRP2.teleportingPlayers.add(player.getID());

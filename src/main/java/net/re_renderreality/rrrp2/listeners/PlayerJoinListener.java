@@ -17,6 +17,7 @@ import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.AFK;
 import net.re_renderreality.rrrp2.utils.Utilities;
 import net.re_renderreality.rrrp2.database.OnlinePlayers;
+import net.re_renderreality.rrrp2.database.Registry;
 
 
 public class PlayerJoinListener
@@ -42,7 +43,7 @@ public class PlayerJoinListener
 			id = Database.findNextID("players");
 			
 			firstjoin = true;
-			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(), player.getConnection().getAddress().getHostString(), "", "default", 5.0, false, false, false, false, false, 0.0, null, null, null, null );
+			PlayerCore thePlayer = new PlayerCore(id,player.getUniqueId().toString(),player.getName(), player.getConnection().getAddress().getHostString(), "", "default", 5.0, false, false, false, false, false, false, false, 0.0, null, null, null, null );
 			Database.addUUID(uuid, id);
 			thePlayer.insert();
 
@@ -73,7 +74,7 @@ public class PlayerJoinListener
 		
 		RRRP2.recentlyJoined.add(event.getTargetEntity());
 		
-		OnlinePlayers OP = RRRP2.getRRRP2().getOnlinePlayer();
+		OnlinePlayers OP = Registry.getOnlinePlayers();
 		PlayerCore players = Database.getPlayerCore(id);
 		if (firstjoin) {
 			players.setFirstseenUpdate(todaysDate);

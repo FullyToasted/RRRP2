@@ -11,9 +11,8 @@ import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigChat;
-import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Log;
 
@@ -25,8 +24,7 @@ public class ChatListener {
 	public void onMessage(MessageChannelEvent.Chat event)
 	{
 		Player player = event.getCause().first(Player.class).get();
-		int id = Database.getIDFromDatabase(player.getUniqueId().toString());
-		PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+		PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 		//String message = event.getMessage().toPlain();
 		 
 		StringBuilder original = new StringBuilder(event.getMessage().toPlain());

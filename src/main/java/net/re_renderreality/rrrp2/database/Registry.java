@@ -22,6 +22,9 @@ public class Registry {
 	 */
 	public static void setPlugin(RRRP2 p) { plugin = p; }
 	
+	/**
+	 * @param o sets current online players object
+	 */
 	public static void setOnlinePlayers(OnlinePlayers o) { onlinePlayers = o; }
 	
 	/**
@@ -39,5 +42,8 @@ public class Registry {
 	 */
 	public static Server getServer() { return game.getServer(); }	
 	
+	/**
+	 * @return Current Online Players Object
+	 */
 	public static OnlinePlayers getOnlinePlayers() { return onlinePlayers; }
 }

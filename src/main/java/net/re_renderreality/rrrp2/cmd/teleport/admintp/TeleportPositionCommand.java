@@ -17,7 +17,6 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
@@ -79,8 +78,7 @@ public class TeleportPositionCommand extends CommandExecutorBase {
 
 		if (p.isPresent()) {
 			if (src.hasPermission("teleport.pos.others")) {
-				int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(p.get().getName());
-				PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+				PlayerCore player = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.get().getName());
 				player.setLastlocationUpdate(Utilities.convertLocation(p.get()));
 
 				if(world != null)
@@ -94,8 +92,7 @@ public class TeleportPositionCommand extends CommandExecutorBase {
 		} else {
 			if (src instanceof Player) {
 				Player player = (Player) src;
-				int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(player.getName());
-				PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+				PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 				playercore.setLastlocationUpdate(Utilities.convertLocation(player));
 
 				if(world != null)

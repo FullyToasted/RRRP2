@@ -71,7 +71,7 @@ public class HomeCommand extends CommandExecutorBase {
 		setLocalVariables();
 		Optional<String> homeName = ctx.<String> getOne("homename");
 		Player source = (Player) src;
-		PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(source.getName());
+		PlayerCore player = Registry.getOnlinePlayers().getPlayerCorefromUsername(source.getName());
 		
 		if(src instanceof Player) {
 			if(homeName.isPresent()) {

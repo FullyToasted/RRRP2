@@ -100,7 +100,7 @@ public class Database {
 			}
 			
 			if(!tables.contains("players")) {
-				execute("CREATE TABLE players (ID INT, uuid VARCHAR(60), name TEXT, IP VARCHAR(45), nick TEXT, channel TEXT, money DOUBLE, banned BOOL, god BOOL, fly BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen TEXT, lastseen TEXT)");
+				execute("CREATE TABLE players (ID INT, uuid VARCHAR(60), name TEXT, IP VARCHAR(45), nick TEXT, channel TEXT, money DOUBLE, muted Bool, banned BOOL, god BOOL, fly BOOL, jailed BOOL, tptoggle BOOL, invisible BOOL, onlinetime DOUBLE, lastlocation TEXT, lastdeath TEXT, firstseen TEXT, lastseen TEXT)");
 				execute("INSERT INTO players VALUES (0, '" + "uuid" + "', '" + "name" + "', '" + "192.168.1.1" + "', '" + "nick" + "', '" + "channel" + "', 123.0, 0,  1, 0, 1, 0, 123.0, '" + "LastLocation" + "', '" + "LastDeath" + "', '" + "FirstSeen" + "', '" + "LastSeen" + "');");
 			}
 				
@@ -281,9 +281,46 @@ public class Database {
 				player.setNick(rs.getString("nick"));
 				player.setChannel(rs.getString("channel"));
 				player.setMoney(rs.getDouble("money"));
+				player.setMuted(rs.getBoolean("muted"));
 				player.setBanned(rs.getBoolean("banned"));
 				player.setGod(rs.getBoolean("god"));
 				player.setFly(rs.getBoolean("fly"));
+				player.setJailed(rs.getBoolean("jailed"));
+				player.setTPToggle(rs.getBoolean("tptoggle"));
+				player.setInvisible(rs.getBoolean("invisible"));
+				player.setOnlinetime(rs.getDouble("onlinetime"));
+				player.setLastlocation(rs.getString("lastlocation"));
+				player.setLastdeath(rs.getString("lastdeath"));
+				player.setFirstseen(rs.getString("firstseen"));
+				player.setLastseen(rs.getString("lastseen"));
+				rs.close();
+			}	
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return player;
+	}
+	
+	public static PlayerCore getPlayerCore(String username) {
+		PlayerCore player = new PlayerCore();
+		try {
+			Connection connection = datasource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM players WHERE name = " + username + ";");
+			while(rs.next()) {
+				player.setID(rs.getInt("ID"));
+				player.setUUID(rs.getString("uuid")); 
+				player.setName(rs.getString("name"));
+				player.setNick(rs.getString("nick"));
+				player.setChannel(rs.getString("channel"));
+				player.setMoney(rs.getDouble("money"));
+				player.setMuted(rs.getBoolean("muted"));
+				player.setBanned(rs.getBoolean("banned"));
+				player.setGod(rs.getBoolean("god"));
+				player.setFly(rs.getBoolean("fly"));
+				player.setJailed(rs.getBoolean("jailed"));
 				player.setTPToggle(rs.getBoolean("tptoggle"));
 				player.setInvisible(rs.getBoolean("invisible"));
 				player.setOnlinetime(rs.getDouble("onlinetime"));

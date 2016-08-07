@@ -17,7 +17,6 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
@@ -66,9 +65,9 @@ public class TeleportCommand extends CommandExecutorBase {
 
 		if (optionalPlayer.isPresent())	{
 			Player player = optionalPlayer.get();
-			PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(player.getName());
+			PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			Player s = (Player) src;
-			PlayerCore source = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(s.getName());
+			PlayerCore source = Registry.getOnlinePlayers().getPlayerCorefromUsername(s.getName());
 
 			if (optionalTarget.isPresent())	{
 				if (src.hasPermission("rrr.admin.tpo.others")) {
@@ -118,7 +117,7 @@ public class TeleportCommand extends CommandExecutorBase {
 
 			if (!optionalWorld.isPresent()) {
 				Location<World> location = new Location<>(target.getWorld(), x, y, z);
-				PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(target.getName());
+				PlayerCore playerTarget = Registry.getOnlinePlayers().getPlayerCorefromUsername(target.getName());
 				playerTarget.setLastlocationUpdate(Utilities.convertLocation(target));
 				target.setLocation(location);
 				target.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleported to location!"));
@@ -130,12 +129,12 @@ public class TeleportCommand extends CommandExecutorBase {
 					Location<World> location = new Location<>(world.get(), x, y, z);
 
 					if (!target.getWorld().getUniqueId().equals(world.get().getUniqueId())) {
-						PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(target.getName());
+						PlayerCore playerTarget = Registry.getOnlinePlayers().getPlayerCorefromUsername(target.getName());
 						playerTarget.setLastlocationUpdate(Utilities.convertLocation(target));
 						target.transferToWorld(world.get().getUniqueId(), location.getPosition());
 					}
 					else {
-						PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(target.getName());
+						PlayerCore playerTarget = Registry.getOnlinePlayers().getPlayerCorefromUsername(target.getName());
 						playerTarget.setLastlocationUpdate(Utilities.convertLocation(target));
 						target.setLocation(location);
 					}

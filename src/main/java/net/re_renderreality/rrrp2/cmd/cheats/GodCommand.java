@@ -16,7 +16,6 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
-import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 
@@ -60,8 +59,7 @@ public class GodCommand extends CommandExecutorBase {
 		Optional<Player> targetPlayer = ctx.<Player> getOne("player");
 		if(!targetPlayer.isPresent() && src.hasPermission("rrr.cheat.god.self") && src instanceof Player) {
 			Player player = (Player) src;
-			int id = Database.getID(player.getUniqueId().toString());
-			PlayerCore playerz = Registry.getOnlinePlayers().getPlayer(id);
+			PlayerCore playerz = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			if(playerz.getGod()) {
 				playerz.setGodUpdate(false);
 				player.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode: ", TextColors.GRAY, "off."));
@@ -71,8 +69,7 @@ public class GodCommand extends CommandExecutorBase {
 			}
 		} else if (src.hasPermission("rrr.cheat.god.others")) {
 			Player player = targetPlayer.get();
-			int id = Database.getID(player.getUniqueId().toString());
-			PlayerCore playerz = Registry.getOnlinePlayers().getPlayer(id);
+			PlayerCore playerz = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			if (playerz.getGod())
 			{
 				src.sendMessage(Text.of(TextColors.GOLD, "Toggled Godmode for " + player.getName() + ": ", TextColors.GRAY, "off."));

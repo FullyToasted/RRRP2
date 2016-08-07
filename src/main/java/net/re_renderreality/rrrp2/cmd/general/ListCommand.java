@@ -99,7 +99,7 @@ public class ListCommand extends CommandExecutorBase {
 					//Add Player to player list
 					if (optPlayer.isPresent() && !listedPlayers.contains(optPlayer.get().getUniqueId())) {
 						Player player = optPlayer.get();
-						PlayerCore playa = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(player.getName());
+						PlayerCore playa = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 						listedPlayers.add(optPlayer.get().getUniqueId());
 						Text name = null;
 						if(!(playa.getNick().equals(""))) {
@@ -131,7 +131,7 @@ public class ListCommand extends CommandExecutorBase {
 				List<Text> onlineUsers = Lists.newArrayList();
 
 				for (Player player : remainingPlayers) {
-					PlayerCore playa = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(player.getName());
+					PlayerCore playa = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 					Text name = Text.builder().append(TextSerializers.FORMATTING_CODE.deserialize(playa.getNick())).append(Text.of(" ")).build();
 					boolean isAFK = false;
 

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
@@ -72,7 +71,7 @@ public class WhoisCommand extends CommandExecutorBase {
 			playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(pPlayer.get().getName());
 		}
 		if( playercore.getID() == 0 ) {
-			src.sendMessage(Text.of(TextColors.RED, "Player does not Exsist!"));
+			src.sendMessage(Text.of(TextColors.RED, "Player does not Exist!"));
 			return CommandResult.empty();
 		}
 		
@@ -83,9 +82,7 @@ public class WhoisCommand extends CommandExecutorBase {
 					sendWhois(src, playercore);
 					return CommandResult.success();
 			} else if(!player.isPresent() && !pPlayer.isPresent()) {
-				String uuid = ((Player) src).getUniqueId().toString();
-				int ids = Database.getID(uuid);
-				PlayerCore self = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(ids);
+				PlayerCore self = Registry.getOnlinePlayers().getPlayerCorefromUsername(((Player) src).getName());
 				sendWhois(src, self);
 				return CommandResult.success();
 			}
@@ -109,6 +106,11 @@ public class WhoisCommand extends CommandExecutorBase {
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Nickname: ", TextColors.GRAY, offlinePlayer.getNick()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Chat Channel : ", TextColors.GRAY, offlinePlayer.getChannel()));
 		src.sendMessage(Text.of(TextColors.GOLD, "Player's Money: ", TextColors.GRAY, offlinePlayer.getMoney()));
+		if(offlinePlayer.getMuted()) {
+			src.sendMessage(Text.of(TextColors.GOLD, "Muted: ", TextColors.GREEN, offlinePlayer.getMuted()));
+		} else {
+			src.sendMessage(Text.of(TextColors.GOLD, "Muted: ", TextColors.RED, offlinePlayer.getMuted()));
+		}
 		if(offlinePlayer.getBanned()) {
 			src.sendMessage(Text.of(TextColors.GOLD, "Banned: ", TextColors.GREEN, offlinePlayer.getBanned()));
 		} else {
@@ -123,6 +125,11 @@ public class WhoisCommand extends CommandExecutorBase {
 			src.sendMessage(Text.of(TextColors.GOLD, "Fly: ", TextColors.GREEN, offlinePlayer.getFly()));
 		} else {
 			src.sendMessage(Text.of(TextColors.GOLD, "Fly: ", TextColors.RED, offlinePlayer.getFly()));
+		}
+		if(offlinePlayer.getJailed()) {
+			src.sendMessage(Text.of(TextColors.GOLD, "TpToggle: ", TextColors.GREEN, offlinePlayer.getJailed()));
+		} else {
+			src.sendMessage(Text.of(TextColors.GOLD, "TpToggle: ", TextColors.RED, offlinePlayer.getJailed()));
 		}
 		if(offlinePlayer.getTPToggle()) {
 			src.sendMessage(Text.of(TextColors.GOLD, "TpToggle: ", TextColors.GREEN, offlinePlayer.getTPToggle()));

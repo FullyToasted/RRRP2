@@ -22,7 +22,6 @@ import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigSpawn;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigTeleport;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
-import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
@@ -69,8 +68,7 @@ public class SpawnCommand extends CommandExecutorBase {
 		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
-			int id = Database.getID(player.getUniqueId().toString());
-			PlayerCore playerz = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+			PlayerCore playerz = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			Transform<World> spawn;
 			if(ReadConfigSpawn.isSpawnInConfig(Registry.getServer().getDefaultWorldName())) {
 				spawn = ReadConfigSpawn.getSpawn(Registry.getServer().getDefaultWorldName());

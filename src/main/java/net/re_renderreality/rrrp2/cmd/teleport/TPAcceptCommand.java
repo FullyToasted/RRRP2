@@ -97,10 +97,7 @@ public class TPAcceptCommand extends CommandExecutorBase {
 				RRRP2.pendingInvites.remove(foundInvitation);
 			}
 		}
-		else if (src instanceof ConsoleSource) {
-			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /tpaccept!"));
-		}
-		else if (src instanceof CommandBlockSource) {
+		else if (src instanceof ConsoleSource || src instanceof CommandBlockSource) {
 			src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "Must be an in-game player to use /tpaccept!"));
 		}
 		return CommandResult.success();

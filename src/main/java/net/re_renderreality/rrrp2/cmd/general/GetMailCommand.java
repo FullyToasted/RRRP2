@@ -17,7 +17,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
@@ -71,8 +70,7 @@ public class GetMailCommand extends CommandExecutorBase {
 		//lists the mail a player has received. Mail is never truly deleted
 		if(src instanceof Player) {
 			Player player = (Player) src;
-			int pid = Database.getID(player.getUniqueId().toString());
-			PlayerCore players = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(pid);
+			PlayerCore players = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			if(OID.isPresent() && oCommand.isPresent()) {
 				int command = oCommand.get();
 				int id = OID.get();

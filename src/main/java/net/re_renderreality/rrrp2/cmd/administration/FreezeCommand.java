@@ -61,8 +61,7 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 		//freezes one player
 		if(targetPlayer.isPresent()) {
 			Player target = targetPlayer.get();
-			int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(target.getName());
-			PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+			PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(target.getName());
 		
 			if(RRRP2.frozenPlayers.contains(playercore.getID())) {
 				RRRP2.frozenPlayers.remove(playercore.getID());
@@ -79,8 +78,7 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 			if(all.get().equals("All") || all.get().equals("all")) {
 				src.sendMessage(Text.of(TextColors.GOLD, "Freezing all online players"));
 				for (Player target : Registry.getGame().getServer().getOnlinePlayers()) {
-					int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(target.getName());
-					PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+					PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(target.getName());
 					
 					if(target.equals(src)) {
 						src.sendMessage(Text.of(TextColors.DARK_RED, "Error! ", TextColors.RED, "You cannot freeze yourself!"));
@@ -93,8 +91,7 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 			} else if(all.get().equals("FreeAll") || all.get().equals("freeall")) {
 				src.sendMessage(Text.of(TextColors.GOLD, "Freeing all online players"));
 				for (Player target : Registry.getGame().getServer().getOnlinePlayers()) {
-					int id = RRRP2.getRRRP2().getOnlinePlayer().getIDfromUsername(target.getName());
-					PlayerCore playercore = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+					PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(target.getName());
 					
 					if(RRRP2.frozenPlayers.contains(playercore.getID())) {
 						RRRP2.frozenPlayers.remove(playercore.getID());

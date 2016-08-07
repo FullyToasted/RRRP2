@@ -18,7 +18,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
@@ -77,8 +76,8 @@ public class MailCommand extends CommandExecutorBase {
 					targetID = Database.getPlayerIDfromUsername(player.get());
 					target = Database.getPlayerCore(targetID);
 				} else if (pPlayer.isPresent()) {
-					targetID = Database.getPlayerIDfromUsername(pPlayer.get().getName());
-					target = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(targetID);
+					target = Registry.getOnlinePlayers().getPlayerCorefromUsername(pPlayer.get().getName());
+					targetID = target.getID();
 					if(!(targetID == 0)) {
 						pPlayer.get().sendMessage(Text.of("You have received mail!"));
 					}	
@@ -93,8 +92,7 @@ public class MailCommand extends CommandExecutorBase {
 					String todaysDate = dateFormat.format(cal.getTime());
 					
 					Player p = (Player) src;
-					int cPlayerID = Database.getIDFromDatabase(p.getUniqueId().toString());
-					PlayerCore cPlayer = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(cPlayerID);
+					PlayerCore cPlayer = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.getName());
 					MailCore mail = new MailCore(target.getID(), target.getName(), Database.findNextMailID(), cPlayer.getID(), cPlayer.getName(), todaysDate, message.get(), false);
 					mail.insert();
 					
@@ -114,7 +112,7 @@ public class MailCommand extends CommandExecutorBase {
 					Calendar cal = Calendar.getInstance();
 					String todaysDate = dateFormat.format(cal.getTime());
 					
-					PlayerCore target = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(targetID);
+					PlayerCore target = Registry.getOnlinePlayers().getPlayer(targetID);
 					MailCore mail = new MailCore(target.getID(), target.getName(), Database.findNextID("mail"), 0, "Console", todaysDate, message.get(), false);
 					mail.insert();
 					

@@ -58,7 +58,7 @@ public class AFKCommand extends CommandExecutorBase {
 		//Overrides and instantly causes AFK to execute
 		if (src instanceof Player) {
 			Player source = (Player) src;
-			PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(source.getName());
+			PlayerCore player = Registry.getOnlinePlayers().getPlayerCorefromUsername(source.getName());
 
 			if (RRRP2.afkList.containsKey(player.getID())) {
 				RRRP2.afkList.remove(player.getID());

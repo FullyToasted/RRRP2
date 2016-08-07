@@ -2,7 +2,7 @@ package net.re_renderreality.rrrp2.listeners;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.*;
-import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
@@ -27,8 +27,6 @@ public class PlayerLeftEvent
 	public void onPlayerDisconnect(ClientConnectionEvent.Disconnect event)
 	{
 		Player player = event.getTargetEntity();
-		String uuid = player.getUniqueId().toString();
-		int id = Database.getIDFromDatabase(uuid);
 		String disconnectMessage = ReadConfigMesseges.getLeaveMsg();
 		String lastloc = Utilities.convertLocation(player);
 		
@@ -42,12 +40,12 @@ public class PlayerLeftEvent
 			Text newMessage = TextSerializers.formattingCode('&').deserialize(disconnectMessage);
 			event.setMessage(newMessage);
 		}
-		PlayerCore playa = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(id);
+		PlayerCore playa = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 		if(!(playa == null) && !(playa.getBanned())) {
 			playa.setLastlocationUpdate(lastloc);
 			playa.setLastseenUpdate(todaysDate);
 			playa.setFlyUpdate(false);
-			RRRP2.getRRRP2().getOnlinePlayer().removePlayer(playa);
+			Registry.getOnlinePlayers().removePlayer(playa);
 		}
 		
 		if (RRRP2.afkList.containsKey(playa.getID()))

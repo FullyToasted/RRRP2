@@ -15,7 +15,6 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
@@ -76,9 +75,8 @@ public class NickCommand  extends CommandExecutorBase {
 					return CommandResult.empty();
 				}
 			} else if(pPlayer.isPresent()) {
-				int targetID = Database.getPlayerIDfromUsername(pPlayer.get().getName());
-				players = RRRP2.getRRRP2().getOnlinePlayer().getPlayer(targetID);
-				if(targetID == 0) {
+				players = Registry.getOnlinePlayers().getPlayerCorefromUsername(pPlayer.get().getName());
+				if(players.getID() == 0) {
 					src.sendMessage(Text.of(TextColors.RED, "Player does not exsist!"));
 					return CommandResult.empty();
 				}

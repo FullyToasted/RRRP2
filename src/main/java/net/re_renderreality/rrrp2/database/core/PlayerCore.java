@@ -12,9 +12,11 @@ public class PlayerCore {
 	private String nick;
 	private String channel;
 	private double money;
+	private boolean muted;
 	private boolean banned;
 	private boolean god;
 	private boolean fly;
+	private boolean jailed;
 	private boolean tptoggle;
 	private boolean invisible;
 	private double onlinetime;
@@ -46,9 +48,11 @@ public class PlayerCore {
 					  String nick, 
 					  String channel,
 					  double money, 
+					  boolean muted,
 					  boolean banned,
 					  boolean god, 
 					  boolean fly, 
+					  boolean jailed,
 					  boolean tptoggle, 
 					  boolean invisible, 
 					  double onlinetime,
@@ -65,8 +69,10 @@ public class PlayerCore {
 		this.channel = channel;
 		this.banned = banned;
 		this.money = money;
+		this.muted = muted;
 		this.god = god;
 		this.fly = fly;
+		this.jailed = jailed;
 		this.tptoggle = tptoggle;
 		this.invisible = invisible;
 		this.onlinetime = onlinetime;
@@ -84,9 +90,10 @@ public class PlayerCore {
 	 * inserts original player into the database
 	 */
 	public void insert() {
-		String command = "INSERT INTO players VALUES (" + ID + ", '" + uuid + "', '" + name + "', '" + ip + "', '" + nick + "', '" + channel + "', " + money + ", " + Utilities.boolToInt(banned) + ", " 
-														+ Utilities.boolToInt(god) + ", " + Utilities.boolToInt(fly) + ", " + Utilities.boolToInt(tptoggle) + ", " 
-														+ Utilities.boolToInt(invisible) + ", " + onlinetime + ", '" + lastlocation + "', '" + lastdeath + "', '" + firstseen + "', '" + lastseen + "')";
+		String command = "INSERT INTO players VALUES (" + ID + ", '" + uuid + "', '" + name + "', '" + ip + "', '" + nick + "', '" + channel + "', " + money + ", " + Utilities.boolToInt(muted) + ", " 
+														+ Utilities.boolToInt(banned) + ", " + Utilities.boolToInt(god) + ", " + Utilities.boolToInt(fly) + ", " + Utilities.boolToInt(tptoggle) + ", " 
+														+ Utilities.boolToInt(jailed) + ", " + Utilities.boolToInt(invisible) + ", " + onlinetime + ", '" + lastlocation + "', '" + lastdeath + "', '" 
+														+ firstseen + "', '" + lastseen + "')";
 		Database.execute(command);
 		Database.addUUID(uuid, ID);
 	}
@@ -96,8 +103,8 @@ public class PlayerCore {
 	 * @note update on login
 	 */
 	public void update() {
-		String command = "UPDATE players SET ID = " + ID + ", uuid = '" + uuid + "', name = '" + name + "', IP = '" + ip + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money 
-													+ ", banned = " + Utilities.boolToInt(banned) + ", god = " + Utilities.boolToInt(god) + ", fly = " + Utilities.boolToInt(fly) + ", tptoggle = " + Utilities.boolToInt(tptoggle) 
+		String command = "UPDATE players SET ID = " + ID + ", uuid = '" + uuid + "', name = '" + name + "', IP = '" + ip + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money + ", muted = " + Utilities.boolToInt(muted)
+ 													+ ", banned = " + Utilities.boolToInt(banned) + ", god = " + Utilities.boolToInt(god) + ", fly = " + Utilities.boolToInt(fly) + ", jailed = " + Utilities.boolToInt(jailed) + ", tptoggle = " + Utilities.boolToInt(tptoggle) 
 													+ ", invisible = " + Utilities.boolToInt(invisible) + ", onlinetime = " + onlinetime + ", lastlocation = '" + lastlocation 
 													+ "', lastdeath = '" + lastdeath + "', firstseen = '" + firstseen + "', lastseen = '" + lastseen + "' WHERE ID = " + ID + ";";
 		Log.debug(command);
@@ -177,6 +184,15 @@ public class PlayerCore {
 	}
 	
 	/**
+	 * @param sets player's muted status
+	 */
+	public void setMutedUpdate(boolean muted) { 
+		this.muted = muted; 
+		String command = "UPDATE players SET muted = " + this.muted + " WHERE ID = "+ this.ID + ";";
+		Database.execute(command);
+	}
+	
+	/**
 	 * @param god set the player in god mode
 	 */
 	public void setBannedUpdate(boolean banned) { 
@@ -200,6 +216,15 @@ public class PlayerCore {
 	public void setFlyUpdate(boolean fly) { 
 		this.fly = fly; 
 		String command = "UPDATE players SET fly = " + Utilities.boolToInt(this.fly) + " WHERE ID = "+ this.ID + ";";
+		Database.execute(command);
+	}
+	
+	/**
+	 * @param sets player's jailed status
+	 */
+	public void setJailedUpdate(boolean jailed) { 
+		this.jailed = jailed; 
+		String command = "UPDATE players SET jailed = " + this.jailed + " WHERE ID = "+ this.ID + ";";
 		Database.execute(command);
 	}
 	
@@ -317,6 +342,13 @@ public class PlayerCore {
 	}
 	
 	/**
+	 * @param set the player to be muted or unmuted
+	 */
+	public void setMuted(boolean muted) { 
+		this.muted = muted;
+	}
+	
+	/**
 	 * @param god set the player in god mode
 	 */
 	public void setBanned(boolean banned) { 
@@ -335,6 +367,13 @@ public class PlayerCore {
 	 */
 	public void setFly(boolean fly) { 
 		this.fly = fly; 
+	}
+	
+	/**
+	 * @param god set the player in jailed mode
+	 */
+	public void setJailed(boolean jailed) { 
+		this.jailed = jailed;
 	}
 	
 	/**
@@ -438,11 +477,19 @@ public class PlayerCore {
 	}
 	
 	/**
+	 * @return returns Mute status
+	 */
+	public boolean getMuted() {
+		return muted;
+	}
+	
+	/**
 	 * @return returns Ban status
 	 */
 	public boolean getBanned() {
 		return banned;
 	}
+	
 	/**
 	 * @return is the player god status
 	 */
@@ -455,6 +502,13 @@ public class PlayerCore {
 	 */
 	public boolean getFly() { 
 		return fly; 
+	}
+	
+	/**
+	 * @return returns Jail status
+	 */
+	public boolean getJailed() {
+		return jailed;
 	}
 	
 	/**
@@ -531,9 +585,11 @@ public class PlayerCore {
 		player = player + "NICK: " + getNick() + "\n";
 		player = player + "CHANNEL: " + getChannel() + "\n";
 		player = player + "MONEY: " + getMoney() + "\n";
-		player = player + "Banned: " + getBanned() + "\n";
+		player = player + "MUTED: " + getMuted() + "\n";
+		player = player + "BANNED: " + getBanned() + "\n";
 		player = player + "GOD: " + getGod() + "\n";
 		player = player + "FLY: " + getFly() + "\n";
+		player = player + "JAILED: " + getJailed() + "\n";
 		player = player + "TPTOGGLE: " + getTPToggle() + "\n";
 		player = player + "INVISIBLE: " + getInvisible() + "\n";
 		player = player + "ONLINETIME: " + getOnlinetime() + "\n";

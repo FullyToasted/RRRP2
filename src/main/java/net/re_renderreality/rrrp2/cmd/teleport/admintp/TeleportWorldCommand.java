@@ -19,7 +19,6 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.World;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigSpawn;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
@@ -117,12 +116,12 @@ public class TeleportWorldCommand extends CommandExecutorBase {
 		Transform<World> spawn = ReadConfigSpawn.getSpawn(world.getName());
 		if(!(spawn == null)) {
 			if (!p.getWorld().getUniqueId().equals(world.getUniqueId())) {
-				PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(p.getName());
+				PlayerCore playerTarget = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.getName());
 				playerTarget.setLastlocationUpdate(Utilities.convertLocation(p));
 				p.transferToWorld(world.getUniqueId(), spawn.getPosition());
 			}
 			else {
-				PlayerCore playerTarget = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(p.getName());
+				PlayerCore playerTarget = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.getName());
 				playerTarget.setLastlocationUpdate(Utilities.convertLocation(p));
 				p.setLocation(spawn.getLocation());
 			}

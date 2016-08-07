@@ -207,11 +207,6 @@ public class RRRP2{
 	public Path getConfigDir() {
 		return configDir;
 	}
-	
-	/**
-	 * @return Logger for logging status messages.
-	 */
-	//public Logger getLogger() { return logger; }
 
 	/**
 	 * @return current Server Object.
@@ -226,5 +221,5 @@ public class RRRP2{
 	/**
 	 * @return current Online Player object
 	 */
-	public OnlinePlayers getOnlinePlayer() { return onlinePlayer;	}
+	private OnlinePlayers getOnlinePlayer() { return onlinePlayer;	}
 }

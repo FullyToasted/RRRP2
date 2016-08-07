@@ -16,7 +16,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
@@ -92,7 +91,7 @@ public class TeleportAllCommand extends CommandExecutorBase {
 	public void tp(Player source) {
 		for(Player p:Registry.getServer().getOnlinePlayers()) {
 			if(!(p == source)) {
-				PlayerCore player = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(p.getName());
+				PlayerCore player = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.getName());
 				player.setLastlocationUpdate(Utilities.convertLocation(p));
 				p.sendMessage(Text.of(TextColors.GOLD, "You have been teleported to: ", TextColors.GRAY, source.getName()));
 				p.setLocation(source.getLocation());

@@ -22,7 +22,6 @@ import org.spongepowered.api.world.World;
 
 import com.flowpowered.math.vector.Vector3d;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
@@ -76,7 +75,7 @@ public class ManageHomesCommand extends CommandExecutorBase {
 		
 		if(src instanceof Player) {
 			Player player = (Player) src;
-			PlayerCore players = RRRP2.getRRRP2().getOnlinePlayer().getPlayerCorefromUsername(player.getName());
+			PlayerCore players = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			if(hID.isPresent() && oCommand.isPresent()) {
 				int command = oCommand.get();
 				if(command == 1 || command == 2 || command == 3) {

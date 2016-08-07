@@ -65,6 +65,8 @@ public class OnlinePlayers {
 		for (int n:players.keySet()) {
 			if(getPlayer(n).getName().equals(username)) {
 				return getPlayer(n);
+			} else {
+				return Database.getPlayerCore(username);
 			}
 		}
 		return null;
