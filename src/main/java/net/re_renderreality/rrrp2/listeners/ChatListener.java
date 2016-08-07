@@ -1,6 +1,5 @@
 package net.re_renderreality.rrrp2.listeners;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -15,8 +14,8 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigChat;
 import net.re_renderreality.rrrp2.database.Database;
-import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
+import net.re_renderreality.rrrp2.utils.Log;
 
 public class ChatListener {
 	
@@ -61,8 +60,7 @@ public class ChatListener {
 		if (suffixInOriginal.length() != 0)
 			suffixInOriginal = suffixInOriginal.substring(0, suffixInOriginal.length() - 1) + ReadConfigChat.getLastCharactar();
 	
-		Logger l = Registry.getLogger();
-		l.info(lastmessage + " " + restOfOriginal);
+		Log.debug(lastmessage + " " + restOfOriginal);
 		if (!player.hasPermission("rrr.color.chat.use")) {
 			if(lastmessage) {
 				event.setMessage(Text.builder()

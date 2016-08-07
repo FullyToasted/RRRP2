@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.Configurable;
+import net.re_renderreality.rrrp2.utils.Log;
 
 /**
  * Handles the config.conf file
@@ -36,6 +37,7 @@ public class Config implements Configurable
 	@Override
 	public void setup()
 	{
+		Log.test("FILE EXSIST? " + !Files.exists(configFile));
 		if (!Files.exists(configFile))
 		{
 			try
@@ -86,6 +88,9 @@ public class Config implements Configurable
 	public void populate()
 	{
 		//Populates with General COnfig information. Anything specialized will be given dedicated .conf file
+		get().getNode("Debug", "Logging Level").setValue("INFO").setComment("Level of info to spit out to the console Options:ALL, CONFIG, WARN, SEVERE, DEBUG, OFF, INFO");
+		get().getNode("Debug", "Log Commands").setValue(true).setComment("Log commands");
+		
 		get().getNode("mysql").setComment("MySQL Options for RRRP2.");
 		get().getNode("mysql", "use").setValue(false).setComment("Enables/Disables MySQL usage for EssentialCmds.");
 		get().getNode("mysql", "port").setValue("8080").setComment("Port of MySQL Database.");

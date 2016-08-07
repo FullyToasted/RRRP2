@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -18,6 +17,7 @@ import org.spongepowered.api.text.format.TextColors;
 import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
+import net.re_renderreality.rrrp2.utils.Log;
 
 public class ReplyCommand extends CommandExecutorBase {
 	private String name;
@@ -60,8 +60,6 @@ public class ReplyCommand extends CommandExecutorBase {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		setLocalVariables();
 		Optional<String> messages = ctx.<String> getOne("Message");
-		
-		Logger l = Registry.getLogger();
 		if (messages.isPresent()) {
 			String message = messages.get();
 			if(RRRP2.recentlyMessaged.containsKey(src.getName())) {
@@ -71,7 +69,7 @@ public class ReplyCommand extends CommandExecutorBase {
 
 				RRRP2.recentlyMessaged.put(target.getName(), target);
 				
-				l.info(target.getName() + " whsipers to " + target.getName() + ": " + message);
+				Log.info(target.getName() + " whsipers to " + target.getName() + ": " + message);
 				for(Player p : RRRP2.socialSpy) {
 					if(!(p.getName().equals(src.getName()))) {
 						p.sendMessage(Text.of(TextColors.GRAY, target.getName() + " whsipers to " + target.getName() + ": " + message));

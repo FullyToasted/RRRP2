@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
@@ -26,6 +25,7 @@ import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.BanCore;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
+import net.re_renderreality.rrrp2.utils.Log;
 
 public class PardonCommand extends CommandExecutorBase {
 	private String name;
@@ -64,7 +64,6 @@ public class PardonCommand extends CommandExecutorBase {
 	
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
 		setLocalVariables();
-		Logger l = RRRP2.getRRRP2().getLogger();
 		Game game = RRRP2.getRRRP2().getGame();
 		Optional<String> sPlayer = ctx.<String> getOne("player name");
 
@@ -76,7 +75,7 @@ public class PardonCommand extends CommandExecutorBase {
 			id = Database.getPlayerIDfromUsername(sPlayer.get());
 			ban = Database.getOneBan(id);
 			playercore = Database.getPlayerCore(id);
-			l.info(playercore.getName() + " " + UUID.fromString(playercore.getUUID()).toString());
+			Log.debug(playercore.getName() + " " + UUID.fromString(playercore.getUUID()).toString());
 			
 			//loads the user service 
 			UserStorageService uss = Sponge.getGame().getServiceManager().provide(UserStorageService.class).get();

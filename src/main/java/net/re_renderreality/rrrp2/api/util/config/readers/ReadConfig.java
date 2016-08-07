@@ -6,18 +6,74 @@ import java.util.UUID;
 
 import com.google.common.collect.Lists;
 
+import net.re_renderreality.rrrp2.RRRP2;
+import net.re_renderreality.rrrp2.RRRP2.DebugLevel;
 import net.re_renderreality.rrrp2.api.util.config.ConfigManager;
 import net.re_renderreality.rrrp2.api.util.config.Configs;
 import net.re_renderreality.rrrp2.api.util.config.Configurable;
 //import org.spongepowered.api.Sponge;
 import net.re_renderreality.rrrp2.config.Config;
-
+import net.re_renderreality.rrrp2.utils.Log;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 
 public class ReadConfig {
 	private static Configurable mainConfig = Config.getConfig();
 	private static ConfigManager configManager = new ConfigManager();
 	
+	public static RRRP2.DebugLevel getDebugLevel() {
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Debug", "Logging Level");
+		if (configManager.getString(node).isPresent()) {
+			String debug = configManager.getString(node).get();
+			if(debug.equals("ALL")) {
+				return DebugLevel.ALL;
+			} else if(debug.equals("CONFIG")) {
+				return DebugLevel.CONFIG;
+			} else if(debug.equals("DEBUG")) {
+				return DebugLevel.DEBUG;
+			} else if(debug.equals("INFO")) {
+				return DebugLevel.INFO;
+			} else if(debug.equals("OFF")) {
+				return DebugLevel.OFF;
+			} else if(debug.equals("SEVERE")) {
+				return DebugLevel.SEVERE;
+			} else if(debug.equals("WARNING")) {
+				return DebugLevel.WARNING;
+			} 
+		}
+		Log.error("Error getting DEBUG level from Config. Resetting to default");
+		setSQLPort("INFO");
+		return DebugLevel.INFO;
+	}
+	
+	/**
+	 * @param value value to set Debug Level to. Must be one of the 6 possible options(ALL, CONFIG, INFO, OFF, SEVERE, WARNING)
+	 */
+	public static void setDebugLevel(String value)	{
+		if(value.equals("ALL") || value.equals("CONFIG") || value.equals("INFO") || value.equals("OFF") || value.equals("SEVERE") || value.equals("WARNING")) {
+			Configs.setValue(mainConfig, new Object[] {"Debug", "Logging Level" }, value);
+		} else {
+			Configs.setValue(mainConfig, new Object[] {"Debug", "Logging Level" }, "INFO");
+		}
+	}
+	
+	/**
+	 * @return the choice of whether or not to Log Commands. default is true
+	 */
+	public static boolean getLogCommands() {
+		CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("Debug", "Log Commands");
+		if (configManager.getBoolean(node).isPresent())
+			return node.getBoolean();
+		setLogCommands(true);
+		return false;
+	}
+	
+	/**
+	 * @param value choice of using MySQL True or False
+	 */
+	public static void setLogCommands(boolean value) {
+		Configs.setValue(mainConfig, new Object[] { "Debug", "Log Commands" }, value);
+	}
+
 	/**
 	 * @return either the default port or the port set in the config
 	 */

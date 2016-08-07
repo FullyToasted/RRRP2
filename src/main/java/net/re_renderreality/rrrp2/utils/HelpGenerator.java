@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
@@ -33,7 +32,6 @@ public class HelpGenerator {
 	 * populates the help generator object
 	 */
 	public void populate() {
-		Logger l = Registry.getLogger();
 		commands = CommandLoader.getLoadedCommands();
 		commands.forEach(cmd -> {
 			String name = cmd.getName();

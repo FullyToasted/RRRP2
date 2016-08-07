@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -66,7 +65,6 @@ public class MailCommand extends CommandExecutorBase {
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException	{
 		setLocalVariables();
-		Logger l = RRRP2.getRRRP2().getLogger();
 		Optional<String> player = ctx.<String> getOne("player name");
 		Optional<Player> pPlayer = ctx.<Player> getOne("player");
 		Optional<String> message = ctx.<String> getOne("Message");
@@ -75,7 +73,6 @@ public class MailCommand extends CommandExecutorBase {
 			int targetID;
 			PlayerCore target;
 			if((player.isPresent() || pPlayer.isPresent()) && message.isPresent()) {
-				l.info(player.isPresent() + " " + pPlayer.isPresent() + " " + message.isPresent());
 				if(player.isPresent()) {
 					targetID = Database.getPlayerIDfromUsername(player.get());
 					target = Database.getPlayerCore(targetID);

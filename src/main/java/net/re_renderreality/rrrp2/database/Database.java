@@ -1,14 +1,12 @@
 package net.re_renderreality.rrrp2.database;
 
-
-import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.service.sql.SqlService;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import net.re_renderreality.rrrp2.RRRP2;
+import net.re_renderreality.rrrp2.utils.Log;
 import net.re_renderreality.rrrp2.utils.Utilities;
 import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.database.core.*;
@@ -135,8 +133,7 @@ public class Database {
 	 */
 	public static void execute(String execute) {	
 		try {
-			Logger l = RRRP2.getRRRP2().getLogger();
-			l.info(execute);
+			Log.debug(execute);
 			Connection connection = datasource.getConnection();
 			Statement statement = connection.createStatement();
 			statement.execute(execute);

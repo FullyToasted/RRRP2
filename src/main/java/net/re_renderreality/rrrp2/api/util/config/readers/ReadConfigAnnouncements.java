@@ -2,19 +2,17 @@ package net.re_renderreality.rrrp2.api.util.config.readers;
 
 import java.util.ArrayList;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.api.util.config.ConfigManager;
 import net.re_renderreality.rrrp2.api.util.config.Configs;
 import net.re_renderreality.rrrp2.api.util.config.Configurable;
 import net.re_renderreality.rrrp2.config.Announcements;
+import net.re_renderreality.rrrp2.utils.Log;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 
 public class ReadConfigAnnouncements {
-	private static Logger l = RRRP2.getRRRP2().getLogger();
 	private static Configurable announcementsConfig = Announcements.getConfig();
 	private static ConfigManager configManager = new ConfigManager();
 	
@@ -83,7 +81,7 @@ public class ReadConfigAnnouncements {
 		CommentedConfigurationNode node = Configs.getConfig(announcementsConfig).getNode("Announcement Count");
 		int newnumber = node.getInt() + 1;
 		node.setValue(newnumber);
-		l.info(newnumber + " " + announcement );
+		Log.info("New Announcement ID:" + newnumber + " Text: " + announcement );
 		String sNumber = newnumber + "";
 		Configs.getConfig(announcementsConfig).getNode("Announcements" , sNumber).setValue(announcement);
 		announcementsConfig.save();
@@ -97,6 +95,7 @@ public class ReadConfigAnnouncements {
 		String number = "" + announcementNum;
 		CommentedConfigurationNode node = Configs.getConfig(announcementsConfig).getNode("Announcements" , number );
 		node.setValue(announcement);
+		Log.info("Changed Announcement ID:" + announcementNum + " Text: " + announcement );
 		announcementsConfig.save();
 		
 	}
@@ -108,6 +107,7 @@ public class ReadConfigAnnouncements {
 		CommentedConfigurationNode node = Configs.getConfig(announcementsConfig).getNode("Announcements");
 		String key = "" + id;
 		node.removeChild(key);
+		Log.info("Removed Announcement ID:" + id);
 		Configs.getConfig(announcementsConfig).getNode("Announcement Count").setValue(getNumAnnouncements()-1);
 		announcementsConfig.save();
 	}

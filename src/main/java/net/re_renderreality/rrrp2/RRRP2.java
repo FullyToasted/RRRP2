@@ -15,11 +15,13 @@ import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.listeners.*;
 import net.re_renderreality.rrrp2.utils.AFK;
 import net.re_renderreality.rrrp2.utils.HelpGenerator;
+import net.re_renderreality.rrrp2.utils.Log;
 import net.re_renderreality.rrrp2.utils.SurroundedPlayer;
 import net.re_renderreality.rrrp2.utils.TPInvitation;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 import org.slf4j.Logger;
+//import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.command.CommandSource;
@@ -57,6 +59,8 @@ public class RRRP2{
 	@ConfigDir(sharedRoot = false)
 	private Path configDir;
 	
+	public enum DebugLevel { ALL, DEBUG, CONFIG, INFO, OFF, SEVERE, WARNING }
+	
 	public static RRRP2 plugin;
 	public static HashMap<Integer, SurroundedPlayer> surrounded = new HashMap<Integer, SurroundedPlayer>();
 	public static HashMap<Integer, AFK> afkList = new HashMap<>();
@@ -81,19 +85,19 @@ public class RRRP2{
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event)
 	{
-		getLogger().info(container.getName() + ": Config Initiallation Beginning....");
+		Log.info(container.getName() + ": Config Initiallation Beginning....");
 		plugin = this;
 
 		// Create Config Directory for EssentialCmds
 		if (!Files.exists(configDir))
 		{
-			getLogger().info(container.getName() + ": Config root not found generating...");
+			Log.debug(container.getName() + ": Config root not found generating...");
 			if (Files.exists(configDir.resolveSibling("RRRP2")))
 			{
 				try
 				{
 					Files.move(configDir.resolveSibling("RRRP2"), configDir);
-					getLogger().info(container.getName() + ": Config root generated");
+					Log.debug(container.getName() + ": Config root generated");
 				}
 				catch (IOException e) 
 				{
@@ -105,7 +109,7 @@ public class RRRP2{
 				try
 				{
 					Files.createDirectories(configDir);
-					getLogger().info(container.getName() + ": Config root generated");
+					Log.debug(container.getName() + ": Config root generated");
 				}
 				catch (IOException e)
 				{
@@ -118,10 +122,10 @@ public class RRRP2{
 		// Create data Directory for the Plugin
 		if (!Files.exists(configDir.resolve("data")))
 		{
-			getLogger().info(container.getName() + ": Config data subfolder not found generating...");
+			Log.debug(container.getName() + ": Config data subfolder not found generating...");
 			try
 			{
-				getLogger().info(container.getName() + ": Config data subfolder generated");
+				Log.debug(container.getName() + ": Config data subfolder generated");
 				Files.createDirectories(configDir.resolve("data"));
 			}
 			catch (IOException e)
@@ -139,7 +143,7 @@ public class RRRP2{
 		Announcements.getConfig().setup();
 		Chat.getConfig().setup();
 		
-		getLogger().info(container.getName() + ": Config Initiallation Finished");
+		Log.info(container.getName() + ": Config Initiallation Finished");
 	}
 	
 	/**
@@ -153,7 +157,6 @@ public class RRRP2{
 		
 		server = game.getServer();
 		Registry.setGame(getGame());
-		Registry.setLogger(getLogger());
 		Registry.setOnlinePlayers(getOnlinePlayer());
 		CommandLoader.registerCommands();
 		
@@ -185,7 +188,7 @@ public class RRRP2{
 		Database.setup(game);
     	Database.load(game);
 		
-		getLogger().info(container.getName() + " v" + container.getVersion().get() + " has successfully been initialized.");
+		Log.info(container.getName() + " v" + container.getVersion().get() + " has successfully been initialized.");
 	}
 	
 	/**
@@ -195,7 +198,7 @@ public class RRRP2{
 	@Listener 
 	public void gameStopping(GameStoppingServerEvent event) {
 		
-		getLogger().info(container.getName() + " v" + container.getVersion() + " has successfully been un-initialized.");
+		Log.info(container.getName() + " v" + container.getVersion() + " has successfully been un-initialized.");
 	}
 	
 	/**
@@ -208,7 +211,7 @@ public class RRRP2{
 	/**
 	 * @return Logger for logging status messages.
 	 */
-	public Logger getLogger() { return logger; }
+	//public Logger getLogger() { return logger; }
 
 	/**
 	 * @return current Server Object.

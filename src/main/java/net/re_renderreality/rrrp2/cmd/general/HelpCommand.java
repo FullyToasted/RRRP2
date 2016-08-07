@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -70,7 +69,6 @@ public class HelpCommand extends CommandExecutorBase {
 	 * Lists a Pagination Generated help page for either all commands or the specified subcategory @TODO NEEDS to be completely rewritten
 	 */
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException {
-		Logger l = Registry.getLogger();
 		setLocalVariables();
 		admin = admin(src);
 		cheat = cheat(src);

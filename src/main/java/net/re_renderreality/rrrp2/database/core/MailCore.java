@@ -1,9 +1,7 @@
 package net.re_renderreality.rrrp2.database.core;
 
-import org.slf4j.Logger;
-
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.utils.Log;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class MailCore {
@@ -49,11 +47,10 @@ public class MailCore {
 	 * @note update on login
 	 */
 	public void update() {
-		Logger l = RRRP2.getRRRP2().getLogger();
 		String command = "UPDATE mail SET recepientID = " + recepientID + ", recepientName = '" + recepientName + "', mailID = " + mailID 
 															 + ", senderID = " + senderID + ", senderName = '" + senderName + "', sentTime = '" 
 															 + sentTime + "', message = '" + message + "', read = " + Utilities.boolToInt(read) + ";";
-		l.info(command);
+		Log.debug(command);
 		Database.execute(command);
 
 	}

@@ -1,9 +1,7 @@
 package net.re_renderreality.rrrp2.database.core;
 
-import org.slf4j.Logger;
-
-import net.re_renderreality.rrrp2.RRRP2;
 import net.re_renderreality.rrrp2.database.Database;
+import net.re_renderreality.rrrp2.utils.Log;
 import net.re_renderreality.rrrp2.utils.Utilities;
 
 public class PlayerCore {
@@ -98,12 +96,11 @@ public class PlayerCore {
 	 * @note update on login
 	 */
 	public void update() {
-		Logger l = RRRP2.getRRRP2().getLogger();
 		String command = "UPDATE players SET ID = " + ID + ", uuid = '" + uuid + "', name = '" + name + "', IP = '" + ip + "', nick = '" + nick + "', channel = '" + channel + "', money = " + money 
 													+ ", banned = " + Utilities.boolToInt(banned) + ", god = " + Utilities.boolToInt(god) + ", fly = " + Utilities.boolToInt(fly) + ", tptoggle = " + Utilities.boolToInt(tptoggle) 
 													+ ", invisible = " + Utilities.boolToInt(invisible) + ", onlinetime = " + onlinetime + ", lastlocation = '" + lastlocation 
 													+ "', lastdeath = '" + lastdeath + "', firstseen = '" + firstseen + "', lastseen = '" + lastseen + "' WHERE ID = " + ID + ";";
-		l.info(command);
+		Log.debug(command);
 		Database.execute(command);
 
 	}
