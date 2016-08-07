@@ -29,7 +29,7 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 		description = "Freeze a player in place";
 		perm = "rrr.admin.freeze";
 		useage = "/freeze <player>";
-		notes = null;
+		notes = "/freeze (all|freeall) can also be used";
 	}
 	
 	public String getName() {
@@ -66,12 +66,12 @@ public class FreezeCommand extends AsyncCommandExecutorBase {
 		
 			if(RRRP2.frozenPlayers.contains(playercore.getID())) {
 				RRRP2.frozenPlayers.remove(playercore.getID());
-				src.sendMessage(Text.of(TextColors.GRAY, playercore.getName(), TextColors.GOLD, "is now frozen."));
+				src.sendMessage(Text.of(TextColors.GRAY, playercore.getName(), TextColors.GOLD, " is now frozen."));
 				target.sendMessage(Text.of(TextColors.GOLD, "You have been freed!"));
 			}
 			else {
 				RRRP2.frozenPlayers.add(playercore.getID());
-				src.sendMessage(Text.of(TextColors.GRAY, playercore.getName(), TextColors.GOLD, "is now frozen."));
+				src.sendMessage(Text.of(TextColors.GRAY, playercore.getName(), TextColors.GOLD, " is now frozen."));
 				target.sendMessage(Text.of(TextColors.GOLD, "You have been frozen!"));
 			}
 		} else if(all.isPresent()) {
