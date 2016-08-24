@@ -18,7 +18,7 @@ import org.spongepowered.api.world.World;
 
 import net.re_renderreality.rrrp2.PluginInfo;
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigTeleport;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
@@ -72,9 +72,9 @@ public class BackCommand extends CommandExecutorBase {
 				Location<World> location = Utilities.convertLocation(playerz.getLastlocation());
 
 				//teleport cool down if player doesn't have override
-				if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("rrp2.teleport.cooldown.override")) {
+				if (ReadConfig.getTeleportCooldownEnabled() && !player.hasPermission("rrp2.teleport.cooldown.override")) {
 					RRRP2.teleportingPlayers.add(playerz.getID());
-					src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleporting to Last Location. Please wait " + ReadConfigTeleport.getTeleportCooldown() + " seconds."));
+					src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleporting to Last Location. Please wait " + ReadConfig.getTeleportCooldown() + " seconds."));
 					
 					Sponge.getScheduler().createTaskBuilder().execute(() -> {
 						if(RRRP2.teleportingPlayers.contains(playerz.getID())) {
@@ -84,7 +84,7 @@ public class BackCommand extends CommandExecutorBase {
 								player.transferToWorld(location.getExtent().getUniqueId(), location.getPosition());
 							RRRP2.teleportingPlayers.remove(playerz.getID());
 						}
-					}).delay(ReadConfigTeleport.getTeleportCooldown(), TimeUnit.SECONDS).name("RRRP2 - Back Timer").submit(Sponge.getGame().getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
+					}).delay(ReadConfig.getTeleportCooldown(), TimeUnit.SECONDS).name("RRRP2 - Back Timer").submit(Sponge.getGame().getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
 				} else {
 					if (player.getLocation().getExtent().getUniqueId().equals(location.getExtent().getUniqueId()))
 						player.setLocation(location);

@@ -11,7 +11,7 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigSpawn;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigWorld;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 
@@ -57,7 +57,8 @@ public class SetSpawnCommand extends CommandExecutorBase {
 		setLocalVariables();
 		if (src instanceof Player) {
 			Player player = (Player) src;
-			ReadConfigSpawn.setSpawn(player.getWorld().getName(), player.getTransform(), player.getWorld().getName());
+			ReadConfigWorld.setWorld(((Player) src).getWorld().getName());
+			ReadConfigWorld.setSpawn(player.getTransform());
 			player.getWorld().getProperties().setSpawnPosition(player.getLocation().getBlockPosition());
 			src.sendMessage(Text.of(TextColors.GREEN, "Success: ", TextColors.YELLOW, "Spawn set."));
 		} else {

@@ -11,7 +11,7 @@ import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigChat;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.Log;
@@ -53,10 +53,10 @@ public class ChatListener {
 			playerName = original.substring(prefixInOriginal.length() - 1, original.indexOf(nick) + nick.length());
 		}
 	
-		prefixInOriginal = prefixInOriginal.replaceFirst("<", ReadConfigChat.getFirstCharactar());
+		prefixInOriginal = prefixInOriginal.replaceFirst("<", ReadConfig.getFirstCharactar());
 	
 		if (suffixInOriginal.length() != 0)
-			suffixInOriginal = suffixInOriginal.substring(0, suffixInOriginal.length() - 1) + ReadConfigChat.getLastCharactar();
+			suffixInOriginal = suffixInOriginal.substring(0, suffixInOriginal.length() - 1) + ReadConfig.getLastCharactar();
 	
 		Log.debug(lastmessage + " " + restOfOriginal);
 		if (!player.hasPermission("rrr.color.chat.use")) {

@@ -19,7 +19,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.World;
 
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigSpawn;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigWorld;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
@@ -113,7 +113,8 @@ public class TeleportWorldCommand extends CommandExecutorBase {
 			
 	//
 	private void tp(World world, Player p) {
-		Transform<World> spawn = ReadConfigSpawn.getSpawn(world.getName());
+		ReadConfigWorld.setWorld(world.getName());
+		Transform<World> spawn = ReadConfigWorld.getSpawn();
 		if(!(spawn == null)) {
 			if (!p.getWorld().getUniqueId().equals(world.getUniqueId())) {
 				PlayerCore playerTarget = Registry.getOnlinePlayers().getPlayerCorefromUsername(p.getName());

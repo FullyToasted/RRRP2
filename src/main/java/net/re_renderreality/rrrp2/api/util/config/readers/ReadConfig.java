@@ -374,4 +374,42 @@ public class ReadConfig {
 			}
 		}
 	}
+	
+	//Start Chat
+		/**
+		 * @return chat first character
+		 */
+		public static String getFirstCharactar() {
+			CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("chat", "firstcharacter");
+			if (configManager.getString(node).isPresent())
+				return node.getString();
+			setFirstCharactar("<");
+			return "<";
+		}
+		
+		/**
+		 * @param value set chat first character
+		 */
+		public static void setFirstCharactar(String value) {
+				Configs.setValue(mainConfig, new Object[] {"chat", "firstcharacter"}, value);	
+		}
+		
+		/**
+		 * @return chat last character
+		 */
+		public static String getLastCharactar() {
+			CommentedConfigurationNode node = Configs.getConfig(mainConfig).getNode("chat", "lastcharacter");
+			if (configManager.getString(node).isPresent())
+				return node.getString();
+			setLastCharactar(">");
+			return ">";
+		}
+		
+		/**
+		 * @param value chat last character
+		 */
+		public static void setLastCharactar(String value) {
+				Configs.setValue(mainConfig, new Object[] {"chat", "lastcharacter"}, value);	
+		}
+		//End Chat
 }

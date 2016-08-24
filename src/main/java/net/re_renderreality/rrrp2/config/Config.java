@@ -107,6 +107,9 @@ public class Config implements Configurable
 		get().getNode("AFK", "timer", "enable").setValue(true);
 		get().getNode("AFK", "timer", "time").setValue(300000);
 		
+		get().getNode("chat", "firstcharacter").setValue("<").setComment("changes the first character in name block");
+		get().getNode("chat", "lastcharacter" ).setValue(">").setComment("changes the last character in name block");
+		
 		get().getNode("Enchantments", "Allow Unsafe Enchantments").setValue(true);
 		
 		get().getNode("world", "weather", "locked").setValue(null);

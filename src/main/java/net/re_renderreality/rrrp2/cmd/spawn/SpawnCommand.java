@@ -19,8 +19,8 @@ import org.spongepowered.api.world.World;
 
 import net.re_renderreality.rrrp2.PluginInfo;
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigSpawn;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigTeleport;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigWorld;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
@@ -70,17 +70,13 @@ public class SpawnCommand extends CommandExecutorBase {
 			Player player = (Player) src;
 			PlayerCore playerz = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
 			Transform<World> spawn;
-			if(ReadConfigSpawn.isSpawnInConfig(Registry.getServer().getDefaultWorldName())) {
-				spawn = ReadConfigSpawn.getSpawn(Registry.getServer().getDefaultWorldName());
-			} else {
-				Utilities.broadcastMessage("Error! No Spawn set. Have server administrator type /setspawn");
-				return CommandResult.empty();
-			}
-		
+			ReadConfigWorld.setWorld(Registry.getServer().getDefaultWorldName());
+			spawn = ReadConfigWorld.getSpawn();
+			
 			//tp cooldown if enabled
-			if (ReadConfigTeleport.isTeleportCooldownEnabled() && !player.hasPermission("rrrp2.teleport.cooldown.override")) {
+			if (ReadConfig.getTeleportCooldownEnabled() && !player.hasPermission("rrrp2.teleport.cooldown.override")) {
 				RRRP2.teleportingPlayers.add(playerz.getID());
-				src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleporting to Spawn. Please wait " + ReadConfigTeleport.getTeleportCooldown() + " seconds."));
+				src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleporting to Spawn. Please wait " + ReadConfig.getTeleportCooldown() + " seconds."));
 				
 				Sponge.getScheduler().createTaskBuilder().execute(() -> {
 					if(RRRP2.teleportingPlayers.contains(playerz.getID()))
@@ -95,7 +91,7 @@ public class SpawnCommand extends CommandExecutorBase {
 						src.sendMessage(Text.of(TextColors.GREEN, "Success! ", TextColors.YELLOW, "Teleported to Spawn"));
 						RRRP2.teleportingPlayers.remove(playerz.getID());
 					}
-				}).delay(ReadConfigTeleport.getTeleportCooldown(), TimeUnit.SECONDS).name("RRRP2 - Back Timer").submit(Sponge.getGame().getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
+				}).delay(ReadConfig.getTeleportCooldown(), TimeUnit.SECONDS).name("RRRP2 - Back Timer").submit(Sponge.getGame().getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
 			} else {
 				playerz.setLastlocationUpdate(Utilities.convertLocation(player));
 			

@@ -32,7 +32,7 @@ public class Messages implements Configurable {
 		return messages;
 	}
 	
-	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir().resolve("files") + "/Messages.conf");
+	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir().resolve("chat") + "/messages.conf");
 	private ConfigurationLoader<CommentedConfigurationNode> configLoader = HoconConfigurationLoader.builder().setPath(configFile).build();
 	private CommentedConfigurationNode configNode;
 	
@@ -43,7 +43,7 @@ public class Messages implements Configurable {
 		{
 			try
 			{
-				File folder = new File("config/rrr.commands/files");
+				File folder = new File("config/rrr.commands/chat");
 				if(!folder.exists()) 
 					folder.mkdir();
 				

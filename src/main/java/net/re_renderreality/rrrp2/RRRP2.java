@@ -19,6 +19,7 @@ import net.re_renderreality.rrrp2.utils.Log;
 import net.re_renderreality.rrrp2.utils.SurroundedPlayer;
 import net.re_renderreality.rrrp2.utils.TPInvitation;
 import net.re_renderreality.rrrp2.utils.Utilities;
+import net.re_renderreality.rrrp2.utils.WorldHandler;
 
 import org.slf4j.Logger;
 //import org.slf4j.Logger;
@@ -139,12 +140,8 @@ public class RRRP2{
 		Config.getConfig().setup();
 		Messages.getConfig().setup();
 		MOTD.getConfig().setup();
-		Warps.getConfig().setup();
-		Spawn.getConfig().setup();
-		Teleport.getConfig().setup();
 		Rules.getConfig().setup();
-		Announcements.getConfig().setup();
-		Chat.getConfig().setup();
+		Announcements.getConfig().setup();		
 		
 		Log.info(container.getName() + ": Config Initiallation Finished");
 	}
@@ -159,6 +156,7 @@ public class RRRP2{
 		Utilities.startAFKService();
 		
 		server = game.getServer();
+		Registry.setServer(server);
 		Registry.setGame(getGame());
 		Registry.setOnlinePlayers(getOnlinePlayer());
 		CommandLoader.registerCommands();
@@ -190,6 +188,7 @@ public class RRRP2{
 	
 		Database.setup(game);
     	Database.load(game);
+    	WorldHandler.setup();
 		
 		Log.info(container.getName() + " v" + container.getVersion().get() + " has successfully been initialized.");
 	}

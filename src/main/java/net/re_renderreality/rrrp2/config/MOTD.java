@@ -30,7 +30,7 @@ public class MOTD implements Configurable
 		return motd;
 	}
 
-	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir().resolve("files") + "/MOTD.conf");
+	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir().resolve("chat") + "/motd.conf");
 	private ConfigurationLoader<CommentedConfigurationNode> configLoader = HoconConfigurationLoader.builder().setPath(configFile).build();
 	private CommentedConfigurationNode configNode;
 
@@ -41,9 +41,10 @@ public class MOTD implements Configurable
 		{
 			try
 			{
-				File file = new File("config/rrr.commands/files");
-				if(!file.exists()) 
-		    		file.mkdir();
+				File folder = new File("config/rrr.commands/chat");
+				if(!folder.exists()) 
+					folder.mkdir();
+				
 				Files.createFile(configFile);
 				load();
 				populate();

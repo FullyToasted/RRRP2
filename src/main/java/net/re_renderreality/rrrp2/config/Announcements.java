@@ -1,5 +1,6 @@
 package net.re_renderreality.rrrp2.config;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,7 +26,7 @@ public class Announcements implements Configurable
 		return announcements;
 	}
 
-	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir() + "/announcements.conf");
+	private Path configFile = Paths.get(RRRP2.getRRRP2().getConfigDir().resolve("chat") + "/announcements.conf");
 	private ConfigurationLoader<CommentedConfigurationNode> configLoader = HoconConfigurationLoader.builder().setPath(configFile).build();
 	private CommentedConfigurationNode configNode;
 
@@ -36,6 +37,10 @@ public class Announcements implements Configurable
 		{
 			try
 			{
+				File folder = new File("config/rrr.commands/chat");
+				if(!folder.exists()) 
+					folder.mkdir();
+				
 				Files.createFile(configFile);
 				load();
 				populate();

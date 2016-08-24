@@ -10,7 +10,7 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.World;
 
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigTeleport;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.database.Registry;
 import net.re_renderreality.rrrp2.database.core.PlayerCore;
 import net.re_renderreality.rrrp2.utils.AFK;
@@ -20,7 +20,7 @@ public class PlayerMoveListener {
 	public void onPlayerMove(MoveEntityEvent event, @First Player player)
 	{
 		PlayerCore playercore = Registry.getOnlinePlayers().getPlayerCorefromUsername(player.getName());
-		if (ReadConfigTeleport.isTeleportCooldownEnabled() && RRRP2.teleportingPlayers.contains(playercore.getID())) {
+		if (ReadConfig.getTeleportCooldownEnabled() && RRRP2.teleportingPlayers.contains(playercore.getID())) {
 			RRRP2.teleportingPlayers.remove(playercore.getID());
 			player.sendMessage(Text.of(TextColors.RED, "Teleportation canceled due to movement."));
 		}

@@ -23,7 +23,7 @@ import com.flowpowered.math.vector.Vector3d;
 
 import net.re_renderreality.rrrp2.PluginInfo;
 import net.re_renderreality.rrrp2.RRRP2;
-import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfigTeleport;
+import net.re_renderreality.rrrp2.api.util.config.readers.ReadConfig;
 import net.re_renderreality.rrrp2.backend.CommandExecutorBase;
 import net.re_renderreality.rrrp2.database.Database;
 import net.re_renderreality.rrrp2.database.Registry;
@@ -104,9 +104,9 @@ public class HomeCommand extends CommandExecutorBase {
 	
 	private boolean teleportPlayer(Player source, PlayerCore player, HomeCore home) {
 		try {
-			if (ReadConfigTeleport.isTeleportCooldownEnabled() && !source.hasPermission("rrr.general.teleport.cooldownoverride")) {
+			if (ReadConfig.getTeleportCooldownEnabled() && !source.hasPermission("rrr.general.teleport.cooldownoverride")) {
 				RRRP2.teleportingPlayers.add(player.getID());
-				source.sendMessage(Text.of(TextColors.GOLD, "Teleporting to Home. Please wait ",TextColors.GRAY, ReadConfigTeleport.getTeleportCooldown(), TextColors.GOLD, " seconds."));
+				source.sendMessage(Text.of(TextColors.GOLD, "Teleporting to Home. Please wait ",TextColors.GRAY, ReadConfig.getTeleportCooldown(), TextColors.GOLD, " seconds."));
 
 				Sponge.getScheduler().createTaskBuilder().execute(() -> {
 					if (RRRP2.teleportingPlayers.contains(player.getID())) {
@@ -124,7 +124,7 @@ public class HomeCommand extends CommandExecutorBase {
 						source.sendMessage(Text.of(TextColors.GOLD, "Teleported to Home: ", TextColors.GRAY, home.getHomeName()));
 						RRRP2.teleportingPlayers.remove(player.getID());
 					}
-				}).delay(ReadConfigTeleport.getTeleportCooldown(), TimeUnit.SECONDS).name("RRRP2 - Back Timer").submit(Sponge.getGame().getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
+				}).delay(ReadConfig.getTeleportCooldown(), TimeUnit.SECONDS).name("RRRP2 - Back Timer").submit(Sponge.getGame().getPluginManager().getPlugin(PluginInfo.ID).get().getInstance().get());
 			} else {
 				player.setLastlocationUpdate(Utilities.convertLocation(source));
 

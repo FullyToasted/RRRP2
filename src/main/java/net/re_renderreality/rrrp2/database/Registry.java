@@ -8,6 +8,7 @@ import net.re_renderreality.rrrp2.RRRP2;
 public class Registry {
 	
 	private static Game game;
+	private static Server server;
 	private static RRRP2 plugin;
 	private static OnlinePlayers onlinePlayers;
 	public enum helpCategory { Admin, Cheater, General, Teleport, Misc}
@@ -21,6 +22,11 @@ public class Registry {
 	 * @param p RRRP2 to set registered RRRP2 object to.
 	 */
 	public static void setPlugin(RRRP2 p) { plugin = p; }
+	
+	/**
+	 * @param p RRRP2 to set registered RRRP2 object to.
+	 */
+	public static void setServer(Server s) { server = s; }
 	
 	/**
 	 * @param o sets current online players object
@@ -40,7 +46,7 @@ public class Registry {
 	/**
 	 * @return the registered Server object.
 	 */
-	public static Server getServer() { return game.getServer(); }	
+	public static Server getServer() { return server; }	
 	
 	/**
 	 * @return Current Online Players Object
